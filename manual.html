@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Minecraft Pixel Art Maker &#8226; Manual</title>
+  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Display colour swatches next to their RGB text (tuples matched by pattern)
+    var clrcell, content, pattern = /\(\s*[0-9]{0,3}\s*,\s*[0-9]{0,3}\s*,\s*[0-9]{0,3}\s*\)/;
+    var colours = [], rand4=[], i, clr;
+    var icon = "<svg width=\"1.2em\" height=\"1.2em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+        "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
+        "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
+    for (clrcell of $("tbody.colouricons td")) {
+      content = $(clrcell).text(); console.log(content, pattern.test(content));
+      if (pattern.test(content)) {
+        colours.push(content);
+        $(clrcell).html("<span style=\"color:rgb"+content+";\">&nbsp;"+icon+"</span>"+"&nbsp;&nbsp;" + content);
+      }
+    }
+    //Select 4 randomly for extended instead of showing all colours
+    for (i=0; i<4; i++) { rand4.push(colours[Math.floor(Math.random()*colours.length)]); } console.log(rand4);
+    for (clr of rand4) {
+      $("#clriconnormal").html("&nbsp;&nbsp;<span style=\"color:rgb"+clr+";\">"+icon+"</span>"+
+         $("#clriconnormal").html());
+      clr = clr.trim().slice(1,-1).split(',');
+      for (i=0; i<clr.length; i++) {clr[i] = Math.floor(255/220*Number(clr[i].trim())) };
+      $("#clriconlight").html("&nbsp;&nbsp;<span style=\"color:rgb("+clr.join(',')+");\">"+icon+"</span>"+
+         $("#clriconlight").html());
+      for (i=0; i<clr.length; i++) {clr[i] = Math.floor(180/255*clr[i]) };
+      $("#clricondark").html("&nbsp;&nbsp;<span style=\"color:rgb("+clr.join(',')+");\">"+icon+"</span>"+
+         $("#clricondark").html());
+    }
+  });
+</script>
+</head>
+
+<body>
+<div class="container-fluid headercover" id="pageHead">
+	<div class="container-sm">
+		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Pixel Art Maker</h1>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition) that builds the image in your world, to view it on a map!</h5>
+	</div>
+</div>
+<div class="container-fluid bg-dark"><br></div>
+<div class="container-lg justify-content-lg-center mx-auto my-5 py-3" id="pageMainContent">
+  <div class="container-lg text-center text-capitalize" id="manual"><h3>Manual<br><hr><br></h3></div>
+  <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
+  <div class="alert alert-dismissible alert-warning fade show">
+    It is highly recommended to use this app on a desktop/laptop and not a mobile device!
+    <button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span></button>
+  </div>
+  <p> This app functions entirely <i>in your browser</i> (No data is ever stored in or sent to any external server!).
+    While this is advantageous for speed and security, the trade-off is that some essential functions may not
+    work if you haven't updated your browser software to the latest version in a while, or your device places many
+    restrictions on it.<br> You <b><i>must</i></b> have Javascript enabled for this site. In additon, it is recommended
+    that atleast 15 MB memory is available for this site (or don't upload too many images into one pack).
+    This site does not use any cookies or local storage.</p>
+  <div class="my-4 row"><div class="col-md-4"></div>
+    <div class="col-md-4 px-2"><a href="index.html" class="btn btn-block btn-outline-success">
+      Back to the App &nbsp;
+      <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-controller" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.119 2.693c.904.19 1.75.495 2.235.98.407.408.779 1.05 1.094 1.772.32.733.599 1.591.805 2.466.206.875.34 1.78.364 2.606.024.815-.059 1.602-.328 2.21a1.42 1.42 0 0 1-1.445.83c-.636-.067-1.115-.394-1.513-.773a11.307 11.307 0 0 1-.739-.809c-.126-.147-.25-.291-.368-.422-.728-.804-1.597-1.527-3.224-1.527-1.627 0-2.496.723-3.224 1.527-.119.131-.242.275-.368.422-.243.283-.494.576-.739.81-.398.378-.877.705-1.513.772a1.42 1.42 0 0 1-1.445-.83c-.27-.608-.352-1.395-.329-2.21.024-.826.16-1.73.365-2.606.206-.875.486-1.733.805-2.466.315-.722.687-1.364 1.094-1.772.486-.485 1.331-.79 2.235-.98.932-.196 2.03-.292 3.119-.292 1.089 0 2.187.096 3.119.292zm-6.032.979c-.877.185-1.469.443-1.733.708-.276.276-.587.783-.885 1.465a13.748 13.748 0 0 0-.748 2.295 12.351 12.351 0 0 0-.339 2.406c-.022.755.062 1.368.243 1.776a.42.42 0 0 0 .426.24c.327-.034.61-.199.929-.502.212-.202.4-.423.615-.674.133-.156.276-.323.44-.505C4.861 9.97 5.978 9.026 8 9.026s3.139.943 3.965 1.855c.164.182.307.35.44.505.214.25.403.472.615.674.318.303.601.468.929.503a.42.42 0 0 0 .426-.241c.18-.408.265-1.02.243-1.776a12.354 12.354 0 0 0-.339-2.406 13.753 13.753 0 0 0-.748-2.295c-.298-.682-.61-1.19-.885-1.465-.264-.265-.856-.523-1.733-.708-.85-.179-1.877-.27-2.913-.27-1.036 0-2.063.091-2.913.27z"/>
+  <path d="M11.5 6.026a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1 1a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1 1a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-7-2.5h1v3h-1v-3z"/>
+  <path d="M3.5 6.526h3v1h-3v-1zM3.051 3.26a.5.5 0 0 1 .354-.613l1.932-.518a.5.5 0 0 1 .258.966l-1.932.518a.5.5 0 0 1-.612-.354zm9.976 0a.5.5 0 0 0-.353-.613l-1.932-.518a.5.5 0 1 0-.259.966l1.932.518a.5.5 0 0 0 .612-.354z"/>
+</svg></a></div>
+  <div class="col-md-4"></div></div>
+  <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Using This Web App<br><br></h4>
+  <p> <a href="index.html" class="text-dark font-weight-bold"> Minecraft Pixel Art Maker</a> lets you upload images and 
+    select the colour palette and size of the pixel art to be created from each one, then processes them to create new 
+    images that resemble what can be shown on <a href="https://www.minecraft.net/">Minecraft</a> maps (in <a 
+    href="https://minecraft.gamepedia.com/Bedrock_Edition"> Bedrock edition</a>) as closely as possible.
+    You can then generate a <a href="https://www.minecraft.net/addons">behaviour pack</a> containing <a 
+    href="https://minecraft.gamepedia.com/Commands">commands</a> that will place blocks to build the images in your world!
+  </p>
+  <p class="lead mb-0" id="image-instructions"> Follow the steps below :</p>
+  <span> The points with this symbol 
+    <span class="text-warning"><svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-terminal-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
+</svg></span> contain technical details that you can ignore if you're not interested.</span><br><br>
+  <ol start="1">
+    <li> Scroll to the <b class="bg-light">&nbsp;Upload Images&nbsp;</b> section, in which there is a form titled 
+      'Image 1'. Using the file chooser, upload an image from your system (any image type - JPG/JPEG, PNG, GIF, TIFF,
+    etc that is recognised by your browser as an image can be uploaded). Avoid choosing large images (with a size larger
+    than around 1000px, or 1-2 MB) as this may fill up too much of memory available to your browser and also since the
+    resized/pixelated version (≤ 512px) may not look very similar to the original.</li>
+    <li> Choose an area (as <i>width x height</i>) that the image built in your world should cover. These numbers (ranging
+      from 1x1 to 4x4) specify the number of Level 0 (zero) maps (The smallest map size in minecraft, displaying an area of 
+      128x128 blocks, or, 1 pixel for each block) to cover.</li>
+    <li> Choose a colour palette from 3 options - Basic, Standard or Extended. Basic and Standard use flat / horizontal
+      arrangements of blocks only; while Extended is 3 dimensional, extending upto a maximum height that you must specify
+      View the <a href="#colour-tables">colours used for these palettes</a> below.</li>
+    <li> The Function name is the identifier that will be used to refer to that image in the commands (it can only
+      contain the characters <kbd>A-Z</kbd> <kbd>a-z</kbd> <kbd>0-9</kbd> <kbd>_ - . ( )</kbd> due to Minecraft command
+      syntax)</li>
+    <li> Depending on the colour palette chosen, you might also have to fill in an extra option of the Building material 
+      (for Basic only) or Maximum height (for Extended only)</li>
+    <li><a href="https://en.wikipedia.org/wiki/Floyd–Steinberg_dithering"> Dither </a> is an image processing effect that
+      controls how accurately any region of the converted image has similar colour/appearance to the original image, by 
+      introducing noise/grain of different colours as required - try toggling this On/Off for a different look !</li>
+    <br><li>Click on the <b class="text-info bg-light">&nbsp;Process Image&nbsp;</b> button to finish resizing,
+      pixelating and converting its colour palette. After this, the form will be disabled so that the settings for 
+      this image can't be changed again. Three new buttons - <b class="text-info bg-light">&nbsp;Original&nbsp;</b>
+    , <b class="text-info bg-light">&nbsp; Resized &nbsp;</b>&amp; <b class="text-info bg-light">&nbsp; Converted
+    &nbsp;</b> will be added. Click on these to view the corresponding images. <br>
+    <span class="text-warning"><svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-terminal-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
+</svg></span> 
+    The resized/converted images
+     may actually be very small in size (128 to 512 px), so they are displayed enlarged. Right click on the previewed
+     image and open it in a New Tab to see the actual size, or also copy / save these images if you would like to.</li> 
+    <li> You can process as many images as you like to write into the same behaviour pack - however it is not recommended
+      to add more than 8-10 as this can cause problems downloading the large file produced (~1 MB per small image).
+      To add a new image, click on the <span class="text-success"> <svg width="1em" height="1em" viewBox="0 0 16 16" 
+      class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" 
+      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/> 
+      </svg></span> icon to the top right of the image form area, and a new tab will be created. Follow the same guidelines
+    as above while filling it in. A new tab is added each time, and its title changes to the function name of its image,
+    provided by you, after processing.</li>
+    <li> If you've processed an image but don't want to use it anymore, you can remove it permanently by clicking
+    the <b class="text-danger bg-light">&nbsp;Delete&nbsp;</b> button in the bottom right of the processed image form.
+    <b>Warning :</b> This action can't be undone ! You can delete all the images if you like and still continue to write
+    the behaviour pack - this will just result in a 'blank' pack with no content other than its ID and icon being
+    generated.</li>
+  </ol>
+  <p class="lead" id="pack-instructions"> To create the Behaviour pack :</p>
+  <ol start="10">
+    <li> Using an add-on, you can bundle commands to build all the uploaded &amp; processed images into a single file.
+      Navigate to the <b class="bg-light">&nbsp;Create the Add-On&nbsp;</b> section below the image forms and enter
+    a name and description for the behaviour pack. These will be displayed in the Behaviour packs / Storage menu in-game,
+    after the pack has been imported.</li>
+    <li> 
+      <span class="text-warning"><svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-terminal-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
+</svg></span>
+      The behaviour pack will consist of a <code>manifest.json</code> file, a <code>pack_icon.png</code> and
+    a <code>functions</code> folder at the toplevel. The manifest comtains the name, description, and other data
+    required by minecraft such as : <ul> <li> The minimum game version - <code> 1.16.4</code> is used</li> 
+      <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> <li> 2 <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier"> UUIDs </a> to uniquely identify the pack - 
+    version 4 UUIDs generated securely by <a href="https://www.uuidtools.com/"> an external service</a> are used by default,
+    but if their server does not respond, you will be prompted to enter 2 UUIDs manually - any UUID (v4 or other) is 
+    sufficient as long as it has not been reused or copied from another existing pack that you are using / may use.
+      The pack_icon generated by default contains snippets of the first 4 images that have been processed 
+      (or of all the images, if less than 4 were processed).</li></ul> You can edit the icon or manifest if you 
+      want to make any changes later on. <br> See an <a href="#example-pack"> 
+      example behaviour pack structure</a> below.</li>
+    <li> 
+      <span class="text-warning"><svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-terminal-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
+</svg></span>
+      The functions folder will contain a subfolder for each processed image, named its image's <i> Function Name</i>.
+      Each of these folders may contain 2 - 32 files with commands, depending on the image size. <br>
+      This is because Minecraft places a recursive upper limit of upto 10,000 commands being executed from any function
+      call, and even the smallest 1x1 image size covers an area of 128&times;128 = 16,384 blocks, requiring at least
+      that many <i>/setblock</i> commands. Hence, each map area is split into 2 halves and
+      one function is written for each zone.<br> The <i>/setblock</i> commands use relative <b>&tilde;</b> (<a 
+      href="https://minecraft.gamepedia.com/Commands#Relative_world_coordinates:_Tilde_notation">tilde notation</a>) to
+    specify the positon, so that the image will be built wherever you (the player, or a command block if you are using
+    one) are standing, instead of a specific place in each world every time.</li><br>
+    <li><strong><u>Common Function Coordinates : </u></strong>If this is enabled, the coordinates of every block in the image, 
+      across all functions, will be written with reference to the same starting point (<span class="bg-light">&nbsp;
+      ~ ~ ~ &nbsp;</span> is the top-left (NW) corner of the image, also the NW corner of the first zone) - so
+      you should run all functions from that same location. Otherwise, the reference for each function is the top left
+      (NW) corner of its zone only, and you have to move to the corner of the next zone each time before filling
+      in the blocks there. <br>It is recommended <i>not</i> to enable this and move manually instead (depending on
+      the image size and your <a href="https://minecraft.gamepedia.com/Chunk#Bedrock_Edition"> simulation distance 
+      </a>) since, for large images, blocks far away from they player outside the sim distance or any ticking area 
+      will not be placed, leaving odd gaps in the picture.</li>
+    <li><strong><u>Replace only air instead of destroying :</u></strong> If this is enabled, wherever there are any non-air / 
+      non-empty blocks at a location where a block for the image has to be placed, those blocks are not replaced 
+    but are preserved (this will leave a "gap" or a differently coloured spot in the
+    image at those places, if there are any). <b>Note : </b> When this is disabled (normally), the extended / 3D 
+      arrangement clears the entire cuboidal volume from the starting top-left-lowest corner to the bottom-right-highest
+      (including spaces in which there are no blocks, above/below each image block).
+    If enabled, this volume is <i> not</i> cleared.</li>
+    <li> Click on the <b class="text-info bg-light">&nbsp;Write Functions&nbsp;</b> button at the end of the form
+    to analyse all the processed images and write commands for them, and combine everything into a ZIP file. 
+    When this process is complete, the button will be replaced with a <b class="text-success bg-light">&nbsp;
+      Download &nbsp;</b> button. Click on it to download the pack, named <code>pixelart.mcpack</code> by default - 
+    you can rename this to whatever you like.<br><br>
+    <span class="text-warning"><svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-terminal-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
+</svg></span>
+      Internally, the file before downloading is stored as a <a href="https://en.wikipedia.org/wiki/Binary_large_object">
+      Blob file</a> - this format may not be fully supported by some older browsers, so in case it doesn't work or
+    the download is incomplete or missing some data, you can try the alternate link provided below it, which stores
+    it temporarily as a Data URI (more widely supported, although this has much smaller size limits, so it may not
+    work too if you have uploaded more than 1-2 images or have enabled memory usage restrictions in your browser.
+      There is no alternative to these).</li>
+  </ol>
+  <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
+  <ol>
+    <li> Import and apply the behaviour pack to your world(s). <br> <b>Note : </b>Cheats must be enabled to use
+    functions. If you want to earn achievements in that world or keep cheats off, you'll have to place all the
+    blocks manually - you can refer to the processed images or even extract the function files from the pack and
+    read those to identify how many blocks you'll need or which ones go where.</li>
+    <li> Go to the place in your world where you want to build the image, and open a Level 0 (staring size) map
+      there. If you want the image to be aligned exactly with the edges of the map (no gaps/edges), go to the top-left 
+      corner of that map and mark that as the block from which to start building the image instead.</li>
+    <li> This will be the top left corner of the image (see the green square in the figure below), and the image
+    will extend anywhere from 128 blocks (1 map) to 512 blocks (4 maps) South and East from here, depending on the 
+      size you've chosen. Height-wise, it will be built at the block in which you are standing, for the
+    flat (basic / standard) palettes, or ranging from that block till (<i>specified max height</i>) blocks above
+    where you are standing, for the 3D (extended) palette.<b> *</b></li>
+    <li> <div class="row"><div class="col-md-8">If your image has a size of <b><i>a</i></b>x<b><i>b</i></b>
+      maps for example, there will be 2 &times; <b><i>a</i></b> &times; <b><i>b</i></b> functions to be executed
+      individually, called <i>function_name</i>/<b>1</b>, <i>function_name</i>/<b>2</b>, ... so on.
+      Each of these builds one section of the whole image, covering a vertical half of one map (64&times;128 blocks).
+      These are arranged from West to East row-wise, for all the rows in your image area North to South. The figure
+      to the right shows an example for a 2x2 image.<br>
+      <ul><li>If '<i>Use same starting coordinate for all functions</i>' is enabled, run all the functions from
+        this corner only (top-left of the whole image, marked with a small green square in the figure).</li>
+      <li> If this option was not enabled, you need to be at the top-left corner of each zone before running the
+        function for that zone - marked by small black squares in the figure. You may not need to move manually,
+        as in this case all the functions up till the last will also contain <code>/tp</code> commands to teleport
+        you to the next corner, and also place a <i>Cobblestone</i> block there to identify it exactly.</li></ul>
+      Note : You can even run the functions from command blocks placed at those locations instead of standing at
+       the corner and entering the command yourself.</div>
+      <div class="col-md-4"><figure class="figure">
+        <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
+        <figcaption class="figure-caption">Example zone arrangement for a 2x2 image.</figcaption></figure></div>
+      </div></li>
+    <li>The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
+    For example, if your image's function name was <i>wallpaper</i>, and its size was 2x1, you would need to run
+      the commands <pre class="pl-4"><code>/function wallpaper/1
+/function wallpaper/2
+/function wallpaper/3
+/function wallpaper/4</code></pre><a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)">
+      Read more</a> about functions in Minecraft.</li>
+    <li><span class="lead">You're Done !</span> Once you've constructed the image, map the entire area covered by it
+      and build a map wall for your pixel art !<br> You can also optionally <a 
+    href="https://minecraft.gamepedia.com/Cartography_Table#Usage"> lock the maps </a> with glass panes to prevent
+    them from updating even if some other structures are built above your image blocks, covering them.</li>
+  </ol>
+  <p class="text-muted">* For the 3D arrangement, the max height specification only ensures that blocks do not get
+  placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
+  image. You may find, after building it, that the blocks did not reach that height anyway.</p>
+  <br><hr>
+  <h4 class="container-lg text-center text-capitalize" id="colour-tables"><br><br>Colour Tables<br></h4>
+  <p>The RGB colour values used by this web app for the palettes are :</p>
+  <!--No content must be in tthese table cells other than the RGB tuples as text, see the script in head-->
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Basic </th></tr></thead>
+        <tbody class="colouricons">
+          <tr><td>(218, 218, 218) </td><td>(175, 112, 55)</td><td>(140, 72, 175)</td><td>(95, 130, 180)</td></tr>
+          <tr><td>(195, 195, 75)</td><td>(125, 175, 56)</td><td>(195, 115, 135)</td><td>(64, 64, 64)</td></tr>
+          <tr><td>(128, 128, 128)</td><td>(64, 108, 128)</td><td>(108, 53, 150)</td><td>(42, 64, 150)</td></tr>
+          <tr><td>(88, 64, 42)</td><td>(88, 108, 42)</td><td>(128, 42, 42)</td><td>(20, 20, 20)</td></tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Standard </th></tr></thead>
+        <tbody class="colouricons">
+          <tr><td colspan="2" class="text-muted"> &nbsp; All basic colours plus the following</td>
+            <td>(96, 96, 96)</td><td>(128, 96, 64)</td></tr>
+          <tr><td>(120, 100, 60)</td><td>(54, 78, 21)</td><td>(45, 70, 45)</td><td>(96, 0, 0)</td></tr>
+          <tr><td>(218, 0, 0)</td><td>(218, 128, 0)</td><td>(0, 104, 0)</td><td>(218, 160, 80)</td></tr>
+          <tr><td>(120, 70, 42)</td><td>(78, 185, 180)</td><td>(64, 108, 218)</td><td>(0, 184, 48)</td></tr>
+          <tr><td>(0, 0, 0)</td><td>(146, 28, 28)</td><td>(16, 128, 112)</td><td>(75, 58, 48)</td></tr>
+          <tr><td>(208, 208, 64)</td><td>(169, 169, 169)</td><td>(208, 198, 138)</td><td>(139, 144, 156)</td></tr>
+          <tr><td>(108, 150, 48)</td><td>(64, 108, 128)</td><td>(218, 218, 205)</td><td>(136, 136, 218)</td></tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Extended </th></tr></thead>
+        <tbody class="text-muted">
+          <tr><td colspan="3">&nbsp; All Standard Colours &nbsp;<small><i> (Refresh this page to view a new
+            selection) </i></small>
+            </td><td id="clriconnormal"></td></tr>
+          <tr><td colspan="3"> &nbsp; Slightly brighter version of each standard colour, by multiplying each of 
+            (R,G,B) by 255/220</td><td id="clriconlight"></td></tr>
+          <tr><td colspan="3">&nbsp; Slightly darker version of each standard colour, by multiplying each of (
+            R,G,B) by 180/220</td><td id="clricondark"></td></tr>
+        </tbody>
+      </table>
+      <p> <br>&nbsp;The blocks used to get these colours are : </p>
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Basic </th></tr></thead>
+        <tbody>
+          <tr><td>White</td><td>Orange</td><td>Magenta</td><td>Light Blue</td></tr>
+          <tr><td>Yellow</td><td>Lime</td><td>Pink</td><td>Grey</td></tr>
+          <tr><td>Light Grey</td><td>Cyan</td><td>Purple</td><td>Blue</td></tr>
+          <tr><td>Brown</td><td>Green</td><td>Red</td><td>Black</td></tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Standard </th></tr></thead>
+        <tbody>
+          <tr><td colspan="2"> &nbsp; Concrete is used for the basic colours</td>
+            <td>Stone</td><td>Coarse Dirt</td></tr>
+          <tr><td>Crafting Table</td><td>Oak Leaves</td><td>Spruce Leaves</td><td>Netherrack</td></tr>
+          <tr><td>Redstone Block</td><td>Shroomlight</td><td>Dried Kelp Block</td><td>Glowstone</td></tr>
+          <tr><td>Redstone Lamp</td><td>Diamond Block</td><td>Lapis Block</td><td>Emerald Block</td></tr>
+          <tr><td>Netherite Block</td><td>Crimson Nylium</td><td>Warped Nylium</td><td>Soul Soil</td></tr>
+          <tr><td>Gold Block</td><td>Cobweb</td><td>End Stone</td><td>Iron Block</td></tr>
+          <tr><td>Slime Block</td><td>Prismarine</td><td>Quartz Block</td><td>Blue Ice</td></tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Extended </th></tr></thead>
+        <tbody>
+          <tr><td colspan="4">&nbsp; Standard shade if the block is at the same height (y-level) as the 
+            one just North of it</td></tr>
+          <tr><td colspan="4"> &nbsp; Brighter shade if the block is ≥ 2 levels <i>higher</i> than the one N of it</td></tr>
+          <tr><td colspan="4"> &nbsp; Darker shade if the block is ≥ 2 levels <i>lower</i> than the one N of it</td></tr>
+        </tbody>
+      </table>
+  <p> <u>Note : </u><ol class="pl-1">
+    <li> These RGB values may not be the <i>exact</i> defaults used in Minecraft, but have been measured closely
+       and will not deviate much visually from the actual colours used (in unmodified/vanilla Minecraft 1.16.4 
+      Bedrock edition)</li>
+     <li> No liquids (water, lava) or falling blocks (sand, gravel, etc) or blocks that cannot 'float' without
+         support (torches, bells, etc) are used. The leaves that are used are the non-decaying variants.</li>
+     <li> No blocks whose map colour can vary depending on the biome (like Grass Blocks) or blocks which can change
+         into others on their own (like Mycelium to dirt, or Coral to Dry Coral) are used.</li>
+     <li> The <a href="https://minecraft.gamepedia.com/Map_item_format">list of Map Colours</a> on the Official Minecraft
+       Wiki is only for Java Edition - Bedrock edition theoretically has any number of possible colours, but only a few are
+       used.</li></ol></p>
+  <h4 class="container-lg text-center text-capitalize" id="example-pack"><br><br>Example behaviour pack<br><br></h4>
+  <p> This is the file structure of an example behaviour pack generated by this app. Assume it was created using 2 
+  images, one with the function name "cliff" and of size 2x1, and the other with the function name "bastion" and of
+  map size 1x1. Directory names are written with an ending <b>/</b> and the rest are files :</p>
+  <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
+  behaviour pack.mcpack
+   |
+   |-- manifest.json
+   |-- pack_icon.png
+   └-- functions/
+        |
+        ├-- cliff/
+        |    |-- 1.mcfunction
+        |    |-- 2.mcfunction
+        |    |-- 3.mcfunction
+        |    └-- 4.mcfunction
+        |
+        └-- bastion/
+             |-- 1.mcfunction
+             └-- 2.mcfunction
+  </code></pre><br>
+  <div class="row"><div class="col-4"></div>
+    <div class="col-4"><a class="btn btn-block btn-warning mx-auto" href="resources/sample_pack.mcpack" 
+                          download="sample_pack.mcpack"> Download a sample pack </a>
+      <!--form method="get" action="resources/all_link_keep.zip">
+      <button class="btn btn-block btn-warning mx-auto" type="submit">Download a sample pack</button></form-->
+    </div><div class="col-4"></div></div><br>
+  <p> To view/edit/replace the files inside, just rename the <code>.mcpack</code> extension to <code>.zip</code>
+  and extract all contents using any Compressed (ZIP) folder utility.</p>
+  <p> You can also add contents of other behaviour packs to these, or vice-versa, at a later stage and re-apply
+    the same pack after updating the version number in the manifest to any higher number.</p>
+  <br><hr><br>
+  <div class="text-center lead"><a href="#manual">Back to top &uarr;</a> </div>
+</div>
+<div class="container-fluid bg-dark text-center" id="pageFooter">
+  <br><h6 class="text-white" id="footertitle">Minecraft Pixel Art Maker</h6>
+  <h6 class="text-white-50">Version 1.0.0<br><br></h6>
+  <p>
+    <a class="text-white-50" href="index.html">Web App</a> | 
+    <a class="text-white-50" href="#">Manual</a> | 
+    <a class="text-white-50" href="about.html">About</a> | 
+    <a class="text-white-50" href="">Site Home</a>
+  </p><br>
+</div>
+</body>
+</html>
