@@ -9,6 +9,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
   
+<link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="manifest" href="images/site.webmanifest">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ccbb99">
+<link rel="shortcut icon" href="/mages/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="images/browserconfig.xml">
+<meta name="theme-color" content="#ccbb99">
+  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -48,7 +58,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Pixel Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -56,14 +66,14 @@
   <div class="container-lg text-center text-capitalize" id="manual"><h3>Manual<br><hr><br></h3></div>
   <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
   <div class="alert alert-dismissible alert-warning fade show">
-    It is highly recommended to use this app on a desktop/laptop and not a mobile device!
+    It is recommended to use this app on a desktop/laptop instead of on mobile!
     <button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span></button>
   </div>
   <p> This app functions entirely <i>in your browser</i> (No data is ever stored in or sent to any external server!).
     While this is advantageous for speed and security, the trade-off is that some essential functions may not
     work if you haven't updated your browser software to the latest version in a while, or your device places many
     restrictions on it.<br> You <b><i>must</i></b> have Javascript enabled for this site. In additon, it is recommended
-    that atleast 15 MB memory is available for this site (or don't upload too many images into one pack).
+    that atleast 10 MB memory is available for this site (or don't upload too many images into one pack).
     This site does not use any cookies or local storage.</p>
   <div class="my-4 row"><div class="col-md-4"></div>
     <div class="col-md-4 px-2"><a href="index.html" class="btn btn-block btn-outline-success">
@@ -231,15 +241,17 @@
       </div></li>
     <li>The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
     For example, if your image's function name was <i>wallpaper</i>, and its size was 2x1, you would need to run
-      the commands <pre class="pl-4"><code>/function wallpaper/1
+      the commands <pre class="pl-4 mb-0"><code>/function wallpaper/1
 /function wallpaper/2
 /function wallpaper/3
 /function wallpaper/4</code></pre><a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)">
       Read more</a> about functions in Minecraft.</li>
-    <li><span class="lead">You're Done !</span> Once you've constructed the image, map the entire area covered by it
+    <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> You can also optionally <a 
     href="https://minecraft.gamepedia.com/Cartography_Table#Usage"> lock the maps </a> with glass panes to prevent
-    them from updating even if some other structures are built above your image blocks, covering them.</li>
+    them from updating even if some other structures are built above your image blocks, covering them.</p>
+    <p>If you also want to rotate sections of the image, you can copy and rotate them in your world
+      using <a href="https://minecraft.gamepedia.com/Structure_Block#Usage">Structure blocks</a>.</p></li>
   </ol>
   <p class="text-muted">* For the 3D arrangement, the max height specification only ensures that blocks do not get
   placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
@@ -247,7 +259,7 @@
   <br><hr>
   <h4 class="container-lg text-center text-capitalize" id="colour-tables"><br><br>Colour Tables<br></h4>
   <p>The RGB colour values used by this web app for the palettes are :</p>
-  <!--No content must be in tthese table cells other than the RGB tuples as text, see the script in head-->
+  <!--No content must be in these table cells other than the RGB tuples as text, see the script in head-->
       <table class="table table-bordered table-sm">
         <thead class="table-info"><tr><th colspan="4">&nbsp; &nbsp; Basic </th></tr></thead>
         <tbody class="colouricons">

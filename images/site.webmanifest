@@ -1,0 +1,14 @@
+{
+    "name": "Minecraft Pixel Art Maker",
+    "short_name": "MC Pixel Art",
+    "icons": [
+        {
+            "src": "/images/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ccbb99",
+    "background_color": "#ccbb99",
+    "display": "standalone"
+}

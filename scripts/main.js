@@ -194,7 +194,7 @@ function writeBhvPack(images, uuids) {
       min_engine_version: [1,16,4]
     },
     modules: [{
-      description: "Created using Minecraft Pixel Art Maker, "+Date(),
+      description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on "+Date(),
       type: "data",
       uuid: uuids[1],
       version: [1,0,0]
@@ -235,11 +235,11 @@ function writeBhvPack(images, uuids) {
         $("#spinnerModal").addClass('d-none');
         $("#spinnerModal").removeClass('d-block');
     }, function (err) {
-        console.error("Unexpected error creating blob : ", err);
+        alert("Uh oh\nSomething went wrong !");
+        console.error("Unexpected error creating blob : \n", err);
         $("#spinnerModal").addClass('d-none');
         $("#spinnerModal").removeClass('d-block');
   });
-  try {
   pack.generateAsync({type:"base64"})
     .then(function(uri) {
      uri = "data:application/zip;base64," + uri;
@@ -248,9 +248,9 @@ function writeBhvPack(images, uuids) {
         saveAs(uri, "pixelart.mcpack");
       })
     }, function(err) {
-      alert(err);
+      alert("Uh oh\nSomething went wrong !");
+      console.error("Unexpected error creating Data URL : \n", err);
   });
-  } catch(err) {alert(err.message);}
 }
 
 function setSaveAsZip(blob) {

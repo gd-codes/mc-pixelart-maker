@@ -162,7 +162,7 @@ function makeLogo(images) {
     for (var i=0; i<images.length; i++) {
       ctx.putImageData(images[i], 16*i, 16*i);
     }
-    ctx.drawImage(logodata, 80, 80, 32, 32);
+    ctx.drawImage(logodata, 88, 88, 32, 32);
   }
   try {
     return canv.toDataURL('image/png');
