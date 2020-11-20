@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="manifest" href="images/site.webmanifest">
 <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ccbb99">
-<link rel="shortcut icon" href="/mages/favicon.ico">
+<link rel="shortcut icon" href="images/favicon.ico">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-config" content="images/browserconfig.xml">
 <meta name="theme-color" content="#ccbb99">
@@ -31,14 +31,14 @@
         "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
         "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
     for (clrcell of $("tbody.colouricons td")) {
-      content = $(clrcell).text(); console.log(content, pattern.test(content));
+      content = $(clrcell).text();
       if (pattern.test(content)) {
         colours.push(content);
         $(clrcell).html("<span style=\"color:rgb"+content+";\">&nbsp;"+icon+"</span>"+"&nbsp;&nbsp;" + content);
       }
     }
     //Select 4 randomly for extended instead of showing all colours
-    for (i=0; i<4; i++) { rand4.push(colours[Math.floor(Math.random()*colours.length)]); } console.log(rand4);
+    for (i=0; i<4; i++) { rand4.push(colours[Math.floor(Math.random()*colours.length)]); }
     for (clr of rand4) {
       $("#clriconnormal").html("&nbsp;&nbsp;<span style=\"color:rgb"+clr+";\">"+icon+"</span>"+
          $("#clriconnormal").html());
@@ -154,7 +154,7 @@
 </svg></span>
       The behaviour pack will consist of a <code>manifest.json</code> file, a <code>pack_icon.png</code> and
     a <code>functions</code> folder at the toplevel. The manifest comtains the name, description, and other data
-    required by minecraft such as : <ul> <li> The minimum game version - <code> 1.16.4</code> is used</li> 
+    required by minecraft such as : <ul> <li> The minimum game version - <code> 1.16.0</code> is used</li> 
       <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> <li> 2 <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier"> UUIDs </a> to uniquely identify the pack - 
     version 4 UUIDs generated securely by <a href="https://www.uuidtools.com/"> an external service</a> are used by default,
     but if their server does not respond, you will be prompted to enter 2 UUIDs manually - any UUID (v4 or other) is 
@@ -183,7 +183,7 @@
       (NW) corner of its zone only, and you have to move to the corner of the next zone each time before filling
       in the blocks there. <br>It is recommended <i>not</i> to enable this and move manually instead (depending on
       the image size and your <a href="https://minecraft.gamepedia.com/Chunk#Bedrock_Edition"> simulation distance 
-      </a>) since, for large images, blocks far away from they player outside the sim distance or any ticking area 
+      </a>) since, for large images, blocks far away from they player, outside the sim distance or any ticking area, 
       will not be placed, leaving odd gaps in the picture.</li>
     <li><strong><u>Replace only air instead of destroying :</u></strong> If this is enabled, wherever there are any non-air / 
       non-empty blocks at a location where a block for the image has to be placed, those blocks are not replaced 
@@ -230,9 +230,9 @@
       <ul><li>If '<i>Use same starting coordinate for all functions</i>' is enabled, run all the functions from
         this corner only (top-left of the whole image, marked with a small green square in the figure).</li>
       <li> If this option was not enabled, you need to be at the top-left corner of each zone before running the
-        function for that zone - marked by small black squares in the figure. You may not need to move manually,
+        function for that zone - marked by small black squares in the figure. You won't have to move manually,
         as in this case all the functions up till the last will also contain <code>/tp</code> commands to teleport
-        you to the next corner, and also place a <i>Cobblestone</i> block there to identify it exactly.</li></ul>
+        you to the next corner, and also try to place a <i>Cobblestone</i> block there to identify it exactly.</li></ul>
       Note : You can even run the functions from command blocks placed at those locations instead of standing at
        the corner and entering the command yourself.</div>
       <div class="col-md-4"><figure class="figure">
@@ -373,7 +373,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Pixel Art Maker</h6>
-  <h6 class="text-white-50">Version 1.0.0<br><br></h6>
+  <h6 class="text-white-50">Version 1.1.0<br><br></h6>
   <p>
     <a class="text-white-50" href="index.html">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 

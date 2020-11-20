@@ -28,6 +28,16 @@ $(document).ready(function() {
   $("#writePackBtn").click(function(event) {
     startCreateBhvPack(event);
   });
+  
+  /*if (! $("#demoVideo").length) {
+    $("#carVideoItem").append("<video style=\"width:100%;\" controls loop autoplay>"+
+            "<source src=\"resources/demo_video_720p24fps.mp4\" type=\"video/mp4\">"+
+            "Your browser could not load this video.</video>");
+    var vid = $("#carVideoItem video")[0];
+    vid.volume = 0;
+    vid.play();
+  }*/
+  $("#demoCarousel").carousel({interval: 2000});
 });
 
 
@@ -191,7 +201,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,16,4]
+      min_engine_version: [1,16,0]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on "+Date(),

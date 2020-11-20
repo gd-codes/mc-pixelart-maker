@@ -69,3 +69,7 @@ kbd {
 #spinnerModalHeading {
   z-index: 1061;
 }
+
+#demoCarousel {
+  max-width: 750px;
+}
