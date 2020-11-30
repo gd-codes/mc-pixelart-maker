@@ -29,6 +29,9 @@ $(document).ready(function() {
     startCreateBhvPack(event);
   });
   
+  for (var i=1; i<=7; i++) {
+    $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
+  }
   /*if (! $("#demoVideo").length) {
     $("#carVideoItem").append("<video style=\"width:100%;\" controls loop autoplay>"+
             "<source src=\"resources/demo_video_720p24fps.mp4\" type=\"video/mp4\">"+

@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Minecraft Pixel Art Maker</title>
+<title>Minecraft Map Art Maker</title>
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
@@ -34,7 +34,7 @@
 <body>
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
-		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Pixel Art Maker</h1>
+		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
 		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
@@ -42,13 +42,16 @@
 <div class="container-lg justify-content-lg-center mx-auto my-5" id="pageMainContent">
   <div class="alert alert-info alert-dismissible fade show">
     <h4 class="alert-heading">How this app works</h4>
-    <p>Minecraft <a class="alert-link" target="_blank" href="https://minecraft.gamepedia.com/Tutorials/Pixel_art">Pixel Art</a>
-      Maker resizes, pixelates and limits the colour palette of your uploaded image to one that is shown in Minecraft maps. It
-      then analyses the final image to identify a suitable minecraft block and coordinates for each pixel so that if those
-      blocks are placed at those locations in your minecraft world, a map of the area will display the final image ! The
-      placement is automated by writing several '/setblock' commands in function files, that can be applied through a 
-      <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank">behaviour pack</a> and executed using
-      the '/function' command in-game.</p>
+    <p>Minecraft Map Art Maker resizes, pixelates and reduces the colour palette of your uploaded image to one that
+      is shown in Minecraft maps. It then analyses the final image to identify a suitable minecraft block and coordinates
+      for each pixel so that if those blocks are placed at those locations in your minecraft world, a map of the area 
+      will display the final image ! The placement is automated by writing several '/setblock' commands in function files,
+      that can be applied through a <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a> and executed using the '/function' command in-game.</p>
+    <ul><li>This app is free and <a href="about.html#opensource" class="alert-link" target="_blank">open source</a> 
+      online software,</li>
+      <li>Runs in your browser - no need to download or install programs, or send data to other websites/servers,</li>
+      <li>Valid for Minecraft on all devices that can use behaviour packs - Win 10, Android, iOS, Console, etc</li>
+    </ul>
     <a class="btn btn-info" href="manual.html" target="_blank">Read More …</a>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
@@ -258,7 +261,7 @@
       <div class="form-group row">
         <label for="bpackDescInput" class="col-sm-2 col-form-label text-primary text-right">Description</label>
         <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
-                  placeholder="Created using Minecraft Pixel Art Maker !"></textarea>
+                  placeholder="Created using Minecraft Map Art Maker !"></textarea>
       </div>
       <span class="row form-text text-muted px-3 d-block mb-3">Some advanced settings - read the 
         <a href="manual.html#pack-instructions" target="_blank">manual</a> for details on these, or just leave
@@ -300,9 +303,9 @@
       <div class="alert alert-warning mt-4">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" 
              xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; The pack is a zip file with a '.mcpack' extension. If Minecraft (Bedrock edition)
-      is installed on your device, just double click it to launch the game and import it, or read more on add-ons
-        <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank"> here</a>.
+          <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
+        just double click it to launch the game and import it on PC, or read the installation steps
+        <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
         Read the manual page</a> for more detailed instructions.</div>
@@ -321,26 +324,26 @@
         <!--li data-target="#demoCarousel" data-slide-to="7"></li-->
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="images/d1.png" class="d-block w-100" alt="Import the pack">
+        <div class="carousel-item active" id="cari1">
+          <img class="d-block w-100" alt="Import the pack">
         </div>
-        <div class="carousel-item">
-          <img src="images/d2.png" class="d-block w-100" alt="Apply it to your world">
+        <div class="carousel-item" id="cari2">
+          <img class="d-block w-100" alt="Apply it to your world">
         </div>
-        <div class="carousel-item">
-          <img src="images/d3.png" class="d-block w-100" alt="Choose your starting location">
+        <div class="carousel-item" id="cari3">
+          <img class="d-block w-100" alt="Choose your starting location">
         </div>
-        <div class="carousel-item">
-          <img src="images/d4.png" class="d-block w-100" alt="Run the functions">
+        <div class="carousel-item" id="cari4">
+          <img class="d-block w-100" alt="Run the functions">
         </div>
-        <div class="carousel-item">
-          <img src="images/d5.png" class="d-block w-100" alt="The entire srtucture is built !">
+        <div class="carousel-item" id="cari5">
+          <img class="d-block w-100" alt="The entire srtucture is built !">
         </div>
-        <div class="carousel-item">
-          <img src="images/d6.png" class="d-block w-100" alt="Map the area">
+        <div class="carousel-item" id="cari6">
+          <img class="d-block w-100" alt="Map the area">
         </div>
-        <div class="carousel-item">
-          <img src="images/d7.png" class="d-block w-100" alt="Put up your maps (pictures)">
+        <div class="carousel-item" id="cari7">
+          <img class="d-block w-100" alt="Put up your maps (pictures)">
         </div>
         <!--div class="carousel-item" id="carVideoItem"></div-->
       </div>
@@ -356,8 +359,8 @@
   </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
-  <br><h6 class="text-white" id="footertitle">Minecraft Pixel Art Maker</h6>
-  <h6 class="text-white-50">Version 1.1.0<br><br></h6>
+  <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
+  <h6 class="text-white-50">Version 1.2.0<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 

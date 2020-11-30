@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Minecraft Pixel Art Maker &#8226; Manual</title>
+<title>Minecraft Map Art Maker &#8226; Manual</title>
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
@@ -57,7 +57,7 @@
 <body>
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
-		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Pixel Art Maker</h1>
+		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
 		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
@@ -85,7 +85,7 @@
 </svg></a></div>
   <div class="col-md-4"></div></div>
   <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Using This Web App<br><br></h4>
-  <p> <a href="index.html" class="text-dark font-weight-bold"> Minecraft Pixel Art Maker</a> lets you upload images and 
+  <p> <a href="index.html" class="text-dark font-weight-bold"> Minecraft Map Art Maker</a> lets you upload images and 
     select the colour palette and size of the pixel art to be created from each one, then processes them to create new 
     images that resemble what can be shown on <a href="https://www.minecraft.net/">Minecraft</a> maps (in <a 
     href="https://minecraft.gamepedia.com/Bedrock_Edition"> Bedrock edition</a>) as closely as possible.
@@ -153,7 +153,7 @@
   <path fill-rule="evenodd" d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354L4.793 6.5 3.146 4.854a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708z"/>
 </svg></span>
       The behaviour pack will consist of a <code>manifest.json</code> file, a <code>pack_icon.png</code> and
-    a <code>functions</code> folder at the toplevel. The manifest comtains the name, description, and other data
+    a <code>functions</code> folder at the toplevel. The manifest contains the name, description, and other data
     required by minecraft such as : <ul> <li> The minimum game version - <code> 1.16.0</code> is used</li> 
       <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> <li> 2 <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier"> UUIDs </a> to uniquely identify the pack - 
     version 4 UUIDs generated securely by <a href="https://www.uuidtools.com/"> an external service</a> are used by default,
@@ -183,7 +183,7 @@
       (NW) corner of its zone only, and you have to move to the corner of the next zone each time before filling
       in the blocks there. <br>It is recommended <i>not</i> to enable this and move manually instead (depending on
       the image size and your <a href="https://minecraft.gamepedia.com/Chunk#Bedrock_Edition"> simulation distance 
-      </a>) since, for large images, blocks far away from they player, outside the sim distance or any ticking area, 
+      </a>) since for large images blocks far away from they player, outside the sim distance or any ticking area, 
       will not be placed, leaving odd gaps in the picture.</li>
     <li><strong><u>Replace only air instead of destroying :</u></strong> If this is enabled, wherever there are any non-air / 
       non-empty blocks at a location where a block for the image has to be placed, those blocks are not replaced 
@@ -211,21 +211,20 @@
   <ol>
     <li> Import and apply the behaviour pack to your world(s). <br> <b>Note : </b>Cheats must be enabled to use
     functions. If you want to earn achievements in that world or keep cheats off, you'll have to place all the
-    blocks manually - you can refer to the processed images or even extract the function files from the pack and
-    read those to identify how many blocks you'll need or which ones go where.</li>
-    <li> Go to the place in your world where you want to build the image, and open a Level 0 (staring size) map
+    blocks manually - you can refer to the processed images or the function files from the pack as a guide.</li>
+    <li> Go to the place in your world where you want to build the image, and open a Level 0 (starting size) map
       there. If you want the image to be aligned exactly with the edges of the map (no gaps/edges), go to the top-left 
       corner of that map and mark that as the block from which to start building the image instead.</li>
     <li> This will be the top left corner of the image (see the green square in the figure below), and the image
-    will extend anywhere from 128 blocks (1 map) to 512 blocks (4 maps) South and East from here, depending on the 
+    will extend anywhere from 128 - 512 blocks (1-4 maps) South and East from here, depending on the 
       size you've chosen. Height-wise, it will be built at the block in which you are standing, for the
     flat (basic / standard) palettes, or ranging from that block till (<i>specified max height</i>) blocks above
     where you are standing, for the 3D (extended) palette.<b> *</b></li>
     <li> <div class="row"><div class="col-md-8">If your image has a size of <b><i>a</i></b>x<b><i>b</i></b>
       maps for example, there will be 2 &times; <b><i>a</i></b> &times; <b><i>b</i></b> functions to be executed
       individually, called <i>function_name</i>/<b>1</b>, <i>function_name</i>/<b>2</b>, ... so on.
-      Each of these builds one section of the whole image, covering a vertical half of one map (64&times;128 blocks).
-      These are arranged from West to East row-wise, for all the rows in your image area North to South. The figure
+      Each of these builds a part of the whole image, covering a vertical half of one map (64&times;128 blocks).
+      These are arranged in order from West to East, then North to South. The figure
       to the right shows an example for a 2x2 image.<br>
       <ul><li>If '<i>Use same starting coordinate for all functions</i>' is enabled, run all the functions from
         this corner only (top-left of the whole image, marked with a small green square in the figure).</li>
@@ -372,8 +371,8 @@
   <div class="text-center lead"><a href="#manual">Back to top &uarr;</a> </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
-  <br><h6 class="text-white" id="footertitle">Minecraft Pixel Art Maker</h6>
-  <h6 class="text-white-50">Version 1.1.0<br><br></h6>
+  <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
+  <h6 class="text-white-50">Version 1.2.0<br><br></h6>
   <p>
     <a class="text-white-50" href="index.html">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 
