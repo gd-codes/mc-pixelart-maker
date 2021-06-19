@@ -1,8 +1,8 @@
 window.addEventListener('beforeunload', function (event) {
   //Confirm before reloading or exiting
-  event.preventDefault();
+  /*event.preventDefault();
   event.returnValue = '';
-  return '';
+  return '';*/
 });
 
 $(document).ready(function() {
@@ -16,6 +16,9 @@ $(document).ready(function() {
   }); 
   $("div[id^='paletteOptions']").on('click', function() {
     displayPaletteOptions(this);
+  });
+  $("button[id^='materialChooseBtn']").on('click', function() {
+    $("#colourTableModal").modal('show');
   });
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
@@ -41,6 +44,14 @@ $(document).ready(function() {
     vid.play();
   }*/
   $("#demoCarousel").carousel({interval: 2000});
+  
+  $(".colour-insert").each(function (index, elem) {
+    var h = $(elem).html();
+    const icon = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" style=\"border: 1px solid black; border-radius: 15%;\">"+
+      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
+    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icon+"</span>"+h);
+  });
 });
 
 
