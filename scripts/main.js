@@ -1,3 +1,16 @@
+
+const icon = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" style=\"border: 1px solid black; border-radius: 15%;\">"+
+      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
+const icon_noborder = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
+      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
+
+const default_colourlist = "white lightgrey grey black brown red orange yellow lime green cyan "+
+   "lightblue blue purple magenta pink oak spruce crimson warped dirt sand clay stone deepslate nether quartz expocopper "+
+   "oxicopper foliage birchleaves conifers vines lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel"+
+   "brightred gold emerald lapis rawiron calcite tuff dripstone slime web ice";
+
 window.addEventListener('beforeunload', function (event) {
   //Confirm before reloading or exiting
   /*event.preventDefault();
@@ -14,11 +27,11 @@ $(document).ready(function() {
   $("input[type='reset']").closest('form').on('reset', function() {
     resetImgHandler(this);
   }); 
-  $("div[id^='paletteOptions']").on('click', function() {
+  $("div[id^='3dOption']").on('click', function() {
     displayPaletteOptions(this);
   });
   $("button[id^='materialChooseBtn']").on('click', function() {
-    $("#colourTableModal").modal('show');
+    configureColourModal(this);
   });
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
@@ -26,34 +39,47 @@ $(document).ready(function() {
   $("button[id^='deleteBtn']").click(function(){deleteImgForm(this);});
   $("#addNewImgBtn").click(newImageUpload);
   
-  $("#resetImageFormBtn_000001").click();
-  
   $("#writePackBtn").click(function(event) {
     startCreateBhvPack(event);
   });
   
+  /*Colour Palette modalview and related UI*/
+  $(".colour-insert").each(function (index, elem) {
+    var h = $(elem).html();
+    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icon+"</span>"+h);
+  });
+  
+  //Bind Colour table modal's selection controls
+  $("#clrSelBtn_All").click(function() { $("input[name='clrSelect']").prop('checked', true); });
+  $("#clrSelBtn_None").click(function() { $("input[name='clrSelect']").prop('checked', false); });
+  $("#clrSelBtn_Inv").click(function() {  
+    $("input[name='clrSelect']").each(function(index, elem) {
+      $(elem).prop('checked', !$(elem).prop('checked'));
+    });
+  });
+  $("#clrSelBtn_Dye").click(function() {
+    $("input[name='clrSelect']").each(function(index, elem) {
+      $(elem).prop('checked', ((index < 16)? true : false));
+    });
+  });
+  $("#clrSelBtn_NB").click(function() { 
+    $("input[name='clrSelect']").eq(30).prop('checked', false);
+    $("input[name='clrSelect']").eq(31).prop('checked', false);
+  });
+  
+  
+  //Initial setup
+  $("#resetImageFormBtn_000001").click();
+  
+  $("#materialOptsDisplay_000001").data("selected", default_colourlist);
+  
   for (var i=1; i<=7; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
-  /*if (! $("#demoVideo").length) {
-    $("#carVideoItem").append("<video style=\"width:100%;\" controls loop autoplay>"+
-            "<source src=\"resources/demo_video_720p24fps.mp4\" type=\"video/mp4\">"+
-            "Your browser could not load this video.</video>");
-    var vid = $("#carVideoItem video")[0];
-    vid.volume = 0;
-    vid.play();
-  }*/
   $("#demoCarousel").carousel({interval: 2000});
-  
-  $(".colour-insert").each(function (index, elem) {
-    var h = $(elem).html();
-    const icon = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
-      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" style=\"border: 1px solid black; border-radius: 15%;\">"+
-      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
-    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icon+"</span>"+h);
-  });
 });
 
+$(document).on('load', function() {refreshColourDisplay("000001");});
 
 function fileInputHandler(elem, file) {
   /*Image is stored as data: URI in the input's HTML data-imagecontent
@@ -81,27 +107,51 @@ function resetImgHandler(elem) {
 function displayPaletteOptions(elem) {
   //Display the correct extra options
   var uid = $(elem).attr('id').slice(-6);
-    var selected = $("input[name=paletteopt_"+uid+"]:checked").val();
-    switch (selected) {
-      case "basic" :
-        $("#extraMaterialOptions_"+uid).collapse('show');
-        $("#extraHeightOption_"+uid).collapse('hide');
-        $("input[name='materialopt_"+uid+"']").attr("required", true);
-        $("input#heightInput_"+uid).attr("required", false);
-        break;
-      case "standard" :
-        $("#extraMaterialOptions_"+uid).collapse('hide');
-        $("#extraHeightOption_"+uid).collapse('hide');
-        $("input[name='materialopt_"+uid+"']").attr("required", false);
-        $("input#heightInput_"+uid).attr("required", false);
-        break;
-      case "extended" :
-        $("#extraMaterialOptions_"+uid).collapse('hide');
-        $("#extraHeightOption_"+uid).collapse('show');
-        $("input[name='materialopt_"+uid+"']").attr("required", false);
-        $("input#heightInput_"+uid).attr("required", true);
-        break;
+  if ($("#3dSwitch_"+uid).prop('checked')) {
+    $("#extraHeightOption_"+uid).collapse('show');
+    $("input#heightInput_"+uid).attr("required", true);
+  } else {
+    $("#extraHeightOption_"+uid).collapse('hide');
+    $("input#heightInput_"+uid).attr("required", false);
+  }
+}
+
+function configureColourModal(elem) {
+  var uid = $(elem).attr('id').slice(-6);
+  var sel = $("#materialOptsDisplay_"+uid).data("selected");
+  $("input[name='clrSelect']").each(function(index, elem) {
+    $(elem).prop('checked', (sel.includes($(elem).attr('value'))));
+  });
+  $("#saveColoursBtn").click(function() {
+    var clrset = [];
+    $("input[name='clrSelect']").each(function(index, elem) {
+      if ($(elem).prop('checked')) {
+        clrset.push($(elem).attr('value'));
+      }
+    });
+    $("#materialOptsDisplay_"+uid).data("selected", clrset.join(" "));
+    refreshColourDisplay(uid);
+  });
+  $("#colourTableModal").modal('show');
+}
+
+function refreshColourDisplay(uid) {
+  //colourmap is defined in imageProcessor.js
+  var htmlc = [];
+  for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
+    if (colourmap[c]!==undefined) {
+      htmlc.push("<span style=\"color:rgb(" + colourmap[c].toString() + "); padding: 2px;\">"+
+               icon_noborder +"<\span>");
+    } else {
+      continue;
     }
+  }
+  var content = htmlc.join("");
+  if (! content.search(/\w/i)) {
+    content = "<i class=\"text-muted\">By default, all colours will be used</i>";
+    $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
+  }
+  $("#materialOptsDisplay_"+uid).html(content);
 }
 
 function submitImgFormHandler(elem, event) {

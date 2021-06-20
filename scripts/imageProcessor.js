@@ -35,6 +35,21 @@ const base_blocks = [
   "slime 0", "prismarine 0"
 ];
 
+const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65, 65, 65], black: [22, 22, 22], 
+                   brown: [88, 65, 44], red: [132, 44, 44], orange: [186, 108, 44], yellow: [198, 198, 44], 
+                   lime: [108, 176, 22], green: [88, 108, 44], cyan: [66, 108, 132], lightblue: [88, 132, 186], 
+                   blue: [44, 66, 152], purple: [108, 55, 152], magenta: [152, 66, 186], pink: [208, 108, 142], 
+                   oak: [124, 100, 60], spruce: [112, 74, 42], crimson: [128, 54, 84], warped: [50, 122, 120], 
+                   dirt: [130, 94, 66], sand: [212, 200, 140], clay: [140, 144, 158], stone: [96, 96, 96], 
+                   deepslate: [86, 86, 86], nether: [96, 0, 0], quartz: [220, 216, 210], expocopper: [116, 92, 84], 
+                   oxicopper: [18, 108, 116], foliage: [0, 108, 0], oakleaves: [55, 80, 20], birchleaves: [60, 78, 38], 
+                   conifers: [45, 70, 45], vines: [68, 97, 27], lichen: [108, 144, 128], darkcrimson: [80, 20, 25], 
+                   darkwarped: [75, 37, 52], crimsonylium: [162, 42, 42], warpwart: [15, 155, 115], 
+                   turquoise: [78, 188, 182], steel: [144, 144, 144], brightred: [220, 0, 0], gold: [215, 205, 65], 
+                   emerald: [0, 188, 50], lapis: [64, 110, 220], rawiron: [185, 150, 125], calcite: [180, 150, 140], 
+                   tuff: [50, 35, 30], dripstone: [65, 42, 30], slime: [108, 152, 48], web: [170, 170, 170], 
+                   ice: [138, 138, 220], grass: [125, 160, 75]}
+
 
 function analyseImage(uid, image, area, palette, dither) {
   //Manage the display etc

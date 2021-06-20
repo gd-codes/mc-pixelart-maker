@@ -181,65 +181,29 @@
       <label for="materialOpts_000001" class="col-sm-2 col-form-label text-primary text-center">Palette</label>
       <div class="col-sm-10" id="materialOpts_000001">
         <div class="row">
-          <div class="col-3">
-            <button class="btn btn-secondary btn-sm" type="button" id="materialChooseBtn_000001">Customise</button>
+          <div class="col-auto">
+            <button class="btn btn-info btn-sm my-auto" type="button" id="materialChooseBtn_000001">Customise</button>
           </div>
-          <div class="col-9 overflow-hidden" id="materialOptsDisplay_000001"></div>
+          <div class="col overflow-hidden" style="line-height: 18px;" id="materialOptsDisplay_000001">
+            <i class="text-muted">By default, all colours will be used</i>
+          </div>
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="paletteOptions_000001" class="col-sm-2 col-form-label text-primary text-center">Structure</label>
-      <div class="col-sm-10" id="paletteOptions_000001">
-        <span class="form-text text-muted">Choose a material set / colour palette for the image : </span>
-        <div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="paletteBsc_000001" 
-                 name="paletteopt_000001" value="basic" required/>
-          <label for="paletteBsc_000001" class="form-check form-check-label pb-sm-2">Basic<br/>
-          <small>Use only the 16 dye colours in a flat arrangement, and select which material to build with</small></label>
-        </div>
-        <div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="paletteStd_000001" 
-                 name="paletteopt_000001" value="standard"/>
-          <label for="paletteStd_000001" class="form-check form-check-label pb-sm-2">Standard<br/>
-          <small>Use all unique blocks in a flat arrangement to get as many colours as possible</small></label>
-        </div>
-        <div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="paletteExt_000001" 
-                 name="paletteopt_000001" value="extended"/>
-          <label for="paletteExt_000001" class="form-check form-check-label pb-sm-2">Extended<br/>
-          <small>Use all unique blocks in a 3D arrangement to get lighter and darker shades of standard colours</small></label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row collapse" id="extraMaterialOptions_000001">
-      <label for="materialInput_000001" class="col-sm-2 col-form-label text-primary text-center">Material</label>
-      <div class="col-sm-10" id="materialInput_000001">
-        <span class="form-text text-muted">Build the image out of :</span>
-        <div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="materialWool_000001" 
-                 name="materialopt_000001" value="wool"/>
-          <label for="materialWool_000001" class="form-check form-check-label">Wool</label>
-        </div><div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="materialConcrete_000001" 
-                 name="materialopt_000001" value="concrete"/>
-          <label for="materialConcrete_000001" class="form-check form-check-label">Concrete</label>
-        </div><div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="materialClay_000001" 
-                 name="materialopt_000001" value="stained_hardened_clay"/>
-          <label for="materialClay_000001" class="form-check form-check-label">Terracotta</label>
-        </div><div class="form-check">
-          <input type="radio" class="form-check form-check-input" id="materialGlass_000001" 
-                 name="materialopt_000001" value="stained_glass"/>
-          <label for="materialGlass_000001" class="form-check form-check-label">Stained Glass</label>
-        </div>
-      </div>
+      <label for="3dOption_000001" class="col-sm-2 col-form-label text-primary text-center">3D</label>
+      <div class="col-sm-10 pt-sm-2" id="3dOption_000001"><div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="3dSwitch_000001"/>
+        <label for="3dSwitch_000001" class="custom-control-label">Use height variation of blocks to obtain additional 
+          lighter and darker shades of each colour (3x the palette !)
+        </label>
+      </div></div>
     </div>
     <div class="form-group row collapse" id="extraHeightOption_000001">
       <label for="heightInput_000001" class="col-sm-2 col-form-label text-primary text-center">Height</label>
       <div class="col-sm-10">
-        <small class="form-text text-muted pb-sm-1">Maximum height of the 3D structure, between 7 and 255 blocks:</small>
-        <input type="number" class="form-control" id="heightInput_000001" min="7" max="255" 
+        <small class="form-text text-muted pb-sm-1">Maximum height of the 3D structure, between 5 and 255 blocks:</small>
+        <input type="number" class="form-control" id="heightInput_000001" min="5" max="255" 
                placeholder="Enter height... (at least 50 blocks recommended)">
       </div>
     </div>
@@ -423,17 +387,23 @@
           </button>
       </div>
       <div class="modal-body overflow-auto" id="colourModalContent">
-        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft 1.17 : </p>
+        <p> Following is the list of 53 colours used by default blocks in Vanilla Minecraft 1.17 : <br> 
+        Tick the blocks you would like to use, and scroll to the end to Save. </p>
         <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
           <span> Select : &nbsp;&nbsp;</span>
-          <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-outline-primary"> All </button>
-            <button type="button" class="btn btn-outline-primary"> None </button>
-            <button type="button" class="btn btn-outline-primary"> Invert Selection </button>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_All"> All </button>
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_None"> None </button>
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_Inv"> Invert Selection </button>
           </div>
           <span> &nbsp; &nbsp; </span>
-          <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-outline-primary"> Only 16 dyes </button>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-info" id="clrSelBtn_Dye"> Select only 16 dyes </button>
+          </div>
+          <span> &nbsp; &nbsp; </span>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-info" id="clrSelBtn_NB"> Unselect biome dependent colours
+            </button>
           </div>
         </div>
         <p></p>
@@ -716,12 +686,19 @@
                 Grass, Double tall Ferns, Azalea, Flowering Azalea </td>
               </tr><tr>
                 <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="grass"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(125,160,75)"></td>
+                <td> Grass </td>
+                <td> Grass Block &nbsp; &nbsp;<i class="text-danger">* Only in plains &amp; Ocean biomes</i></td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
                   <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="oakleaves"/>
                 </div></td>
                 <td class="colour-insert display-4" data-colour="rgb(55,80,20)"></td>
                 <td> Tree Leaves </td>
                 <td> Oak, Dark Oak, Jungle &amp; Acacia leaves &nbsp; &nbsp;<i class="text-danger">* Only in plains 
-                  biomes</i></td>
+                  &amp; Ocean biomes</i></td>
               </tr><tr>
                 <td class><div class="form-check checkbox-scaled">
                   <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="birchleaves"/>
@@ -878,7 +855,7 @@
         </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button type="button" class="btn btn-success" data-dismiss="modal" role="button" aria-label="Save"> 
+        <button type="button" class="btn btn-success" data-dismiss="modal" role="button" id="saveColoursBtn"> 
         Save Changes </button>
       </div>
         </div>
