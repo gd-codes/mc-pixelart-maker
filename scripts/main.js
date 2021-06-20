@@ -98,9 +98,13 @@ function fileInputHandler(elem, file) {
 function resetImgHandler(elem) {
   var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
-      $("#ditherSwitch_"+uid).prop("checked", true);
-      $("#mapSize11_"+uid).prop("checked", true);
-      $("#paletteStd_"+uid).click(); //prop("checked", true);
+    $("#ditherSwitch_"+uid).prop("checked", true);
+    $("#mapSize11_"+uid).prop("checked", true);
+    $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
+    $("#materialOptsDisplay_"+uid).html("<i class=\"text-muted\">By default, all colours will be used</i>");
+    $("#3dSwitch_"+uid).prop('checked', false);
+    $("#extraHeightOption_"+uid).collapse('hide');
+    $("input#heightInput_"+uid).attr("required", false);
   });
 }
 
@@ -119,14 +123,15 @@ function displayPaletteOptions(elem) {
 function configureColourModal(elem) {
   var uid = $(elem).attr('id').slice(-6);
   var sel = $("#materialOptsDisplay_"+uid).data("selected");
-  $("input[name='clrSelect']").each(function(index, elem) {
-    $(elem).prop('checked', (sel.includes($(elem).attr('value'))));
+  $("input[name='clrSelect']").each(function(index, chekbox) {
+    $(chekbox).prop('checked', (sel.includes($(chekbox).attr('value'))));
   });
+  $("#saveColoursBtn").off('click');
   $("#saveColoursBtn").click(function() {
     var clrset = [];
-    $("input[name='clrSelect']").each(function(index, elem) {
-      if ($(elem).prop('checked')) {
-        clrset.push($(elem).attr('value'));
+    $("input[name='clrSelect']").each(function(index, chekbox2) {
+      if ($(chekbox2).prop('checked')) {
+        clrset.push($(chekbox2).attr('value'));
       }
     });
     $("#materialOptsDisplay_"+uid).data("selected", clrset.join(" "));
@@ -147,10 +152,10 @@ function refreshColourDisplay(uid) {
     }
   }
   var content = htmlc.join("");
-  if (! content.search(/\w/i)) {
+  if (content.search(/\w/i) < 0) {
     content = "<i class=\"text-muted\">By default, all colours will be used</i>";
     $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
-  }
+  } 
   $("#materialOptsDisplay_"+uid).html(content);
 }
 
