@@ -178,11 +178,12 @@ function submitImgFormHandler(elem, event) {
   }
   var area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   area = [Number(area[0]), Number(area[2])];
-  var palette = $("input[name=paletteopt_"+uid+"]:checked").val();
+  var palette = $("#materialOptsDisplay_"+uid).data("selected");
+  var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
   var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
   var image = new Image();
   image.onload = function() {
-    var analysis = analyseImage(uid, image, area, palette, dither);
+    var analysis = analyseImage(uid, image, area, palette, d3, dither);
     if (!analysis) {
       $("form#imageForm_"+uid+" :input").prop('disabled', true);
       $("form#imageForm_"+uid+" :radio").prop('disabled', true);

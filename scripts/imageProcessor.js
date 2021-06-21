@@ -1,40 +1,5 @@
 
-const dye_colours = [
-  [218,218,218], [175,112,55], [140,72,175], [95,130,180],
-  [195,195,75], [125,175,56], [195,115,135], [64,64,64],
-  [128,128,128], [64,108,128], [108,53,150], [42,64,150],
-  [88,64,42], [88,108,42], [128,42,42], [20,20,20]
-]; 
 //None of these values should be > 220
-const base_colours = dye_colours.concat([
-  [218,218,205], [136,136,218], [96,96,96], [128,96,64],
-  [120,100,60], [54,78,21], [45,70,45], [96,0,0],
-  [218,0,0], [218,128,0], [0,104,0], [218,160,80],
-  [120,70,42], [78,185,180], [64,108,218], [0,184,48],
-  [0,0,0], [146,28,28], [16,128,112], [75,58,48],
-  [208,208,64], [169,169,169], [208,198,138], [139,144,156],
-  [108,150,48], [64,108,128]
-]);
-const all_colours = base_colours.concat(
-  base_colours.map(function(c){
-    return [Math.round(255/220*c[0]), Math.round(255/220*c[1]), Math.round(255/220*c[2])]}),
-  base_colours.map(function(c){
-    return [Math.round(180/220*c[0]), Math.round(180/220*c[1]), Math.round(180/220*c[2])]})
-); //Don't change the indices/order of any of these lists
-const base_blocks = [
-  "concrete 0", "concrete 1", "concrete 2", "concrete 3",
-  "concrete 4", "concrete 5", "concrete 6", "concrete 7", 
-  "concrete 8", "concrete 9", "concrete 10", "concrete 11", 
-  "concrete 12", "concrete 13", "concrete 14", "concrete 15",
-  "quartz_block 0", "blue_ice 0", "stone 0", " dirt 1",
-  "crafting_table 0", "leaves 12", "leaves 13", "netherrack 0",
-  "redstone_block 0", "shroomlight 0", "dried_kelp_block 0", "glowstone 0",
-  "redstone_lamp 0", "diamond_block 0", "lapis_block 0", "emerald_block 0",
-  "netherite_block 0", "crimson_nylium 0", "warped_nylium 0", "soul_soil 0",
-  "gold_block 0", "web 0", "end_stone 0", "iron_block 0",
-  "slime 0", "prismarine 0"
-];
-
 const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65, 65, 65], black: [22, 22, 22], 
                    brown: [88, 65, 44], red: [132, 44, 44], orange: [186, 108, 44], yellow: [198, 198, 44], 
                    lime: [108, 176, 22], green: [88, 108, 44], cyan: [66, 108, 132], lightblue: [88, 132, 186], 
@@ -51,7 +16,7 @@ const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65
                    ice: [138, 138, 220], grass: [125, 160, 75]}
 
 
-function analyseImage(uid, image, area, palette, dither) {
+function analyseImage(uid, image, area, palette, d3, dither) {
   //Manage the display etc
   var canv = $("#testCanvas")[0];
   var ctx = canv.getContext('2d');
@@ -67,26 +32,25 @@ function analyseImage(uid, image, area, palette, dither) {
     default:
       dispScale = 1;      
   }
+  var p = [];
+  for (var cn of palette.split(" ")) {
+    if (colourmap[cn] !== undefined) {
+      var rgb = (colourmap[cn]); p.push(rgb);
+      if (d3) {
+        p.push([Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])]);
+        p.push([Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])]);
+      }
+    }
+  }
   ctx.drawImage(image, 0, 0, image.width, image.height);
-  //var origCanvImg = ctx.getImageData(0,0,image.width,image.height);
   ctx.clearRect(0,0,canv.width,canv.height);
   canv.height = h; canv.width = w;
   ctx.drawImage(image, 0, 0, w, h);
   var imgData = ctx.getImageData(0,0,w,h);
   var resized_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
-  var finalImgData ;
-  switch (palette) {
-    case "basic" :
-      finalImgData = convertPalette(dye_colours, imgData, dither);
-      break;
-    case "standard" :
-      finalImgData = convertPalette(base_colours, imgData, dither);
-      break;
-    case "extended" :
-      finalImgData = convertPalette(all_colours, imgData, dither);
-      break;
-  }
+  
+  var finalImgData = convertPalette(p, imgData, dither);
   ctx.putImageData(finalImgData, 0, 0);
   var converted_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
