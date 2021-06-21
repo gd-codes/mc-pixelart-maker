@@ -15,6 +15,13 @@ const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65
                    tuff: [50, 35, 30], dripstone: [65, 42, 30], slime: [108, 152, 48], web: [170, 170, 170], 
                    ice: [138, 138, 220], grass: [125, 160, 75]}
 
+function lightPixel(rgb) {
+  return [Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])];
+}
+function darkPixel(rgb) {
+  return [Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])];
+}
+
 
 function analyseImage(uid, image, area, palette, d3, dither) {
   //Manage the display etc
@@ -37,8 +44,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
     if (colourmap[cn] !== undefined) {
       var rgb = (colourmap[cn]); p.push(rgb);
       if (d3) {
-        p.push([Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])]);
-        p.push([Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])]);
+        p.push(darkPixel(rgb)); p.push(lightPixel(rgb));
       }
     }
   }

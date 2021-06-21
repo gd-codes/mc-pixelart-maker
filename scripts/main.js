@@ -77,6 +77,8 @@ $(document).ready(function() {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
+  
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 $(document).on('load', function() {refreshColourDisplay("000001");});
@@ -227,18 +229,13 @@ function startCreateBhvPack(event) {
   }
   var l = $("form[id^='imageForm']").length - processed.length;
   if (l > 0) {
-    var w = confirm("Warning\n\n"+l+" of the image forms have not been processed."+
+    let w = confirm("Warning\n\n"+l+" of the image forms have not been processed."+
                     "These will not be included in the pack - Continue anyway ?");
     if (!w) {return;}
   }
   $("#spinnerModal").addClass('d-block');
   $("#spinnerModal").removeClass('d-none');
-  /*var uuidreq = new XMLHttpRequest();
-  uuidreq.addEventListener("load", function() {
-    console.log(this.responseText);
-  });
-  uuidreq.open('GET', "http://www.uuidgenerator.net/api/version4/2", true);
-  uuidreq.send();*/
+  
   $.ajax({
     url: "https://www.uuidtools.com/api/generate/v4/count/2",
     success: function(data) {
@@ -271,7 +268,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,16,0]
+      min_engine_version: [1,17,0]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on "+Date(),
@@ -293,19 +290,11 @@ function writeBhvPack(images, uuids) {
   var keep = Boolean($("#keepBlocks:checked").length > 0);
   var link = Boolean($("#useLinkedPos:checked").length > 0);
   var fnfolder = pack.folder('functions');
-  for (var o of images) {
-    var palette = $("input[name=paletteopt_"+o.uid+"]:checked").val();
-    var extrainfo = null;
-    switch (palette) {
-      case "basic" :
-        extrainfo = $("input[name=materialopt_"+o.uid+"]:checked").val();
-        break;
-      case "extended" :
-        extrainfo = $("#heightInput_"+o.uid).val();
-        break;
-    }
-    var fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link);
-    for (var f=0; f<fnlist.length; f++) {
+  for (let o of images) {
+    let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
+    let extrainfo = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
+    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link);
+    for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
   }

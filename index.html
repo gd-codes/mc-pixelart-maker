@@ -32,9 +32,12 @@
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
   
@@ -212,7 +215,19 @@
       <div class="col-sm-10 pt-sm-2" id="ditherOption_000001"><div class="custom-control custom-switch">
         <input type="checkbox" class="custom-control-input" id="ditherSwitch_000001"/>
         <label for="ditherSwitch_000001" class="custom-control-label">Dither converted image <small>(Recommended)</small>
-        </label>
+        </label> &nbsp;
+        <a data-toggle="tooltip" data-placement="top" data-html="true" title="Apply Floyd-Steinberg Dithering <br> 
+          <a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> 
+          en.wikipedia.org/wiki/Dither</a>" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" class="text-info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+          class="bi bi-question-circle" > <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0
+  1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 
+  0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 
+  0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 
+  0-1.009.388-1.009.94z"/>
+          </svg>
+        </a>
       </div></div>
     </div>
     <div class="form-group d-flex justify-content-center" id="formActionsPreSubmit_000001">
@@ -241,7 +256,8 @@
   <div class="container-lg text-center text-capitalize"><h3>Create the Add-On</h3></div>
   <div class="container tab-content border border-dark rounded py-3 px-4 my-4" id="packContainer">
     <form id="packForm" novalidate>
-      <span class="row form-text text-muted px-3 d-block mb-3">Enter a name and description for your behaviour pack :</span>
+      <span class="row form-text text-muted px-3 d-block mb-3">Enter a name and an optional description for your behaviour
+        pack (These will be displayed in Minecraft) :</span>
       <div class="form-group row">
         <label for="bpackNameInput" class="col-sm-2 col-form-label text-primary text-right">Name</label>
         <input type="text" id="bpackNameInput" class="col-sm-10 form-control" placeholder="Amazing Pixel Art">
@@ -251,21 +267,43 @@
         <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
                   placeholder="Created using Minecraft Map Art Maker !"></textarea>
       </div>
-      <span class="row form-text text-muted px-3 d-block mb-3">Some advanced settings - read the 
-        <a href="manual.html#pack-instructions" target="_blank">manual</a> for details on these, or just leave
-      them unchecked (default)</span>
+      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - <em>not recommended</em> in general, 
+        you can just leave them unchecked (default) if you don't know what they do </span>
       <div class="form-group row">
         <label for="funcOptionsDiv" class="col-sm-2 col-form-label text-primary text-center">Command Options</label>
         <div id="funcOptionsDiv" class="form-group col-sm-10">
           <div class="form-check">
             <input type="checkbox" id="keepBlocks" class="form-check-input" name="keepBlocksOption" value="keep"/>
-            <label for="keepBlocks" class="form-check-label">
-              Replace only air blocks if there are existing structures in the area</label>
+            <label for="keepBlocks" class="form-check-label"> Replace only air blocks </label> 
+            <a data-toggle="tooltip" data-placement="top" class="text-info" aria-label="Explanation popup"
+              title="Will not overwrite existing structures in the area that the commands are being executed, if there 
+             are any. This may result in gaps in the image." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+          class="bi bi-question-circle" > <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0
+  1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 
+  0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 
+  0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 
+  0-1.009.388-1.009.94z"/>
+          </svg></a>
           </div>
           <div class="form-check">
             <input type="checkbox" id="useLinkedPos" class="form-check-input" name="linkedPosOption" value="link"/>
-            <label for="useLinkedPos" class="form-check-label">
-              Use the same starting coordinate reference for all functions</label>
+            <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
+            <a data-toggle="tooltip" data-placement="top" class="text-info" data-html="true" aria-label="Explanation popup"
+            title="The map contains too many blocks to be placed with a single command, so you have to run a few in sequence.
+               If this option is enabled, you can run all of them from the same location, without moving to the next region
+               each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;> manual </a>). But blocks 
+               cannot be placed outside loaded chunks, to this convenience will fail if the map art is too large" 
+               data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+          class="bi bi-question-circle" > <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0
+  1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 
+  0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 
+  0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 
+  0-1.009.388-1.009.94z"/>
+          </svg></a>
           </div>
         </div>
       </div>
@@ -851,7 +889,7 @@
               </tr>
             </tbody>
           </table>
-          <p> Not included : Water, Grass Blocks, Blocks that are transparent on maps </p>
+          <p> Not included : Water, and blocks that are transparent on maps </p>
         </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
