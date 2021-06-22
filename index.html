@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Minecraft Map Art Maker">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.16,vanilla,add-on">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -28,7 +28,7 @@
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d5.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
   
@@ -52,7 +52,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -62,14 +62,14 @@
     <p>Minecraft Map Art Maker resizes, pixelates and reduces the colour palette of your uploaded image to one that
       is shown in vanilla Minecraft maps. It then analyses the final image to identify a suitable block and coordinates for
 			each pixel so that if those blocks are placed at those locations in your minecraft world, a map of the area 
-      will display the final image ! The placement is automated by writing commands in function files,
-      that can be applied through a <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank">
-			behaviour pack </a> and executed using the '/function' command in-game.</p>
-    <ul><li>This app is an <a href="about.html#opensource" class="alert-link" target="_blank">open source</a> 
-      online software (runs in your browser),</li>
-      <li>Creates valid packs for Minecraft on all Bedrock edition devices- Win 10, Android, iOS, Console, etc</li>
+      will display the final image !</p>
+    <ul> <li> The placement can be automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
+      href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. They can then be readily executed 
+      using the '/function' command in-game.</li> <li>The packs are valid for the latest version of Minecraft on all supported 
+      Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
-    <a class="btn btn-info" href="manual.html" target="_blank">Read More …</a>
+    <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer"
+    href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
   </div>
@@ -99,7 +99,7 @@
     <div class="form-group row">
       <label for="fnNameInput_000001" class="col-sm-2 col-form-label text-primary text-center">Function name</label>
       <div class="col-sm-10">
-      <input type="text" id="fnNameInput_000001" class="form-control" pattern="[A-Za-z0-9_.\-()]+"
+      <input type="text" id="fnNameInput_000001" class="form-control" pattern="[A-Za-z0-9_&#92;.&#92;-()]+"
              placeholder="Enter a short identifier for this image..." required/>
       <small class="form-text text-muted text-sm-left pl-sm-2">The name can only contain alphanumeric characters
         (case <i>in</i>sensitive), periods, underscores, hyphens and parentheses.</small></div>
@@ -219,7 +219,8 @@
         </label> &nbsp;
         <a data-toggle="tooltip" data-placement="top" data-html="true" title="Apply Floyd-Steinberg Dithering <br> 
           <a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> 
-          en.wikipedia.org/wiki/Dither</a>" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" 
+          en.wikipedia.org/wiki/Dither</a><br> This is good for photographs, but may not be necessary for cartoons/etc with
+          solid colours (no gradients)" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" 
         class="text-info add-questionmark"></a>
       </div></div>
     </div>
@@ -261,7 +262,7 @@
                   placeholder="Created using Minecraft Map Art Maker !"></textarea>
       </div>
       <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - <em>not recommended</em> in general, 
-        you can just leave them unchecked (default) if you don't know what they do </span>
+        you may leave them unchecked (default) if you don't have a preference </span>
       <div class="form-group row">
         <label for="funcOptionsDiv" class="col-sm-2 col-form-label text-primary text-center">Command Options</label>
         <div id="funcOptionsDiv" class="form-group col-sm-10">
@@ -269,18 +270,18 @@
             <input type="checkbox" id="keepBlocks" class="form-check-input" name="keepBlocksOption" value="keep"/>
             <label for="keepBlocks" class="form-check-label"> Replace only air blocks </label> 
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup"
-              title="Will not overwrite existing structures in the area that the commands are being executed, if there 
-             are any. This may result in gaps in the image." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            title="Will not overwrite existing structures in the area that the commands are being executed, if there are any.
+            This may result in &quot;gaps&quot in the image." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
            </a>
           </div>
           <div class="form-check">
             <input type="checkbox" id="useLinkedPos" class="form-check-input" name="linkedPosOption" value="link"/>
             <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" data-html="true" 
-            title="The map contains too many blocks to be placed with a single command, so you have to run a few in sequence.
-               If this option is enabled, you can run all of them from the same location, without moving to the next region
-               each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;> manual </a>). But blocks 
-               cannot be placed outside loaded chunks, to this convenience will fail if the map art is too large" 
+            title="The map will contain more than atleast 2 commands, to be run in sequence to build it.
+              If this option is enabled, you can run all of them from the same location, without moving to the next region
+              each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
+              blocks far away outside loaded chunks <i>may</i> fail, so this convenience should be avoided for large map art" 
                data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
           </div>
         </div>
@@ -309,10 +310,11 @@
              xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
         just double click it to launch the game and import it on PC, or read the installation steps
-        <a class="alert-link" href="https://www.minecraft.net/en-us/addons" target="_blank"> for your device</a>.
+        <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
         Read the manual page</a> for more detailed instructions.</div>
+      <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
     </div>
   </div>
   <div class="mx-auto my-4 px-3 mt-5" id="carouselContainer">
@@ -364,7 +366,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 1.2.0<br><br></h6>
+  <h6 class="text-white-50">Version 2.0.0<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 

@@ -42,11 +42,16 @@ $(document).ready(function() {
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
   });
-  $("button[id^='deleteBtn']").click(function(){deleteImgForm(this);});
+  $("button[id^='deleteBtn']").click( function() { 
+    deleteImgForm(this); 
+  });
   $("#addNewImgBtn").click(newImageUpload);
   
   $("#writePackBtn").click(function(event) {
     startCreateBhvPack(event);
+  });
+  $("#resetAddonDiv").click(function(event) {
+    clearBehaviourPack();
   });
   
   /*Colour Palette modalview and related UI*/
@@ -188,6 +193,7 @@ function submitImgFormHandler(elem, event) {
       return;
     }
   }
+  $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   var area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   area = [Number(area[0]), Number(area[2])];
   var palette = $("#materialOptsDisplay_"+uid).data("selected");
@@ -209,9 +215,11 @@ function submitImgFormHandler(elem, event) {
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
     }
+    $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
   image.onerror = function() {
     alert("Error\n\nThere was a problem reading the uploaded image !");
+    $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
   image.src = $("#imgInput_"+uid).data('imagecontent');
 }
@@ -341,4 +349,12 @@ function setSaveAsZip(blob) {
   $("#downloadPackBtn").click(function() {
     saveAs(blob, "pixelart.mcpack");
   });
+}
+
+function clearBehaviourPack() {
+  $("#packActionsPostProcess").addClass('d-none');
+  $("#packActionsPreProcess").removeClass('d-none');
+  $("#downloadPackBtn").off("click");
+  $("#altDownloadPack").off("click");
+  $("#packForm")[0].reset();
 }

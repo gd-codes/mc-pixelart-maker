@@ -120,7 +120,7 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
               `structure load mapart:glow_lichen ~${x} ~${y-1} ~${z}\n`;
             break;
           default : // Normal case, direct placement for most of the blocks
-            fun += `setblock ~${x} ~${y} ~${z} ${code} ${replMode}`;
+            fun += `setblock ~${x} ~${y} ~${z} ${code}${replMode}`;
         }
       }
     }
