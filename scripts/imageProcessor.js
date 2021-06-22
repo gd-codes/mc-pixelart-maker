@@ -8,7 +8,7 @@ const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65
                    dirt: [130, 94, 66], sand: [212, 200, 140], clay: [140, 144, 158], stone: [96, 96, 96], 
                    deepslate: [86, 86, 86], nether: [96, 0, 0], quartz: [220, 216, 210], expocopper: [116, 92, 84], 
                    oxicopper: [18, 108, 116], foliage: [0, 108, 0], oakleaves: [55, 80, 20], birchleaves: [60, 78, 38], 
-                   conifers: [45, 70, 45], vines: [68, 97, 27], lichen: [108, 144, 128], darkcrimson: [80, 20, 25], 
+                   conifers: [45, 70, 45], lichen: [108, 144, 128], darkcrimson: [80, 20, 25], 
                    darkwarped: [75, 37, 52], crimsonylium: [162, 42, 42], warpwart: [15, 155, 115], 
                    turquoise: [78, 188, 182], steel: [144, 144, 144], brightred: [220, 0, 0], gold: [215, 205, 65], 
                    emerald: [0, 188, 50], lapis: [64, 110, 220], rawiron: [185, 150, 125], calcite: [180, 150, 140], 

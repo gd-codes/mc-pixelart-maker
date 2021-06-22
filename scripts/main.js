@@ -5,11 +5,17 @@ const icon = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=
 const icon_noborder = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
       "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
       "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
+const questionmark = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\" class=\"bi bi-question-circle\" > <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/><path d=\"M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z\"/></svg>";
 
 const default_colourlist = "white lightgrey grey black brown red orange yellow lime green cyan "+
    "lightblue blue purple magenta pink oak spruce crimson warped dirt sand clay stone deepslate nether quartz expocopper "+
-   "oxicopper foliage birchleaves conifers vines lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel"+
+   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel"+
    "brightred gold emerald lapis rawiron calcite tuff dripstone slime web ice";
+
+const structures = {
+  azalea_leaves:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OmF6YWxlYV9sZWF2ZXMKBgBzdGF0ZXMBDgBwZXJzaXN0ZW50X2JpdAEBCgB1cGRhdGVfYml0AAADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAE0SAABiAAAAcAAAAAA=",
+  glow_lichen:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAIAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwIAAAAAAAAAAQAAAAMCAAAA//////////8JCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgIAAAAIBABuYW1lFQBtaW5lY3JhZnQ6Y29iYmxlc3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZRUAbWluZWNyYWZ0Omdsb3dfbGljaGVuCgYAc3RhdGVzAxkAbXVsdGlfZmFjZV9kaXJlY3Rpb25fYml0cz8AAAAAAwcAdmVyc2lvbgPSEAEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABjEgAAZQAAAFoAAAAA"
+};
 
 window.addEventListener('beforeunload', function (event) {
   //Confirm before reloading or exiting
@@ -45,8 +51,12 @@ $(document).ready(function() {
   
   /*Colour Palette modalview and related UI*/
   $(".colour-insert").each(function (index, elem) {
-    var h = $(elem).html();
+    let h = $(elem).html();
     $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icon+"</span>"+h);
+  });
+  $(".add-questionmark").each(function (index, elem) {
+    let h = $(elem).html();
+    $(elem).html(h+questionmark);
   });
   
   //Bind Colour table modal's selection controls
@@ -298,6 +308,9 @@ function writeBhvPack(images, uuids) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
   }
+  var strfolder = pack.folder('structures');
+  strfolder.file("mapart/azalea_leaves.mcstructure", structures.azalea_leaves, {base64:true});
+  strfolder.file("mapart/glow_lichen.mcstructure", structures.glow_lichen, {base64:true});
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
         setSaveAsZip(blob);
