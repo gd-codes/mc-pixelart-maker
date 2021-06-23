@@ -88,15 +88,17 @@ $(document).ready(function() {
   
   $("#materialOptsDisplay_000001").data("selected", default_colourlist);
   
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(window).on('load', function() {
+  refreshColourDisplay("000001");
+  
   for (var i=1; i<=7; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
-  
-  $('[data-toggle="tooltip"]').tooltip();
 });
-
-$(document).on('load', function() {refreshColourDisplay("000001");});
 
 function fileInputHandler(elem, file) {
   /*Image is stored as data: URI in the input's HTML data-imagecontent

@@ -32,20 +32,6 @@
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
   
-<!--Order of importing scripts is important ! -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
-<!-- My scripts-->
-<script src="scripts/main.js"></script>
-<script src="scripts/dynamicHtml.js"></script>
-<script src="scripts/imageProcessor.js"></script>
-<script src="scripts/functionWriter.js"></script>
 </head>
 
 <body>
@@ -64,9 +50,9 @@
 			each pixel so that if those blocks are placed at those locations in your minecraft world, a map of the area 
       will display the final image !</p>
     <ul> <li> The placement can be automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
-      href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. They can then be readily executed 
-      using the '/function' command in-game.</li> <li>The packs are valid for the latest version of Minecraft on all supported 
-      Bedrock edition devices - Win 10, Android, iOS, etc </li>
+      href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. These can be readily executed 
+      using a few '/function' commands in-game.</li> <li>The packs are valid for the latest version of Minecraft on all
+      supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
     <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer"
     href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !</p>
@@ -313,7 +299,7 @@
         <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
-        Read the manual page</a> for more detailed instructions.</div>
+        Read this info page</a> for more detailed instructions.</div>
       <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
     </div>
   </div>
@@ -885,5 +871,21 @@
   <canvas id="testCanvas"></canvas>
   <img id="logoImg" src="images/logo_128px.png"/>
 </div>
+  
+<!--Order of importing scripts is important ! -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"></script>
+<!-- My scripts-->
+<script src="scripts/main.js"></script>
+<script src="scripts/dynamicHtml.js"></script>
+<script src="scripts/imageProcessor.js"></script>
+<script src="scripts/functionWriter.js"></script>
+
 </body>
 </html>
