@@ -73,3 +73,43 @@ kbd {
 #demoCarousel {
   max-width: 750px;
 }
+
+.checkbox-scaled input[type=checkbox] {
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.5);
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .checkbox-scaled input[type=checkbox] {
+    -ms-transform: scale(1.0); /* IE */
+    -moz-transform: scale(1.0); /* FF */
+    -webkit-transform: scale(1.0); /* Safari and Chrome */
+    -o-transform: scale(1.0); /* Opera */
+    transform: scale(1.0);
+    padding: 5px;
+  }
+  #colourPaletteTable thead th {
+    font-size: 90%;
+    padding: 6px;
+  }
+  #colourPaletteTable .colour-insert {
+    padding: 0;
+  }
+  #colourPaletteTable .colour-insert svg {
+    width: 0.75em;
+    height: 0.75em;
+  }
+  #colourPaletteTable td:nth-child(4) {
+    font-size: 80%;
+    padding: 10px 2px;
+  }
+  #colourPaletteTable td:nth-child(3) {
+    font-size: 85%;
+    max-width: 20%;
+    word-spacing: 80%;
+  }
+}
