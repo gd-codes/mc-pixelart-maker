@@ -18,10 +18,11 @@ const structures = {
 };
 
 window.addEventListener('beforeunload', function (event) {
-  //Confirm before reloading or exiting
-  /*event.preventDefault();
-  event.returnValue = '';
-  return '';*/
+  if (Number($("body").data("confirm-page-unload"))) {
+    event.preventDefault();
+    event.returnValue = '';
+    return '';
+  }
 });
 
 $(document).ready(function() {
@@ -29,6 +30,7 @@ $(document).ready(function() {
   console.log("Minecraft Pixel Art Maker - Document Ready !");
   $("input.custom-file-input").on('change', function(event){
     fileInputHandler(this, event.target.files[0]);
+    $("body").data("confirm-page-unload", "1");
   }); 
   $("input[type='reset']").closest('form').on('reset', function() {
     resetImgHandler(this);
@@ -41,6 +43,7 @@ $(document).ready(function() {
   });
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
+    $("body").data("confirm-page-unload", "1");
   });
   $("button[id^='deleteBtn']").click( function() { 
     deleteImgForm(this); 
@@ -49,6 +52,7 @@ $(document).ready(function() {
   
   $("#writePackBtn").click(function(event) {
     startCreateBhvPack(event);
+    $("body").data("confirm-page-unload", "1");
   });
   $("#resetAddonDiv").click(function(event) {
     clearBehaviourPack();
@@ -94,7 +98,7 @@ $(document).ready(function() {
 $(window).on('load', function() {
   refreshColourDisplay("000001");
   
-  for (var i=1; i<=7; i++) {
+  for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
@@ -291,7 +295,7 @@ function writeBhvPack(images, uuids) {
       min_engine_version: [1,17,0]
     },
     modules: [{
-      description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on "+Date(),
+      description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + new Date().toDateString(),
       type: "data",
       uuid: uuids[1],
       version: [1,0,0]
