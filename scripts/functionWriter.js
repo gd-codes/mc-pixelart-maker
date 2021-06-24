@@ -42,9 +42,9 @@ function indexOf(x, arr) {
 }
 
 function findYMap(imgdata, maxY) {
-  var Ymap = [], x, z, column, c, type, lastY;
+  var Ymap = [], x, z, column, c, type, lastY, min;
   for (x=0; x<imgdata.width; x++) {
-    column = [0];
+    column = [0]; min=0;
     for (z=0; z<imgdata.height; z++) {
       c = indexOf(getPixelAt(x,z,imgdata), colourlist);
       type = c % 3;
@@ -56,18 +56,21 @@ function findYMap(imgdata, maxY) {
           column.push(lastY);
           break;
         case 1:
-          if (lastY < 2) { //Blocks can't go lower than base height
-            column = column.map(a => a+2);
+          column.push(lastY - 2);
+          if (lastY-2 < min) {
+            min = lastY-2;
           }
-          column.push(lastY);
+          break;
+        case 2:
+          column.push(lastY + 2);
           break;
         case 2:
           column.push(lastY + 2);
           break;
       }
     }
-    //Bring everything within height limit
-    column = column.map(a => a % maxY);
+    //Bring everything within 0 and height limit
+    column = column.map(a => (a - min) % maxY);
     Ymap.push(column);
   }
   return Ymap;
@@ -108,7 +111,7 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
       for (z=zloop; z < zloop+128; z++) {
         pix = (linkpos)? getPixelAt(x,z,imobj) : getPixelAt(x+x0,z+z0,imobj);
         code = blocks[Math.floor(indexOf(pix, colourlist) / 3)];
-        y = (extrainfo <= 1)? 0 : yMap[x][z];
+        y = (extrainfo <= 1)? 0 : ((linkpos)? yMap[x][z] : yMap[x+x0][z+z0]);
         switch (code) {
             // Anomalies - some blocks must be loaded as structures
           case "azalea_leaves 1":
