@@ -7,7 +7,7 @@
 
 <url>
   <loc>https://gd-codes.github.io/mc-pixelart-maker/</loc>
-  <lastmod>2021-01-19</lastmod>
+  <lastmod>2021-06-24</lastmod>
   <changefreq>monthly</changefreq>
   <priority>1.00</priority>
 </url>
@@ -15,25 +15,19 @@
   <loc>https://gd-codes.github.io/mc-pixelart-maker/about.html</loc>
   <lastmod>2021-01-19</lastmod>
   <changefreq>yearly</changefreq>
-  <priority>0.20</priority>
+  <priority>0.0</priority>
 </url>
 <url>
   <loc>https://gd-codes.github.io/mc-pixelart-maker/manual.html</loc>
-  <lastmod>2021-01-19</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.6</priority>
-</url>
-<url>
-  <loc>https://github.com/gd-codes/mc-pixelart-maker</loc>
-  <changefreq>weekly</changefreq>
-  <priority>0.7</priority>
+  <lastmod>2021-05-24</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.2</priority>
 </url>
 <url>
   <loc>https://gd-codes.github.io/mc-pixelart-maker/index.html</loc>
-  <lastmod>2021-01-19</lastmod>
+  <lastmod>2021-06-24</lastmod>
   <changefreq>monthly</changefreq>
-  <priority>0.6</priority>
+  <priority>1.0</priority>
 </url>
-
 
 </urlset>
