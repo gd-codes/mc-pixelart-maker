@@ -58,88 +58,74 @@
   <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
   <p> It is recommended to use this app on a desktop/laptop instead of on mobile! </p> 
   <p>This is a client-side app, i.e. it functions entirely <i>in your browser</i> 
-    (No data is stored in or sent to an external server for processing !). Hence, some essential functions may not
-    work if your browser hasn't been updated to the latest/modern versions, or your device places many
+    (No data is sent back to an external server for processing !). Hence, some essential functions may not
+    work if your browser hasn't been updated for a while, or your device places many
     restrictions on it.<br> You <b><i>must</i></b> have Javascript enabled for this site. In additon, it is recommended
     that atleast 10 MB memory is available for this site (or don't upload too many images into one pack).
     This site does not use any cookies or local storage.</p>
   <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Some Technical notes<br><br></h4>
   <ul class="mt-1">
     <li> When you create the add-on, commands to build all the images that were uploaded <i>and</i> processed
-      will be written into it. Even a single map contains 128&times;128 = 16384 visible blocks to be placed, which is a 
-      lot !, so the commands will be split into 2 sets per map and written into seperate function files (they are
+      will be written into it. Even a single map contains 128&times;128 = 16384 visible blocks to be placed (which is a 
+      lot !), so the commands will be split into 2 sets per map and written into seperate function files (they are
       regular commands like <code>/setblock</code>, but Minecraft can then execute upto 10,000 of them at once from
       these files). More instructions on running the functions are given <a href="#in-mc">below</a>.<br>
     <a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)" rel="nofollow noreferrer">
       Read more</a> about functions in Minecraft.</li><br>
     <li> The converted images seen after you click the 'Process Image' button may vary slightly depending on which device
-      you use ! (Since part of the image operations are performed by your browser). But they will all look similar.</li><br>
+      you use (Since part of the image operations are performed by your browser). But they will all look similar.</li><br>
     <li> The commands use relative <b>&tilde;</b> (<a  rel="nofollow noreferrer"
       href="https://minecraft.gamepedia.com/Commands#Relative_world_coordinates:_Tilde_notation">tilde notation</a>) to
-    specify the positon, so that the image will be built wherever you (the player, or a command block if you are using
-    one) are standing, instead of a specific place in each world every time.</li><br>
-    <li><strong><u>Common Starting Coordinates : </u></strong> Normally, the coordinates of any block in each function
-      (64&times;128 region, half of a map) are specified relative to its own top-left (North-West corner). After executing
-      the function, you would need to be at the next unbuilt map half before running the next function there.<br>
-      However, if this option was checked, the coordinates of every block <em>in the whole map art</em> will be relative to
-      the corner of the <em>first</em> function only (coincident with the NW corner of the whole image) - so you can stand
-      there and run all the commands without moving.<br> This was not recommended just in case (a) blocks thousands of meters
-      away, beyond <a href="https://minecraft.gamepedia.com/Chunk#Bedrock_Edition" rel="nofollow noreferrer"> simulation 
-      distance</a> <em>may not get placed</em>, and (b) if there is another player nearby, they may interfere with the command 
-      placement.</li>
-    <li><strong><u>Replace only air :</u></strong> If this is enabled, the volume (rectangle for a flat art, cuboid for
-      3D) in which the blocks will be placed will not be cleared / filled with air before placing the blocks. In addition,
-      blocks that need to be placed at locations where there is an existing non-air block will not replace it. <br> Note:
-      The Glow lichen uses a cobblestone block below it for support, it will also not be placed if the cobblestone can't.</li>
+    specify the positon, so that the image can be built wherever you (the player, or a command block if you are using
+    one) are located in your world when starting, instead of a specific area every time.</li><br>
+    <li>For the 3D arrangement, the max height specification only ensures that blocks do not get
+  placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
+  image. You may find, after building it, that the blocks did not reach that height anyway.</li><br>
   </ul>
   <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
   <ol>
-    <li> Import and apply the behaviour pack to your world(s). <br> <b>Note : </b>Cheats &amp; Operator permissions must be 
-      enabled to use functions. If you want to earn achievements in that world or keep cheats off, you'll have to place 
-      the blocks manually.</li>
+    <li> Import and apply the behaviour pack to your world(s). <br> <strong class="text-muted">Note : </strong >Cheats &amp;
+      Operator permissions must be enabled to use functions. If you want to earn achievements in that world or keep cheats 
+      off, you'll have to place the blocks manually.</li>
     <li> Go to the location where the image is to be built, and open a Level 0 (smallest size) map there. Check that the
-      starting block you choose is aligned with the top-left (NW) corner of the map !</li>
-    <li> This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
-      and the image will extend anywhere from 128 - 512 blocks (1-4 maps) South and East from here, depending on the 
-      size you've chosen. Height-wise, it will be built at the block in which you are standing, for the 2D, or ranging
-      from that y-level till (<i>specified max height</i>) blocks above it, for the 3D palette.<b>*</b></li>
-    <li> <div class="row"><div class="col-md-8">If your image has a size of <b><i>a</i></b>x<b><i>b</i></b>
-      maps for example, there will be 2 &times; <b><i>a</i></b> &times; <b><i>b</i></b> functions to be executed
-      individually, called <i>function_name</i>/<b>1</b>, <i>function_name</i>/<b>2</b>, ... so on.
-      Each of these builds a part of the whole image, covering a vertical half of one map, arranged in order from West to 
-      East, then North to South. The figure to the right shows an example.<br>
-      <ul><li>If '<i>Use same starting coordinate</i>' is enabled, run all the functions from this starting
-        corner only (top-left of the whole image, marked with a small green square in the figure).</li>
-      <li> If this option was not enabled, you will need to be at the next zone before building it - marked by small black 
-        squares in the figure. You <b>won't have to move manually</b>,
-        in this case all the functions up till the last will also contain <code>/tp</code> commands to automatically teleport
-        you to the next corner, and also try to place a <i>Cobblestone</i> block there to identify it exactly.</li></ul>
-      Note : You can even run the functions from command blocks placed at those locations instead of standing at
-       the corner and entering the command yourself.</div>
+      starting block you choose is aligned with the top-left (NW) corner of the map !<br>
+      This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
+      which will extend South and East from here. Height-wise, it will be built at the block in which you are standing (2D),
+      or extending from there till [<i>specified max height</i>] blocks upwards, for the 3D palette.</li>
+    <li> <div class="row"><div class="col-md-8">If your image covers an area of <b><i>a</i></b>x<b><i>b</i></b>
+      maps, there will be <code>2 * <b><i>a</i></b> * <b><i>b</i></b></code> commands to be executed in order,
+      numbered <i>image_name</i>/<b>1</b>, <i>image_name</i>/<b>2</b>, ... so on.
+      Each of these builds a part of the image, covering a vertical half of one map, arranged in order as illustrated
+      in the figure alongside.<br>
+      <ul><li>If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
+        you must run <em>all</em> the commands while staying at this same corner only (top-left of the whole image).</li>
+      <li> Otherwise, running each function will teleport you (the nearest player) to the corner of the next zone 
+        (marked by small black squares in the figure) after placing those blocks, so that you "move along" as you're running
+        the commands one-by-one. A cobblestone block may also be placed there to identify the corner - you must be standing 
+        exactly where it is before continuing with the next one.</li></ul></div>
       <div class="col-md-4"><figure class="figure">
         <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
         <figcaption class="figure-caption">Example arrangement for an art covering 2x2 maps.</figcaption></figure></div>
       </div></li>
     <li>The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
-    For example, if your image's function name was <i>wallpaper</i>, and its size was 2x1, you would need to run
+    For example, if your image's name was <i>wallpaper</i>, and its size was 2x1 maps, you would need to run
       the commands <pre class="pl-4 mb-0"><code>/function wallpaper/1
 /function wallpaper/2
 /function wallpaper/3
-/function wallpaper/4</code></pre></li>
+/function wallpaper/4</code></pre><br>
+    <strong class="text-muted">Note :</strong> You may need to restart Minecraft and run the <kbd>/reload</kbd> command first,
+      in case they don't appear in the cheats screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
     <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
       href="https://minecraft.gamepedia.com/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
       from updating if some other structures are built above them, or if the colour palette changes in future updates.</p>
     </li>
   </ol>
-  <p class="text-muted">* For the 3D arrangement, the max height specification only ensures that blocks do not get
-  placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
-  image. You may find, after building it, that the blocks did not reach that height anyway.</p>
   <br><hr>
   <h4 class="container-lg text-center text-capitalize" id="example-pack"><br><br>Example behaviour pack<br><br></h4>
-  <p> This is the file structure of an example behaviour pack generated by this app. Assume it was created using 2 
-  images, one with the function name "cliff" and of size 2x1, and the other with the function name "bastion" and of
-  map size 3x2. Directory names are written with an ending <b>/</b> and the rest are files :</p>
+  <p> This is the file structure of an example behaviour pack generated by this app. It contains 2 
+  images - one with the function name "cliff" of size 2x1, and another named "bastion" of
+  size 3x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
   <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
   behaviour pack.mcpack
    |

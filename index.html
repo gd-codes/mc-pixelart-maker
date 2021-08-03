@@ -45,17 +45,18 @@
 <div class="container-lg justify-content-lg-center mx-auto my-5" id="pageMainContent">
   <div class="alert alert-info alert-dismissible fade show">
     <h4 class="alert-heading">How this app works</h4>
-    <p>Minecraft Map Art Maker resizes, pixelates and reduces the colour palette of your uploaded image to one that
-      is shown in vanilla Minecraft maps. It then analyses the final image to identify a suitable block and coordinates for
-			each pixel so that if those blocks are placed at those locations in your minecraft world, a map of the area 
-      will display the final image !</p>
+    <p>Minecraft Map Art Maker pixelates and reduces the colour palette of your uploaded image to one that can be shown 
+      in Minecraft maps using vanilla blocks. It then identifies the coordinates and exact blocks to place in your world for
+			each pixel, so that a map of the area will display the final image !</p>
     <ul> <li> The placement can be automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
       href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. These can be readily executed 
-      using a few '/function' commands in-game.</li> <li>The packs are valid for the latest version of Minecraft on all
-      supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
+      using a few '/function' commands in-game, through a command block or by a player.</li> <li>The packs are valid for 
+      the latest version of Minecraft on all supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
     <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer"
     href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !</p>
+    <p> Other technical explanation, and an example add-on for download, can be found <a href="manual.html#example-pack"
+    target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
   </div>
@@ -247,8 +248,8 @@
         <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
                   placeholder="Created using Minecraft Map Art Maker !"></textarea>
       </div>
-      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - <em>not recommended</em> in general, 
-        you may leave them unchecked (default) if you don't have a preference </span>
+      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - these are <em>not</em> enabled
+      by default </span>
       <div class="form-group row">
         <label for="funcOptionsDiv" class="col-sm-2 col-form-label text-primary text-center">Command Options</label>
         <div id="funcOptionsDiv" class="form-group col-sm-10">
@@ -264,10 +265,10 @@
             <input type="checkbox" id="useLinkedPos" class="form-check-input" name="linkedPosOption" value="link"/>
             <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" data-html="true" 
-            title="The map will contain more than atleast 2 commands, to be run in sequence to build it.
+            title="The map will contain atleast 2 commands to be run in sequence to build it.
               If this option is enabled, you can run all of them from the same location, without moving to the next region
               each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
-              blocks far away outside loaded chunks <i>may</i> fail, so this convenience should be avoided for large map art" 
+              blocks far away outside loaded chunks <i>may</i> fail, which is why this is unchecked by default." 
                data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
           </div>
         </div>
@@ -299,7 +300,7 @@
         <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
-        Read this info page</a> for more detailed instructions.</div>
+        <u>Read this info page</u></a> for more detailed instructions.</div>
       <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
     </div>
   </div>
