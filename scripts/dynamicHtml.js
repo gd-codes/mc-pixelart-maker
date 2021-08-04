@@ -57,7 +57,7 @@ function newImageUpload() {
 `<a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> `,
 `en.wikipedia.org/wiki/Dither</a><br> This is good for photographs, but may not be necessary for cartoons/etc with `,
 `solid colours (no gradients)" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" class="text-info">`,
-`${questionmark}</a></label></div></div></div><div class="form-group d-flex justify-content-center"`,
+`${icons.questionmark}</a></label></div></div></div><div class="form-group d-flex justify-content-center"`,
 `id="formActionsPreSubmit_${uid}"><input type="reset" class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_${uid}"/>`,
 `<button class="btn btn-primary mx-md-2" id="processImageBtn_${uid}" type="submit">Process Image &nbsp; &nbsp;`,
 `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-square-fill" fill="currentColor" `,
@@ -90,9 +90,11 @@ function newImageUpload() {
   $("#imageForm_"+uid).submit(function(event){
     submitImgFormHandler(this, event);
   });
-  $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
+  $("#materialOptsDisplay_"+uid).data("selected", default_palette);
   $("#deleteBtn_"+uid).click(function(){deleteImgForm(this);});
   $('[data-toggle="tooltip"]').tooltip();
   $("li#link_"+uid+" a").click();
   $("#resetImageFormBtn_"+uid).click();
+  
+  refreshColourDisplay(uid);
 }

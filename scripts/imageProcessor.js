@@ -1,19 +1,22 @@
 
 //None of these values should be > 220
-const colourmap = {white: [220, 220, 220], lightgrey: [132, 132, 132], grey: [65, 65, 65], black: [22, 22, 22], 
-                   brown: [88, 65, 44], red: [132, 44, 44], orange: [186, 108, 44], yellow: [198, 198, 44], 
-                   lime: [108, 176, 22], green: [88, 108, 44], cyan: [66, 108, 132], lightblue: [88, 132, 186], 
-                   blue: [44, 66, 152], purple: [108, 55, 152], magenta: [152, 66, 186], pink: [208, 108, 142], 
-                   oak: [124, 100, 60], spruce: [112, 74, 42], crimson: [128, 54, 84], warped: [50, 122, 120], 
-                   dirt: [130, 94, 66], sand: [212, 200, 140], clay: [140, 144, 158], stone: [96, 96, 96], 
-                   deepslate: [86, 86, 86], nether: [96, 0, 0], quartz: [220, 216, 210], expocopper: [116, 92, 84], 
-                   oxicopper: [18, 108, 116], foliage: [0, 108, 0], oakleaves: [55, 80, 20], birchleaves: [60, 78, 38], 
-                   conifers: [45, 70, 45], lichen: [108, 144, 128], darkcrimson: [80, 20, 25], 
-                   darkwarped: [75, 37, 52], crimsonylium: [162, 42, 42], warpwart: [15, 155, 115], 
-                   turquoise: [78, 188, 182], steel: [144, 144, 144], brightred: [220, 0, 0], gold: [215, 205, 65], 
-                   emerald: [0, 188, 50], lapis: [64, 110, 220], rawiron: [185, 150, 125], calcite: [180, 150, 140], 
-                   tuff: [50, 35, 30], dripstone: [65, 42, 30], slime: [108, 152, 48], web: [170, 170, 170], 
-                   ice: [138, 138, 220], grass: [125, 160, 75]}
+//The order of this Map is important !
+const colourmap = new Map([
+  ["white", [220, 220, 220]], ["lightgrey", [132, 132, 132]], ["grey", [65, 65, 65]], ["black", [22, 22, 22]], 
+  ["brown", [88, 65, 44]], ["red", [132, 44, 44]], ["orange", [186, 108, 44]], ["yellow", [198, 198, 44]], 
+  ["lime", [108, 176, 22]], ["green", [88, 108, 44]], ["cyan", [66, 108, 132]], ["lightblue", [88, 132, 186]], 
+  ["blue", [44, 66, 152]], ["purple", [108, 55, 152]], ["magenta", [152, 66, 186]], ["pink", [208, 108, 142]], 
+  ["oak", [124, 100, 60]], ["spruce", [112, 74, 42]], ["crimson", [128, 54, 84]], ["warped", [50, 122, 120]], 
+  ["dirt", [130, 94, 66]], ["sand", [212, 200, 140]], ["clay", [140, 144, 158]], ["stone", [96, 96, 96]], 
+  ["deepslate", [86, 86, 86]], ["nether", [96, 0, 0]], ["quartz", [220, 216, 210]], ["expocopper", [116, 92, 84]], 
+  ["oxicopper", [18, 108, 116]], ["foliage", [0, 108, 0]], ["oakleaves", [55, 80, 20]], ["birchleaves", [60, 78, 38]], 
+  ["conifers", [45, 70, 45]], ["lichen", [108, 144, 128]], ["darkcrimson", [80, 20, 25]], 
+  ["darkwarped", [75, 37, 52]], ["crimsonylium", [162, 42, 42]], ["warpwart", [15, 155, 115]], 
+  ["turquoise", [78, 188, 182]], ["steel", [144, 144, 144]], ["brightred", [220, 0, 0]], ["gold", [215, 205, 65]], 
+  ["emerald", [0, 188, 50]], ["lapis", [64, 110, 220]], ["rawiron", [185, 150, 125]], ["calcite", [180, 150, 140]], 
+  ["tuff", [50, 35, 30]], ["dripstone", [65, 42, 30]], ["slime", [108, 152, 48]], ["web", [170, 170, 170]], 
+  ["ice", [138, 138, 220]], ["grass", [125, 160, 75]]
+]);
 
 function lightPixel(rgb) {
   return [Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])];
@@ -21,6 +24,13 @@ function lightPixel(rgb) {
 function darkPixel(rgb) {
   return [Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])];
 }
+
+var colourlist = [];
+colourmap.forEach(function(value, key) {
+  colourlist.push(value); // Order is important
+  colourlist.push(darkPixel(value));
+  colourlist.push(lightPixel(value));
+});
 
 
 function analyseImage(uid, image, area, palette, d3, dither) {
@@ -41,8 +51,8 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   }
   var p = [];
   for (var cn of palette.split(" ")) {
-    if (colourmap[cn] !== undefined) {
-      var rgb = (colourmap[cn]); p.push(rgb);
+    if (colourmap.get(cn) !== undefined) {
+      var rgb = (colourmap.get(cn)); p.push(rgb);
       if (d3) {
         p.push(darkPixel(rgb)); p.push(lightPixel(rgb));
       }
@@ -156,3 +166,18 @@ function makeLogo(images) {
     console.error("Error forming a pack icon", err);
   } 
 }
+
+function getPixelAt(x, z, dataobj) {
+  // Return RGB of pixel (x,z) from image's continuous (1D) data byte seq
+  let i = 4*(dataobj.width*(z) + x);
+  return [dataobj.data[i], dataobj.data[i+1], dataobj.data[i+2]];
+}
+
+function indexOfArray(a, parent_arr) {
+  for (var i=0; i<parent_arr.length; i++) {
+    if (a[0]==parent_arr[i][0] && a[1]==parent_arr[i][1] && a[2]==parent_arr[i][2]) {
+      return i;
+    }
+  } //Arrays are in different variables -> normal comparison always false
+}
+
