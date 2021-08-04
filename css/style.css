@@ -90,6 +90,11 @@ kbd {
   font-size: 120%;
 }
 
+#survGuidePlaceholderText {
+  padding-left: 200;
+  padding-right: 200;
+}
+
 @media (max-width: 768px) {
   .checkbox-scaled input[type=checkbox] {
     -ms-transform: scale(1.0); /* IE */
@@ -118,5 +123,8 @@ kbd {
     font-size: 85%;
     max-width: 20%;
     word-spacing: 80%;
+  }
+  #survGuidePlaceholderText p {
+    width: 100% !important;
   }
 }

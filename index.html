@@ -227,8 +227,8 @@
     <div class="d-inline">
       <span class="text-right mr-md-1"> View Images </span>
       <div class="btn-group">
-        <button class="btn btn-info" id="viewOrigImgBtn_000001">Original</button>
-        <button class="btn btn-info" id="viewResizedImgBtn_000001">Resized</button>
+        <button class="btn btn-outline-info" id="viewOrigImgBtn_000001">Original</button>
+        <button class="btn btn-outline-info" id="viewResizedImgBtn_000001">Resized</button>
         <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_000001">Converted</button>
       </div>
     </div>
@@ -304,6 +304,31 @@
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
         <u>Read this info page</u></a> for more detailed instructions.</div>
       <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
+    </div>
+  </div>
+  <div class="container-lg text-center text-capitalize"><h3>Survival Guide</h3></div>
+  <div class="container bg-light rounded-top py-3 px-4 mt-4 mb-0 d-flex justify-content-between
+              border border-dark border-bottom-0">
+    <ul class="nav nav-tabs" id="guideTabList"></ul>
+  </div>
+  <div id="survGuidePlaceholderText" 
+       class=" container border border-dark border-top-0 border-bottom-0 py-3 px-4 my-0 d-flex justify-content-center">
+      <p class="d-block w-50 text-muted text-center">If you want to take up the challenge of building the map art by 
+      yourself without using commands, this section can help by showing you block-by-block placement of the processed
+      images !<br/> The options to generate these will appear here after processing</p>
+  </div>
+  <div class="container tab-content border border-dark border-top-0 rounded-bottom py-3 px-4 mt-0 mb-4" 
+       id="guideTabsContainer">
+    <nav aria-label="Pagination for Guide Sections"><ul class="pagination justify-content-center">
+      <li class="page-item disabled"><a class="page-link text-dark">View zone # : </a></li>
+      <li class="page-item"><a class="page-link" data-toggle="collapse" href="#collapstest1">1</a></li>
+      <li class="page-item"><a class="page-link" data-toggle="collapse" href="#collapstest2">2</a></li>
+      <li class="page-item"><a class="page-link" data-toggle="collapse" href="#collapstest3">3</a></li>
+    </ul></nav>
+    <div class="accordion border-top border-light pt-2" id="accEg">
+      <div class="collapse show" id="collapstest1" data-parent="#accEg"> Data 1</div>
+      <div class="collapse" id="collapstest2" data-parent="#accEg"> Data 2</div>
+      <div class="collapse" id="collapstest3" data-parent="#accEg"> Data 3</div>
     </div>
   </div>
   <div class="mx-auto my-4 px-3 mt-5" id="carouselContainer">

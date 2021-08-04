@@ -229,6 +229,9 @@ function submitImgFormHandler(elem, event) {
         name + `<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span>`
       );
       $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
+      
+      addSurvGuideGenerator(uid);
+      
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
       console.error("Error processing image "+uid);
@@ -244,7 +247,9 @@ function submitImgFormHandler(elem, event) {
 
 function deleteImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
-  var verify = confirm("Delete "+$("#fnNameInput_"+uid).val()+" : \nAre you sure ?");
+  var name = $("#fnNameInput_"+uid).val();
+  if (! name) {name = "this image form";}
+  var verify = confirm("Delete "+name+" : \nAre you sure ?");
   if (verify) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
@@ -392,4 +397,18 @@ function clearBehaviourPack() {
   $("#downloadPackBtn").off("click");
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
+}
+
+function addSurvGuideGenerator(uid) {
+  let fname = $("#fnNameInput_"+uid).val();
+  $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
+<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-success btn-block" 
+id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div></div>`);
+  $("#guideTabList").append(`<li class="nav-item" id="guidelink_${uid}"><a class="nav-link" data-toggle="tab" 
+      href="#guideTab_${uid}">${fname}</a></li>`);
+  $("#genGuideBtn_"+uid).click(function() {
+    createSurvivalGuide(uid); // Defined in `dynamichtml.js`
+    alert(fname);
+  });
+  $("#guidelink_"+uid+" a").click();
 }

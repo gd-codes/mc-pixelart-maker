@@ -65,8 +65,8 @@ function newImageUpload() {
 `2-2V2a2 2 0 0 0-2-2H2zm2.5 8.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 `,
 `0 0 1-.708-.708L10.293 8.5H4.5z"/></svg></button></div></form><div class="row d-none justify-content-between" `,
 `id="formActionsPostSubmit_${uid}"><div></div><div class="d-inline"><span class="text-right mr-md-1"> View Images </span>`,
-`<div class="btn-group"><button class="btn btn-info" id="viewOrigImgBtn_${uid}">Original</button>`,
-`<button class="btn btn-info" id="viewResizedImgBtn_${uid}">Resized</button>`,
+`<div class="btn-group"><button class="btn btn-outline-info" id="viewOrigImgBtn_${uid}">Original</button>`,
+`<button class="btn btn-outline-info" id="viewResizedImgBtn_${uid}">Resized</button>`,
 `<button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_${uid}">Converted</button></div></div>`,
 `<button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button></div></div>`]);
   
@@ -102,4 +102,11 @@ function newImageUpload() {
   $("#resetImageFormBtn_"+uid).click();
   
   refreshColourDisplay(uid);
+}
+
+function createSurvivalGuide(uid) {
+  $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
+artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
+the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner. </p>`);
+  var htm = [``];
 }
