@@ -95,6 +95,11 @@ kbd {
   padding-right: 200;
 }
 
+#survGuideTableArea {
+  overflow: scroll !important;
+  max-height: 1500;
+}
+
 @media (max-width: 768px) {
   .checkbox-scaled input[type=checkbox] {
     -ms-transform: scale(1.0); /* IE */

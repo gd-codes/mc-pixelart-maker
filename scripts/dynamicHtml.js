@@ -3,6 +3,11 @@ They appear identical to the oriiginal ones in index.html
 but can be distinguished by a 6 character 'uid' suffix to all
 the HTML id attributes, that will be unique (randomly generated)*/
 
+const materialnames = ["White Dye", "Light Grey Dye", "Grey Dye", "Black Dye", "Brown Dye", "Red Dye", "Orange Dye", 
+  "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
+  "Oak", "Spruce", "Crimson", "Warped", "Dirt", "Sand", "Clay", "Stone", "Deepslate", "Netherrack", "Quartz", "Exposed Copper", "Oxidised Copper", "Foliage", "Tree Leaves", "Birch Leaves", "Conifer Leaves", "Lichen", "Crimson Bark", "Warped Bark", "Crimson Nylium", "Warped Wart", "Turquoise", "Steel", "Bright Red", "Gold", "Emerald", "Lapis", "Raw Iron", "Calcite", "Tuff", "Dripstone", "Slime", "Web", "Ice", "Grass"];
+// Do NOT change the order. It matches `colourmap` and `colourlist` of imageProcessor.js
+
 function newImageUpload() {
   var uid = "";
   var charset = "abcdefghijklmnopqrstuvwxyz1234567890";
@@ -108,5 +113,48 @@ function createSurvivalGuide(uid) {
   $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
 artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
 the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner. </p>`);
-  var htm = [``];
+  var image = $("#imageForm_"+uid).data('finalimage');
+  var zone_origins=[], x0, z0, yMap; 
+    //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
+  for (let z0=0; z0<image.height; z0+=128) {
+    for (let x0=0; x0<image.width; x0+=64) {
+      zone_origins.push([x0,z0]);
+    }
+  }
+  var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
+  if (ymax > 1) {
+    yMap = findYMap(image, ymax); // Defined in `functionwriter.js`
+  }
+  var navlist = [`<li class="page-item disabled"><a class="page-link text-dark">View zone # : </a></li>`],
+      divlist = [], htm = [];
+  for (var i=0; i<zone_origins.length; i++) {
+    let counts = new Array(materialnames.length).fill(0);
+    let table = `<table class="table">`;
+    let pix, code, y;
+    x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
+    for (let z=0; z<128; z++) {
+      table += "<tr>";
+      for (let x=0; x<64; x++) {
+        pix = getPixelAt(x+x0,z+z0,image);
+        code = materialnames[Math.floor(indexOfArray(pix, colourlist) / 3)];
+        y = (ymax <= 1) ? "" : yMap[x+x0][z+z0] ;
+        table += `<td tabindex="0" style="background-color: rgb(${pix[0]},${pix[1]},${pix[2]});"></td>`;
+        counts[Math.floor(indexOfArray(pix, colourlist) / 3)] += 1;
+      }
+      table += "</tr>";
+    }
+    table += "</table>";
+    htm = [`<div class="collapse" id="guidePage_${i+1}_map_${uid}" data-parent="#survGuide_${uid}">`,
+           `<div class="row"><div class="col-md-4" id="survGuideBlockCount"></div>`,
+           `<div class="col-md-8" id="survGuideTableArea">`,table,`</div></div></div>`];
+    navlist.push(`<li class="page-item"><a class="page-link" data-toggle="collapse" ` + 
+                 `href="#guidePage_${i+1}_map_${uid}">${i+1}</a></li>`);
+    divlist.push(htm.join(""));
+  }
+  $("#guideTab_"+uid).html([`<nav aria-label="Pagination"><ul class="pagination justify-content-center">`,
+      navlist.join(""), 
+      `</ul></nav>
+      <div class="accordion border-top border-light pt-2" id="survGuide_${uid}">`,
+      divlist.join(""),
+      `</div>`].join(""));
 }
