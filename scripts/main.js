@@ -50,8 +50,11 @@ $(document).ready(function() {
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
   });
-  $("button[id^='deleteBtn']").click( function() { 
+  $("span[id^='deleteBtn']").click( function() { 
     deleteImgForm(this); 
+  });
+  $("button[id^='imgEditBtn']").click(function() {
+    editImgForm(this);
   });
   $("#addNewImgBtn").click(newImageUpload);
   
@@ -222,9 +225,13 @@ function submitImgFormHandler(elem, event) {
       $("#formActionsPreSubmit_"+uid).removeClass("d-flex");
       $("#formActionsPostSubmit_"+uid).addClass("d-flex");
       $("#formActionsPostSubmit_"+uid).removeClass("d-none");
-      $("#navbarList li[id='link_"+uid+"'] a").text(name);
+      $("#navbarList li[id='link_"+uid+"'] a").html(
+        name + `<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span>`
+      );
+      $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
+      console.error("Error processing image "+uid);
     }
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
@@ -244,6 +251,23 @@ function deleteImgForm(elem) {
     console.info("Removed image form ", uid);
     $("a.nav-link").first().click();
   }
+}
+
+function editImgForm(elem) {
+  var uid = $(elem).attr('id').slice(-6);
+  $("form#imageForm_"+uid+" :input").prop('disabled', false);
+  $("form#imageForm_"+uid+" :radio").prop('disabled', false);
+  $("form#imageForm_"+uid+" :checkbox").prop('disabled', false);
+  $("form#imageForm_"+uid+" :file").prop('disabled', false);
+  $("#formActionsPreSubmit_"+uid).removeClass("d-none");
+  $("#formActionsPreSubmit_"+uid).addClass("d-flex");
+  $("#formActionsPostSubmit_"+uid).removeClass("d-flex");
+  $("#formActionsPostSubmit_"+uid).addClass("d-none");
+  $("#viewOrigImgBtn_"+uid).off('click');
+  $("#viewResizedImgBtn_"+uid).off('click');
+  $("#viewFinalImgBtn_"+uid).off('click');
+  $("#imageForm_"+uid).removeData('finalimage');
+  //console.info("Re-enabled editing of image "+uid);
 }
 
 function startCreateBhvPack(event) {

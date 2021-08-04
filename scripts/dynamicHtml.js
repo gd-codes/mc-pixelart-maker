@@ -9,8 +9,8 @@ function newImageUpload() {
   for(var rb=0; rb<6; rb++) {
     uid += charset.charAt(Math.floor(Math.random() * charset.length));
   }
-  $("#navbarList").append("<li class=\"nav-item\" id=\"link_"+uid+"\">"+
-        "<a class=\"nav-link\" data-toggle=\"tab\" href=\"#tabPane_"+uid+"\">New Image</a></li>");
+  $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
+      href="#tabPane_${uid}">New Image<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
   
   var newpane = [`<div class="tab-pane fade show active" id="tabPane_${uid}"><form id="imageForm_${uid}"><div class="form-group">`,
 `<label for="imgInput_${uid}" class="text-primary font-weight-bold">Select an Image</label><div class="custom-file">`,
@@ -68,7 +68,7 @@ function newImageUpload() {
 `<div class="btn-group"><button class="btn btn-info" id="viewOrigImgBtn_${uid}">Original</button>`,
 `<button class="btn btn-info" id="viewResizedImgBtn_${uid}">Resized</button>`,
 `<button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_${uid}">Converted</button></div></div>`,
-`<button class="btn btn-danger mr-sm-3" id="deleteBtn_${uid}">Delete</button></div></div>`]);
+`<button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button></div></div>`]);
   
   $("#tabContainer").append(newpane.join(""));
   
@@ -90,8 +90,13 @@ function newImageUpload() {
   $("#imageForm_"+uid).submit(function(event){
     submitImgFormHandler(this, event);
   });
+  $("#deleteBtn_"+uid).click( function() { 
+    deleteImgForm(this); 
+  });
+  $("#imgEditBtn_"+uid).click(function() {
+    editImgForm(this);
+  });
   $("#materialOptsDisplay_"+uid).data("selected", default_palette);
-  $("#deleteBtn_"+uid).click(function(){deleteImgForm(this);});
   $('[data-toggle="tooltip"]').tooltip();
   $("li#link_"+uid+" a").click();
   $("#resetImageFormBtn_"+uid).click();

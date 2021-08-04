@@ -83,6 +83,13 @@ kbd {
   padding: 10px;
 }
 
+.delete-X:hover {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 120%;
+}
+
 @media (max-width: 768px) {
   .checkbox-scaled input[type=checkbox] {
     -ms-transform: scale(1.0); /* IE */
