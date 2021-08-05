@@ -1,5 +1,6 @@
 
 //None of these values should be > 220
+//The keys also must match the `value`s of checkboxes in the colour table modal
 //The order of this Map is important !
 const colourmap = new Map([
   ["white", [220, 220, 220]], ["lightgrey", [132, 132, 132]], ["grey", [65, 65, 65]], ["black", [22, 22, 22]], 
@@ -31,6 +32,7 @@ colourmap.forEach(function(value, key) {
   colourlist.push(darkPixel(value));
   colourlist.push(lightPixel(value));
 });
+var colourtokens = Array.from(colourmap.keys());
 
 
 function analyseImage(uid, image, area, palette, d3, dither) {

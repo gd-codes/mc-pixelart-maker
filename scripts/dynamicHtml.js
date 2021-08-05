@@ -4,9 +4,12 @@ but can be distinguished by a 6 character 'uid' suffix to all
 the HTML id attributes, that will be unique (randomly generated)*/
 
 const materialnames = ["White Dye", "Light Grey Dye", "Grey Dye", "Black Dye", "Brown Dye", "Red Dye", "Orange Dye", 
-  "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
-  "Oak", "Spruce", "Crimson", "Warped", "Dirt", "Sand", "Clay", "Stone", "Deepslate", "Netherrack", "Quartz", "Exposed Copper", "Oxidised Copper", "Foliage", "Tree Leaves", "Birch Leaves", "Conifer Leaves", "Lichen", "Crimson Bark", "Warped Bark", "Crimson Nylium", "Warped Wart", "Turquoise", "Steel", "Bright Red", "Gold", "Emerald", "Lapis", "Raw Iron", "Calcite", "Tuff", "Dripstone", "Slime", "Web", "Ice", "Grass"];
-// Do NOT change the order. It matches `colourmap` and `colourlist` of imageProcessor.js
+    "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
+    "Oak", "Spruce", "Crimson", "Warped", "Dirt", "Sand", "Clay", "Stone", "Deepslate", "Netherrack", "Quartz", 
+    "Exposed Copper", "Oxidised Copper", "Foliage", "Tree Leaves", "Birch Leaves", "Conifer Leaves", "Lichen", "Crimson Bark",
+    "Warped Bark", "Crimson Nylium", "Warped Wart", "Turquoise", "Steel", "Bright Red", "Gold", "Emerald", "Lapis", 
+    "Raw Iron", "Calcite", "Tuff", "Dripstone", "Slime", "Web", "Ice", "Grass"];
+// Ordered to match `colourmap` from imageProcessor.js. Do not change.
 
 function newImageUpload() {
   var uid = "";
@@ -113,7 +116,14 @@ function createSurvivalGuide(uid) {
   $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
 artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
 the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner. </p>`);
+  var divlist = [], htm = [], navlist = [`<li class="page-item disabled"><a class="page-link text-dark bg-light border-0">  &nbsp;
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
+    <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
+    <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z"/></svg></a></li>`];
+  
   var image = $("#imageForm_"+uid).data('finalimage');
+  //let fname = $("#fnNameInput_"+uid).val();
+  let pal = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
   var zone_origins=[], x0, z0, yMap; 
     //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (let z0=0; z0<image.height; z0+=128) {
@@ -125,28 +135,37 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   if (ymax > 1) {
     yMap = findYMap(image, ymax); // Defined in `functionwriter.js`
   }
-  var navlist = [`<li class="page-item disabled"><a class="page-link text-dark">View zone # : </a></li>`],
-      divlist = [], htm = [];
+  
   for (var i=0; i<zone_origins.length; i++) {
     let counts = new Array(materialnames.length).fill(0);
-    let table = `<table class="table">`;
+    let table = `<table class="table table-responsive">`, 
+        countlist = `<table class="table table-hover table-sm"><caption>Palette Usage</caption><thead class="thead-light">`+
+                `<tr class="py-3"><th scope="col" class="pl-3">Material</th><th scope="col">Count</th></tr></thead><tbody>`;
     let pix, code, y;
     x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
     for (let z=0; z<128; z++) {
       table += "<tr>";
       for (let x=0; x<64; x++) {
         pix = getPixelAt(x+x0,z+z0,image);
-        code = materialnames[Math.floor(indexOfArray(pix, colourlist) / 3)];
+        code = Math.floor(indexOfArray(pix, colourlist) / 3);
         y = (ymax <= 1) ? "" : yMap[x+x0][z+z0] ;
         table += `<td tabindex="0" style="background-color: rgb(${pix[0]},${pix[1]},${pix[2]});"></td>`;
-        counts[Math.floor(indexOfArray(pix, colourlist) / 3)] += 1;
+        counts[code] += 1;
       }
       table += "</tr>";
     }
     table += "</table>";
+    
+    for (let ct of pal) {
+      let indexn = colourtokens.indexOf(ct);
+      countlist += `<tr><td class="pl-4">${materialnames[indexn]}</td><td>${counts[indexn]}</td></tr>`;
+    }
+    countlist += `</tbody></table>`;
+    console.log(pal, colourtokens, countlist, materialnames);
+    
     htm = [`<div class="collapse" id="guidePage_${i+1}_map_${uid}" data-parent="#survGuide_${uid}">`,
-           `<div class="row"><div class="col-md-4" id="survGuideBlockCount"></div>`,
-           `<div class="col-md-8" id="survGuideTableArea">`,table,`</div></div></div>`];
+           `<div class="row"><div class="col-md-4" id="survGuideBlockCount">`, countlist,
+           `</div><div class="col-md-8" id="survGuideTableArea">`,table,`</div></div></div>`];
     navlist.push(`<li class="page-item"><a class="page-link" data-toggle="collapse" ` + 
                  `href="#guidePage_${i+1}_map_${uid}">${i+1}</a></li>`);
     divlist.push(htm.join(""));

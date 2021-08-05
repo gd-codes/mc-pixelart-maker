@@ -15,7 +15,7 @@ const icons = {
 
 const default_palette = "white lightgrey grey black brown red orange yellow lime green cyan "+
    "lightblue blue purple magenta pink oak spruce crimson warped dirt sand clay stone deepslate nether quartz expocopper "+
-   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel"+
+   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel "+
    "brightred gold emerald lapis rawiron calcite tuff dripstone slime web ice";
 
 const structures = {
@@ -402,13 +402,14 @@ function clearBehaviourPack() {
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
   $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
-<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-success btn-block" 
+<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
 id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div></div>`);
+  
   $("#guideTabList").append(`<li class="nav-item" id="guidelink_${uid}"><a class="nav-link" data-toggle="tab" 
       href="#guideTab_${uid}">${fname}</a></li>`);
+  
   $("#genGuideBtn_"+uid).click(function() {
     createSurvivalGuide(uid); // Defined in `dynamichtml.js`
-    alert(fname);
   });
   $("#guidelink_"+uid+" a").click();
 }
