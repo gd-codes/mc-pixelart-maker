@@ -112,6 +112,8 @@ function newImageUpload() {
   refreshColourDisplay(uid);
 }
 
+
+
 function createSurvivalGuide(uid) {
   $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
 artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
@@ -138,42 +140,60 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   
   for (var i=0; i<zone_origins.length; i++) {
     let counts = new Array(materialnames.length).fill(0);
-    let table = `<table class="table table-responsive">`, 
-        countlist = `<table class="table table-hover table-sm"><caption>Palette Usage</caption><thead class="thead-light">`+
-                `<tr class="py-3"><th scope="col" class="pl-3">Material</th><th scope="col">Count</th></tr></thead><tbody>`;
-    let pix, code, y;
+    let table = [`<table class="table table-responsive">`], 
+        countlist = [`<table class="table table-hover table-sm"><caption>Palette Usage</caption><thead class="thead-light">`,
+                `<tr class="py-3"><th scope="col" class="pl-3">Material</th><th scope="col">Count</th></tr></thead><tbody>`];
+    let pix, pixnorm, code, y;
     x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
     for (let z=0; z<128; z++) {
-      table += "<tr>";
+      table.push("<tr>");
       for (let x=0; x<64; x++) {
         pix = getPixelAt(x+x0,z+z0,image);
         code = Math.floor(indexOfArray(pix, colourlist) / 3);
-        y = (ymax <= 1) ? "" : yMap[x+x0][z+z0] ;
-        table += `<td tabindex="0" style="background-color: rgb(${pix[0]},${pix[1]},${pix[2]});"></td>`;
+        pixnorm = colourlist[3*code];
+        y = (ymax <= 1) ? 0 : yMap[x+x0][z+z0] ;
+        table.push(`<td tabindex="0" style="background-color: rgb(${pixnorm[0]},${pixnorm[1]},${pixnorm[2]});" `+
+        `data-trigger="focus" data-content="Position : &lt;b&gt;~${x} ~${y} ~${z}&lt;/b&gt;" data-html="true" ` + 
+        `title="${materialnames[code]}"></td>`);
         counts[code] += 1;
       }
-      table += "</tr>";
+      table.push("</tr>");
     }
-    table += "</table>";
+    table.push("</table>");
     
     for (let ct of pal) {
       let indexn = colourtokens.indexOf(ct);
-      countlist += `<tr><td class="pl-4">${materialnames[indexn]}</td><td>${counts[indexn]}</td></tr>`;
+      countlist.push(`<tr><td class="pl-4">${materialnames[indexn]}</td><td>${counts[indexn]}</td></tr>`);
     }
-    countlist += `</tbody></table>`;
-    console.log(pal, colourtokens, countlist, materialnames);
+    countlist.push(`</tbody></table>`);
     
     htm = [`<div class="collapse" id="guidePage_${i+1}_map_${uid}" data-parent="#survGuide_${uid}">`,
-           `<div class="row"><div class="col-md-4" id="survGuideBlockCount">`, countlist,
-           `</div><div class="col-md-8" id="survGuideTableArea">`,table,`</div></div></div>`];
+           `<div class="row"><div class="col-md-4" id="survGuideBlockCount_${i+1}_${uid}"><div class="alert alert-info">`,
+           `<p class="alert-heading">${icons.infosquare}</p>`,
+           `<p>Click on any of the squares in the table to view a popup with its block type and coordinates.`,
+           `<br/>You can also use the <code>Tab</code> key to navigate row-by-row.</p>`+
+           ((ymax <= 1) ? `` : `<p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>`),
+           `</div>`].concat(
+          countlist, [`</div><div class="col-md-8 guide-tableareas" id="survGuideTableArea_${i+1}_${uid}">`], 
+          table, [`</div></div></div>`]);
     navlist.push(`<li class="page-item"><a class="page-link" data-toggle="collapse" ` + 
                  `href="#guidePage_${i+1}_map_${uid}">${i+1}</a></li>`);
     divlist.push(htm.join(""));
   }
+  
   $("#guideTab_"+uid).html([`<nav aria-label="Pagination"><ul class="pagination justify-content-center">`,
       navlist.join(""), 
       `</ul></nav>
       <div class="accordion border-top border-light pt-2" id="survGuide_${uid}">`,
       divlist.join(""),
       `</div>`].join(""));
+  
+  $("#survGuideTableArea td").focus(function() {
+    $(this).data('toggle', 'popover');
+    $(this).popover('show');
+  });
+  $("survGuideTableArea td").blur(function() {
+    $(this).popover('dispose');
+    $(this).removeData('toggle');
+  });
 }
