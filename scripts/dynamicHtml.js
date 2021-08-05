@@ -118,14 +118,21 @@ function createSurvivalGuide(uid) {
   $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
 artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
 the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner. </p>`);
-  var divlist = [], htm = [], navlist = [`<li class="page-item disabled"><a class="page-link text-dark bg-light border-0">  &nbsp;
+  var divlist = [], htm = [], navlist = [`<li class="page-item disabled"><a class="page-link text-dark bg-light border-0">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
     <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
     <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z"/></svg></a></li>`];
-  
-  var image = $("#imageForm_"+uid).data('finalimage');
-  //let fname = $("#fnNameInput_"+uid).val();
-  let pal = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
+
+  try {
+    var image = $("#imageForm_"+uid).data('finalimage');
+    //let fname = $("#fnNameInput_"+uid).val();
+    var pal = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
+  } catch (err) {
+    console.error(err);
+    alert("Unexpected Error\n\nCould not generate the guide");
+    return;
+  }
+
   var zone_origins=[], x0, z0, yMap; 
     //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (let z0=0; z0<image.height; z0+=128) {
@@ -154,7 +161,7 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
         y = (ymax <= 1) ? 0 : yMap[x+x0][z+z0] ;
         table.push(`<td tabindex="0" style="background-color: rgb(${pixnorm[0]},${pixnorm[1]},${pixnorm[2]});" `+
         `data-trigger="focus" data-content="Position : &lt;b&gt;~${x} ~${y} ~${z}&lt;/b&gt;" data-html="true" ` + 
-        `title="${materialnames[code]}"></td>`);
+        `data-placement="top" title="${materialnames[code]}"></td>`);
         counts[code] += 1;
       }
       table.push("</tr>");
@@ -181,19 +188,32 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
     divlist.push(htm.join(""));
   }
   
-  $("#guideTab_"+uid).html([`<nav aria-label="Pagination"><ul class="pagination justify-content-center">`,
+  $("#guideTab_"+uid).html([`<nav aria-label="Pagination" id="guidePageBar_${uid}">`,
+      `<ul class="pagination justify-content-center">`,
       navlist.join(""), 
-      `</ul></nav>
-      <div class="accordion border-top border-light pt-2" id="survGuide_${uid}">`,
+      `</ul></nav><div class="accordion border-top border-light pt-2" id="survGuide_${uid}">`,
       divlist.join(""),
       `</div>`].join(""));
-  
-  $("#survGuideTableArea td").focus(function() {
+  $(`#guidePageBar_${uid} li.page-item`).click(function() {
+    switchActiveGuidePage(this);
+  });
+
+  $(`.guide-tableareas td`).focus(function() {
     $(this).data('toggle', 'popover');
     $(this).popover('show');
   });
-  $("survGuideTableArea td").blur(function() {
+  $(`.guide-tableareas td`).blur(function() {
     $(this).popover('dispose');
     $(this).removeData('toggle');
   });
+  $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
+  $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+function switchActiveGuidePage(pagelink) {
+  let off = $(pagelink).hasClass("active");
+  $(pagelink).closest("ul").find("li.active").removeClass('active');
+  if (!off) {
+    $(pagelink).addClass('active');
+  }
 }

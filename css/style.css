@@ -145,4 +145,7 @@ table caption {
   #survGuidePlaceholderText p {
     width: 100% !important;
   }
+  #guideTabsContainer nav {
+    overflow-x: scroll;
+  }
 }
