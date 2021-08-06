@@ -57,36 +57,41 @@
   </div>
   <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
   <p> It is recommended to use this app on a desktop/laptop instead of on mobile! </p> 
-  <p>This is a client-side app, i.e. it functions entirely <i>in your browser</i> 
-    (No data is sent back to an external server for processing !). Hence, some essential functions may not
-    work if your browser hasn't been updated for a while, or your device places many
-    restrictions on it.<br> You <b><i>must</i></b> have Javascript enabled for this site. In additon, it is recommended
-    that atleast 10 MB memory is available for this site (or don't upload too many images into one pack).
-    This site does not use any cookies or local storage.</p>
-  <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Some Technical notes<br><br></h4>
+  <p> The app has been tested on recent versions of Google Chrome, Safari and Microsoft Edge. 
+    Internet Explorer is <em>not</em> fully compatible. Since this is a client-side app (It is run entirely by your browser,
+    no data is sent back the server for processing !), some essential functions may not
+    work if your browser hasn't been updated for a long while, or your device places many
+    restrictions on it.</p> <p>Javascript <b><i>must</i></b> be enabled for this site. In additon, it is recommended
+  that atleast 10 MB memory is available (or don't upload too many images into one pack).</p>
+    <p>This site does not use any cookies or local storage.</p>
+  <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Miscellaneous notes<br><br></h4>
   <ul class="mt-1">
     <li> When you create the add-on, commands to build all the images that were uploaded <i>and</i> processed
       will be written into it. Even a single map contains 128&times;128 = 16384 visible blocks to be placed (which is a 
       lot !), so the commands will be split into 2 sets per map and written into seperate function files (they are
-      regular commands like <code>/setblock</code>, but Minecraft can then execute upto 10,000 of them at once from
-      these files). More instructions on running the functions are given <a href="#in-mc">below</a>.<br>
-    <a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)" rel="nofollow noreferrer">
+      regular commands like <code>/setblock</code>, but Minecraft can then execute upto 10,000 (by default) of them 
+      <em>at once</em> from these files). More instructions on running the functions are given <a href="#in-mc">below</a>.
+      <br><a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)" rel="nofollow noreferrer">
       Read more</a> about functions in Minecraft.</li><br>
-    <li> The converted images seen after you click the 'Process Image' button may vary slightly depending on which device
-      you use (Since part of the image operations are performed by your browser). But they will all look similar.</li><br>
+    <li> The converted images seen after you click the 'Process Image' button may vary slightly (especially in the "noise"
+      generated due to Image Dithering) depending on your device / browser (Since part of the image resizing operations are
+      performed by your browser). This is unavoidable. </li><br>
     <li> The commands use relative <b>&tilde;</b> (<a  rel="nofollow noreferrer"
       href="https://minecraft.gamepedia.com/Commands#Relative_world_coordinates:_Tilde_notation">tilde notation</a>) to
     specify the positon, so that the image can be built wherever you (the player, or a command block if you are using
     one) are located in your world when starting, instead of a specific area every time.</li><br>
     <li>For the 3D arrangement, the max height specification only ensures that blocks do not get
-  placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
-  image. You may find, after building it, that the blocks did not reach that height anyway.</li><br>
+    placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
+    image. You may find, after building it, that the blocks did not reach that height anyway. <br> The limit does not 
+    majorly affect the final appearance. (The shade of each block depends on the height difference between it and the block
+    immediately North of it. This is usually 2 blocks, but may have to abruptly change near the height limit. For this reason,
+    it is recommended not to keep a very low limit.)</li><br>
   </ul>
   <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
   <ol>
     <li> Import and apply the behaviour pack to your world(s). <br> <strong class="text-muted">Note : </strong >Cheats &amp;
       Operator permissions must be enabled to use functions. If you want to earn achievements in that world or keep cheats 
-      off, you'll have to place the blocks manually.</li>
+      off, you'll have to place the blocks manually (You can look at the Survival Guide for some help).</li>
     <li> Go to the location where the image is to be built, and open a Level 0 (smallest size) map there. Check that the
       starting block you choose is aligned with the top-left (NW) corner of the map !<br>
       This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
@@ -114,7 +119,7 @@
 /function wallpaper/3
 /function wallpaper/4</code></pre><br>
     <strong class="text-muted">Note :</strong> You may need to restart Minecraft and run the <kbd>/reload</kbd> command first,
-      in case they don't appear in the cheats screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
+      in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
     <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
       href="https://minecraft.gamepedia.com/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
@@ -170,7 +175,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 2.0.0<br><br></h6>
+  <h6 class="text-white-50">Version 3.0<br><br></h6>
   <p>
     <a class="text-white-50" href="index.html">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 
@@ -178,9 +183,5 @@
     <a class="text-white-50" href="">Site Home</a>
   </p><br>
 </div>
-  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

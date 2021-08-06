@@ -1,7 +1,12 @@
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
 
-//None of these values should be > 220
-//The keys also must match the `value`s of checkboxes in the colour table modal
-//The order of this Map is important !
+/*None of these values should be > 220
+The keys also must match the `value`s of checkboxes in the colour table modal
+The order of this Map is important !*/
 const colourmap = new Map([
   ["white", [220, 220, 220]], ["lightgrey", [132, 132, 132]], ["grey", [65, 65, 65]], ["black", [22, 22, 22]], 
   ["brown", [88, 65, 44]], ["red", [132, 44, 44]], ["orange", [186, 108, 44]], ["yellow", [198, 198, 44]], 
@@ -74,6 +79,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   ctx.clearRect(0, 0, w, h);
   $("#imageForm_"+uid).data('finalimage', finalImgData);
   
+  // Processing done, configure the preview buttons
   $("#viewOrigImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', image.src)
       .height(image.height)

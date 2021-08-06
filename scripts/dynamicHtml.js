@@ -1,7 +1,8 @@
-/*Dynamically addd new form elements to the HTML
-They appear identical to the oriiginal ones in index.html
-but can be distinguished by a 6 character 'uid' suffix to all
-the HTML id attributes, that will be unique (randomly generated)*/
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
 
 const materialnames = ["White Dye", "Light Grey Dye", "Grey Dye", "Black Dye", "Brown Dye", "Red Dye", "Orange Dye", 
     "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
@@ -17,9 +18,11 @@ function newImageUpload() {
   for(var rb=0; rb<6; rb++) {
     uid += charset.charAt(Math.floor(Math.random() * charset.length));
   }
+  // random 6-char uid appended to the HTML DOM id of all elements makes them distinguishable
   $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
       href="#tabPane_${uid}">New Image<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
   
+  // Minified version of content in index.html, with 000001 replaced with new uid
   var newpane = [`<div class="tab-pane fade show active" id="tabPane_${uid}"><form id="imageForm_${uid}"><div class="form-group">`,
 `<label for="imgInput_${uid}" class="text-primary font-weight-bold">Select an Image</label><div class="custom-file">`,
 `<input type="file" class="custom-file-input" id="imgInput_${uid}" accept="image/*" required/>`,
@@ -144,12 +147,15 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   if (ymax > 1) {
     yMap = findYMap(image, ymax); // Defined in `functionwriter.js`
   }
-  
+  // `table` has a matcing coloured cell for every pixel in the image
+  // `countlist` is a table of the total occurrences
+  // Repeat these for each of the zones & append to html as seperate pages
   for (var i=0; i<zone_origins.length; i++) {
     let counts = new Array(materialnames.length).fill(0);
     let table = [`<table class="table table-responsive">`], 
-        countlist = [`<table class="table table-hover table-sm"><caption>Palette Usage</caption><thead class="thead-light">`,
-                `<tr class="py-3"><th scope="col" class="pl-3">Material</th><th scope="col">Count</th></tr></thead><tbody>`];
+        countlist = [`<table class="table table-hover table-sm"><caption class="text-dark">Palette Usage - Zone ${i+1}`,
+                     `</caption><thead class="thead-light"><tr class="py-3"><th scope="col" class="pl-3">Material</th>`,
+                     `<th scope="col">Count</th></tr></thead><tbody>`];
     let pix, pixnorm, code, y;
     x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
     for (let z=0; z<128; z++) {
@@ -157,7 +163,7 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
       for (let x=0; x<64; x++) {
         pix = getPixelAt(x+x0,z+z0,image);
         code = Math.floor(indexOfArray(pix, colourlist) / 3);
-        pixnorm = colourlist[3*code];
+        pixnorm = colourlist[3*code]; // Regular shade (not light/dark pixel), even for 3D colours
         y = (ymax <= 1) ? 0 : yMap[x+x0][z+z0] ;
         table.push(`<td tabindex="0" style="background-color: rgb(${pixnorm[0]},${pixnorm[1]},${pixnorm[2]});" `+
         `data-trigger="focus" data-content="Position : &lt;b&gt;~${x} ~${y} ~${z}&lt;/b&gt;" data-html="true" ` + 
@@ -197,7 +203,7 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   $(`#guidePageBar_${uid} li.page-item`).click(function() {
     switchActiveGuidePage(this);
   });
-
+  // Keeping 16,000+ popovers at once = horrible performance. Hence create and destroy active one each time while focused
   $(`.guide-tableareas td`).focus(function() {
     $(this).data('toggle', 'popover');
     $(this).popover('show');
@@ -206,11 +212,13 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
     $(this).popover('dispose');
     $(this).removeData('toggle');
   });
+  // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
 }
 
 function switchActiveGuidePage(pagelink) {
+  // Pagination active status does not change automatically
   let off = $(pagelink).hasClass("active");
   $(pagelink).closest("ul").find("li.active").removeClass('active');
   if (!off) {

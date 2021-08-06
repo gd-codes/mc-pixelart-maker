@@ -231,8 +231,7 @@ function submitImgFormHandler(elem, event) {
       );
       $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
       
-      deleteSurvivalGuide(uid);
-      addSurvGuideGenerator(uid);
+      deleteSurvivalGuide(uid, true);
       
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
@@ -405,13 +404,13 @@ function clearBehaviourPack() {
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
   let big = $("input[name='mapsizeopt_"+uid+"']:checked").val();
-  big = Number(big[0]) * Number(big[2]);
+  big = Number(big[0]) * Number(big[2]); // Additional warning for large picures
   if (big > 6) {
     $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
 <div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
 id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div>
 <div class="alert alert-danger mx-auto p-2 mt-3 mb-0"><p class="text-center mb-0"><strong class="text-dark">Warning &nbsp; </strong>
-Generating the detailed guide for such a large image may cause lag or crash this webpage. Proceed with caution.
+Generating the detailed guide for such a large image may possibly cause lag/performance issues. Proceed with caution.
 </p></div></div>`);
   } else {
     $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
@@ -429,16 +428,20 @@ id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"><
     setTimeout( function() {
       createSurvivalGuide(uid); // Defined in `dynamichtml.js`
       $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
-    }, 5); // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
+    }); // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
   });
   $("#guidelink_"+uid+" a").click();
 }
 
-function deleteSurvivalGuide(uid) {
-  // Do not use timeouts here, or form may be deleted immediately after adding
+function deleteSurvivalGuide(uid, readd=false) {
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
-  $("#guideTab_"+uid).remove();
-  $("#guidelink_"+uid).remove();
-  $("#guideTabList a.nav-link").first().click();
-  $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
+  setTimeout( function() {
+    $("#guideTab_"+uid).remove();
+    $("#guidelink_"+uid).remove();
+    $("#guideTabList a.nav-link").first().click();
+    $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
+    if (readd) {
+      addSurvGuideGenerator(uid);
+    }
+  });
 }

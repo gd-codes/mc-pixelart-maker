@@ -1,5 +1,10 @@
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
 
-/*Do NOT change these values. The names in `blocks` are ordered to match `colourlist` of `imageProcessor.js`.*/
+//Do NOT change these values. The names in `blocks` are ordered to match `colourlist` of `imageProcessor.js`.
 const blocks = ["concrete 0","concrete 8","concrete 7","concrete 15","concrete 12","concrete 14","concrete 1",
       "concrete 4","concrete 5","concrete 13","concrete 9","concrete 3","concrete 11","concrete 10","concrete 2",
       "concrete 6","planks 0","planks 1","crimson_planks 0","warped_planks 0","dirt 1","sandstone 0","clay 0",
@@ -28,9 +33,6 @@ function findYMap(imgdata, maxY) {
           if (lastY-2 < min) {
             min = lastY-2;
           }
-          break;
-        case 2:
-          column.push(lastY + 2);
           break;
         case 2:
           column.push(lastY + 2);
