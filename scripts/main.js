@@ -1,15 +1,22 @@
-
-const icon = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
+const icons = {
+  square : "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
       "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" style=\"border: 1px solid black; border-radius: 15%;\">"+
-      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
-const icon_noborder = "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
+      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>",
+  square_noborder : "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
       "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
-      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>";
-const questionmark = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\" class=\"bi bi-question-circle\" > <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/><path d=\"M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z\"/></svg>";
+      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>",
+  questionmark : "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\" class=\"bi bi-question-circle\" > <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/><path d=\"M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z\"/></svg>",
+  infosquare : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>`
+};
 
-const default_colourlist = "white lightgrey grey black brown red orange yellow lime green cyan "+
+const default_palette = "white lightgrey grey black brown red orange yellow lime green cyan "+
    "lightblue blue purple magenta pink oak spruce crimson warped dirt sand clay stone deepslate nether quartz expocopper "+
-   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel"+
+   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel "+
    "brightred gold emerald lapis rawiron calcite tuff dripstone slime web ice";
 
 const structures = {
@@ -43,10 +50,12 @@ $(document).ready(function() {
   });
   $("form[id^='imageForm']").submit(function(event){
     submitImgFormHandler(this, event);
-    $("body").data("confirm-page-unload", "1");
   });
-  $("button[id^='deleteBtn']").click( function() { 
+  $("span[id^='deleteBtn']").click( function() { 
     deleteImgForm(this); 
+  });
+  $("button[id^='imgEditBtn']").click(function() {
+    editImgForm(this);
   });
   $("#addNewImgBtn").click(newImageUpload);
   
@@ -61,11 +70,11 @@ $(document).ready(function() {
   /*Colour Palette modalview and related UI*/
   $(".colour-insert").each(function (index, elem) {
     let h = $(elem).html();
-    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icon+"</span>"+h);
+    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icons.square+"</span>"+h);
   });
   $(".add-questionmark").each(function (index, elem) {
     let h = $(elem).html();
-    $(elem).html(h+questionmark);
+    $(elem).html(h+icons.questionmark);
   });
   
   //Bind Colour table modal's selection controls
@@ -90,7 +99,7 @@ $(document).ready(function() {
   //Initial setup
   $("#resetImageFormBtn_000001").click();
   
-  $("#materialOptsDisplay_000001").data("selected", default_colourlist);
+  $("#materialOptsDisplay_000001").data("selected", default_palette);
   
   $('[data-toggle="tooltip"]').tooltip();
 });
@@ -123,7 +132,7 @@ function resetImgHandler(elem) {
   setTimeout(function() {
     $("#ditherSwitch_"+uid).prop("checked", true);
     $("#mapSize11_"+uid).prop("checked", true);
-    $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
+    $("#materialOptsDisplay_"+uid).data("selected", default_palette);
     $("#materialOptsDisplay_"+uid).html("<i class=\"text-muted\">By default, all colours will be used</i>");
     $("#3dSwitch_"+uid).prop('checked', false);
     $("#extraHeightOption_"+uid).collapse('hide');
@@ -167,9 +176,9 @@ function refreshColourDisplay(uid) {
   //colourmap is defined in imageProcessor.js
   var htmlc = [];
   for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
-    if (colourmap[c]!==undefined) {
-      htmlc.push("<span style=\"color:rgb(" + colourmap[c].toString() + "); padding: 2px;\">"+
-               icon_noborder +"<\span>");
+    if (colourmap.get(c)!==undefined) {
+      htmlc.push("<span style=\"color:rgb(" + colourmap.get(c).toString() + "); padding: 2px;\">"+
+               icons.square_noborder +"<\span>");
     } else {
       continue;
     }
@@ -177,7 +186,7 @@ function refreshColourDisplay(uid) {
   var content = htmlc.join("");
   if (content.search(/\w/i) < 0) {
     content = "<i class=\"text-muted\">By default, all colours will be used</i>";
-    $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
+    $("#materialOptsDisplay_"+uid).data("selected", default_palette);
   } 
   $("#materialOptsDisplay_"+uid).html(content);
 }
@@ -217,9 +226,16 @@ function submitImgFormHandler(elem, event) {
       $("#formActionsPreSubmit_"+uid).removeClass("d-flex");
       $("#formActionsPostSubmit_"+uid).addClass("d-flex");
       $("#formActionsPostSubmit_"+uid).removeClass("d-none");
-      $("#navbarList li[id='link_"+uid+"'] a").text(name);
+      $("#navbarList li[id='link_"+uid+"'] a").html(
+        name + `<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span>`
+      );
+      $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
+      
+      deleteSurvivalGuide(uid, true);
+      
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
+      console.error("Error processing image "+uid);
     }
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
@@ -232,13 +248,33 @@ function submitImgFormHandler(elem, event) {
 
 function deleteImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
-  var verify = confirm("Delete "+$("#fnNameInput_"+uid).val()+" : \nAre you sure ?");
+  var name = $("#fnNameInput_"+uid).val();
+  if (! name) {name = "this image form";}
+  var verify = confirm("Delete "+name+" : \nAre you sure ?");
   if (verify) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
     console.info("Removed image form ", uid);
-    $("a.nav-link").first().click();
+    deleteSurvivalGuide(uid);
+    $("#navbarList a.nav-link").first().click();
   }
+}
+
+function editImgForm(elem) {
+  var uid = $(elem).attr('id').slice(-6);
+  $("form#imageForm_"+uid+" :input").prop('disabled', false);
+  $("form#imageForm_"+uid+" :radio").prop('disabled', false);
+  $("form#imageForm_"+uid+" :checkbox").prop('disabled', false);
+  $("form#imageForm_"+uid+" :file").prop('disabled', false);
+  $("#formActionsPreSubmit_"+uid).removeClass("d-none");
+  $("#formActionsPreSubmit_"+uid).addClass("d-flex");
+  $("#formActionsPostSubmit_"+uid).removeClass("d-flex");
+  $("#formActionsPostSubmit_"+uid).addClass("d-none");
+  $("#viewOrigImgBtn_"+uid).off('click');
+  $("#viewResizedImgBtn_"+uid).off('click');
+  $("#viewFinalImgBtn_"+uid).off('click');
+  $("#imageForm_"+uid).removeData('finalimage');
+  //console.info("Re-enabled editing of image "+uid);
 }
 
 function startCreateBhvPack(event) {
@@ -363,4 +399,49 @@ function clearBehaviourPack() {
   $("#downloadPackBtn").off("click");
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
+}
+
+function addSurvGuideGenerator(uid) {
+  let fname = $("#fnNameInput_"+uid).val();
+  let big = $("input[name='mapsizeopt_"+uid+"']:checked").val();
+  big = Number(big[0]) * Number(big[2]); // Additional warning for large picures
+  if (big > 6) {
+    $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
+<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
+id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div>
+<div class="alert alert-danger mx-auto p-2 mt-3 mb-0"><p class="text-center mb-0"><strong class="text-dark">Warning &nbsp; </strong>
+Generating the detailed guide for such a large image may possibly cause lag/performance issues. Proceed with caution.
+</p></div></div>`);
+  } else {
+    $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
+<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
+id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div></div>`);
+  }
+  
+  $("#guideTabList").append(`<li class="nav-item" id="guidelink_${uid}"><a class="nav-link" data-toggle="tab" 
+      href="#guideTab_${uid}">${fname} <span id="deleteGuide_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
+  
+  $("#deleteGuide_"+uid).click( function(){deleteSurvivalGuide(uid);} );
+  
+  $("#genGuideBtn_"+uid).click(function() { 
+    $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
+    setTimeout( function() {
+      createSurvivalGuide(uid); // Defined in `dynamichtml.js`
+      $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
+    }); // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
+  });
+  $("#guidelink_"+uid+" a").click();
+}
+
+function deleteSurvivalGuide(uid, readd=false) {
+  $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
+  setTimeout( function() {
+    $("#guideTab_"+uid).remove();
+    $("#guidelink_"+uid).remove();
+    $("#guideTabList a.nav-link").first().click();
+    $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
+    if (readd) {
+      addSurvGuideGenerator(uid);
+    }
+  });
 }

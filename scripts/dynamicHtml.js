@@ -1,7 +1,16 @@
-/*Dynamically addd new form elements to the HTML
-They appear identical to the oriiginal ones in index.html
-but can be distinguished by a 6 character 'uid' suffix to all
-the HTML id attributes, that will be unique (randomly generated)*/
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
+
+const materialnames = ["White Dye", "Light Grey Dye", "Grey Dye", "Black Dye", "Brown Dye", "Red Dye", "Orange Dye", 
+    "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
+    "Oak", "Spruce", "Crimson", "Warped", "Dirt", "Sand", "Clay", "Stone", "Deepslate", "Netherrack", "Quartz", 
+    "Exposed Copper", "Oxidised Copper", "Foliage", "Tree Leaves", "Birch Leaves", "Conifer Leaves", "Lichen", "Crimson Bark",
+    "Warped Bark", "Crimson Nylium", "Warped Wart", "Turquoise", "Steel", "Bright Red", "Gold", "Emerald", "Lapis", 
+    "Raw Iron", "Calcite", "Tuff", "Dripstone", "Slime", "Web", "Ice", "Grass"];
+// Ordered to match `colourmap` from imageProcessor.js. Do not change.
 
 function newImageUpload() {
   var uid = "";
@@ -9,9 +18,11 @@ function newImageUpload() {
   for(var rb=0; rb<6; rb++) {
     uid += charset.charAt(Math.floor(Math.random() * charset.length));
   }
-  $("#navbarList").append("<li class=\"nav-item\" id=\"link_"+uid+"\">"+
-        "<a class=\"nav-link\" data-toggle=\"tab\" href=\"#tabPane_"+uid+"\">New Image</a></li>");
+  // random 6-char uid appended to the HTML DOM id of all elements makes them distinguishable
+  $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
+      href="#tabPane_${uid}">New Image<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
   
+  // Minified version of content in index.html, with 000001 replaced with new uid
   var newpane = [`<div class="tab-pane fade show active" id="tabPane_${uid}"><form id="imageForm_${uid}"><div class="form-group">`,
 `<label for="imgInput_${uid}" class="text-primary font-weight-bold">Select an Image</label><div class="custom-file">`,
 `<input type="file" class="custom-file-input" id="imgInput_${uid}" accept="image/*" required/>`,
@@ -57,7 +68,7 @@ function newImageUpload() {
 `<a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> `,
 `en.wikipedia.org/wiki/Dither</a><br> This is good for photographs, but may not be necessary for cartoons/etc with `,
 `solid colours (no gradients)" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" class="text-info">`,
-`${questionmark}</a></label></div></div></div><div class="form-group d-flex justify-content-center"`,
+`${icons.questionmark}</a></label></div></div></div><div class="form-group d-flex justify-content-center"`,
 `id="formActionsPreSubmit_${uid}"><input type="reset" class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_${uid}"/>`,
 `<button class="btn btn-primary mx-md-2" id="processImageBtn_${uid}" type="submit">Process Image &nbsp; &nbsp;`,
 `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-square-fill" fill="currentColor" `,
@@ -65,10 +76,10 @@ function newImageUpload() {
 `2-2V2a2 2 0 0 0-2-2H2zm2.5 8.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 `,
 `0 0 1-.708-.708L10.293 8.5H4.5z"/></svg></button></div></form><div class="row d-none justify-content-between" `,
 `id="formActionsPostSubmit_${uid}"><div></div><div class="d-inline"><span class="text-right mr-md-1"> View Images </span>`,
-`<div class="btn-group"><button class="btn btn-info" id="viewOrigImgBtn_${uid}">Original</button>`,
-`<button class="btn btn-info" id="viewResizedImgBtn_${uid}">Resized</button>`,
+`<div class="btn-group"><button class="btn btn-outline-info" id="viewOrigImgBtn_${uid}">Original</button>`,
+`<button class="btn btn-outline-info" id="viewResizedImgBtn_${uid}">Resized</button>`,
 `<button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_${uid}">Converted</button></div></div>`,
-`<button class="btn btn-danger mr-sm-3" id="deleteBtn_${uid}">Delete</button></div></div>`]);
+`<button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button></div></div>`]);
   
   $("#tabContainer").append(newpane.join(""));
   
@@ -90,9 +101,127 @@ function newImageUpload() {
   $("#imageForm_"+uid).submit(function(event){
     submitImgFormHandler(this, event);
   });
-  $("#materialOptsDisplay_"+uid).data("selected", default_colourlist);
-  $("#deleteBtn_"+uid).click(function(){deleteImgForm(this);});
+  $("#deleteBtn_"+uid).click( function() { 
+    deleteImgForm(this); 
+  });
+  $("#imgEditBtn_"+uid).click(function() {
+    editImgForm(this);
+  });
+  $("#materialOptsDisplay_"+uid).data("selected", default_palette);
   $('[data-toggle="tooltip"]').tooltip();
   $("li#link_"+uid+" a").click();
   $("#resetImageFormBtn_"+uid).click();
+  
+  refreshColourDisplay(uid);
+}
+
+
+
+function createSurvivalGuide(uid) {
+  $("#survGuidePlaceholderText").html(`<p class="d-block"><strong class="text-muted">Note </strong>: For convenience, each 
+artwork is divided into a number of zones (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank">
+the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner. </p>`);
+  var divlist = [], htm = [], navlist = [`<li class="page-item disabled"><a class="page-link text-dark bg-light border-0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
+    <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
+    <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z"/></svg></a></li>`];
+
+  try {
+    var image = $("#imageForm_"+uid).data('finalimage');
+    //let fname = $("#fnNameInput_"+uid).val();
+    var pal = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
+  } catch (err) {
+    console.error(err);
+    alert("Unexpected Error\n\nCould not generate the guide");
+    return;
+  }
+
+  var zone_origins=[], x0, z0, yMap; 
+    //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
+  for (let z0=0; z0<image.height; z0+=128) {
+    for (let x0=0; x0<image.width; x0+=64) {
+      zone_origins.push([x0,z0]);
+    }
+  }
+  var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
+  if (ymax > 1) {
+    yMap = findYMap(image, ymax); // Defined in `functionwriter.js`
+  }
+  // `table` has a matcing coloured cell for every pixel in the image
+  // `countlist` is a table of the total occurrences
+  // Repeat these for each of the zones & append to html as seperate pages
+  for (var i=0; i<zone_origins.length; i++) {
+    let counts = new Array(materialnames.length).fill(0);
+    let table = [`<table class="table table-responsive">`], 
+        countlist = [`<table class="table table-hover table-sm"><caption class="text-dark">Palette Usage - Zone ${i+1}`,
+                     `</caption><thead class="thead-light"><tr class="py-3"><th scope="col" class="pl-3">Material</th>`,
+                     `<th scope="col">Count</th></tr></thead><tbody>`];
+    let pix, pixnorm, code, y;
+    x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
+    for (let z=0; z<128; z++) {
+      table.push("<tr>");
+      for (let x=0; x<64; x++) {
+        pix = getPixelAt(x+x0,z+z0,image);
+        code = Math.floor(indexOfArray(pix, colourlist) / 3);
+        pixnorm = colourlist[3*code]; // Regular shade (not light/dark pixel), even for 3D colours
+        y = (ymax <= 1) ? 0 : yMap[x+x0][z+z0] ;
+        table.push(`<td tabindex="0" style="background-color: rgb(${pixnorm[0]},${pixnorm[1]},${pixnorm[2]});" `+
+        `data-trigger="focus" data-content="Position : &lt;b&gt;~${x} ~${y} ~${z}&lt;/b&gt;" data-html="true" ` + 
+        `data-placement="top" title="${materialnames[code]}"></td>`);
+        counts[code] += 1;
+      }
+      table.push("</tr>");
+    }
+    table.push("</table>");
+    
+    for (let ct of pal) {
+      let indexn = colourtokens.indexOf(ct);
+      countlist.push(`<tr><td class="pl-4">${materialnames[indexn]}</td><td>${counts[indexn]}</td></tr>`);
+    }
+    countlist.push(`</tbody></table>`);
+    
+    htm = [`<div class="collapse" id="guidePage_${i+1}_map_${uid}" data-parent="#survGuide_${uid}">`,
+           `<div class="row"><div class="col-md-4" id="survGuideBlockCount_${i+1}_${uid}"><div class="alert alert-info">`,
+           `<p class="alert-heading">${icons.infosquare}</p>`,
+           `<p>Click on any of the squares in the table to view a popup with its block type and coordinates.`,
+           `<br/>You can also use the <code>Tab</code> key to navigate row-by-row.</p>`+
+           ((ymax <= 1) ? `` : `<p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>`),
+           `</div>`].concat(
+          countlist, [`</div><div class="col-md-8 guide-tableareas" id="survGuideTableArea_${i+1}_${uid}">`], 
+          table, [`</div></div></div>`]);
+    navlist.push(`<li class="page-item"><a class="page-link" data-toggle="collapse" ` + 
+                 `href="#guidePage_${i+1}_map_${uid}">${i+1}</a></li>`);
+    divlist.push(htm.join(""));
+  }
+  
+  $("#guideTab_"+uid).html([`<nav aria-label="Pagination" id="guidePageBar_${uid}">`,
+      `<ul class="pagination justify-content-center">`,
+      navlist.join(""), 
+      `</ul></nav><div class="accordion border-top border-light pt-2" id="survGuide_${uid}">`,
+      divlist.join(""),
+      `</div>`].join(""));
+  $(`#guidePageBar_${uid} li.page-item`).click(function() {
+    switchActiveGuidePage(this);
+  });
+  // Keeping 16,000+ popovers at once = horrible performance. Hence create and destroy active one each time while focused
+  $(`.guide-tableareas td`).focus(function() {
+    $(this).data('toggle', 'popover');
+    $(this).popover('show');
+  });
+  $(`.guide-tableareas td`).blur(function() {
+    $(this).popover('dispose');
+    $(this).removeData('toggle');
+  });
+  // Make page 1 visible & active
+  $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
+  $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+function switchActiveGuidePage(pagelink) {
+  // Pagination active status does not change automatically
+  let off = $(pagelink).hasClass("active");
+  $(pagelink).closest("ul").find("li.active").removeClass('active');
+  if (!off) {
+    $(pagelink).addClass('active');
+  }
 }

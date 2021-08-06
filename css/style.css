@@ -83,6 +83,36 @@ kbd {
   padding: 10px;
 }
 
+table caption {
+  caption-side: top;
+}
+
+.delete-X:hover {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+#survGuidePlaceholderText {
+  padding-left: 200;
+  padding-right: 200;
+}
+
+.guide-tableareas {
+  overflow: scroll !important;
+  max-height: 1500;
+}
+
+.guide-tableareas td:focus {
+  -ms-transform: scale(1.5); 
+  -moz-transform: scale(1.5); 
+  -webkit-transform: scale(1.5); 
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  border: medium solid black !important;
+}
+
 @media (max-width: 768px) {
   .checkbox-scaled input[type=checkbox] {
     -ms-transform: scale(1.0); /* IE */
@@ -111,5 +141,11 @@ kbd {
     font-size: 85%;
     max-width: 20%;
     word-spacing: 80%;
+  }
+  #survGuidePlaceholderText p {
+    width: 100% !important;
+  }
+  #guideTabsContainer nav {
+    overflow-x: scroll;
   }
 }

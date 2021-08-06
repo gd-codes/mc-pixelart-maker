@@ -65,7 +65,9 @@
               border border-dark border-bottom-0">
     <ul class="nav nav-tabs" id="navbarList">
       <li class="nav-item" id="link_000001">
-        <a class="nav-link active" data-toggle="tab" href="#tabPane_000001">Image 1</a></li>
+        <a class="nav-link active" data-toggle="tab" href="#tabPane_000001">Image 1
+        <span id="deleteBtn_000001" class="delete-X"> &nbsp; &times;</span></a>
+      </li>
     </ul>
     <button class="btn btn-success rounded rounded-pill" id="addNewImgBtn">
       <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" 
@@ -225,12 +227,12 @@
     <div class="d-inline">
       <span class="text-right mr-md-1"> View Images </span>
       <div class="btn-group">
-        <button class="btn btn-info" id="viewOrigImgBtn_000001">Original</button>
-        <button class="btn btn-info" id="viewResizedImgBtn_000001">Resized</button>
+        <button class="btn btn-outline-info" id="viewOrigImgBtn_000001">Original</button>
+        <button class="btn btn-outline-info" id="viewResizedImgBtn_000001">Resized</button>
         <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_000001">Converted</button>
       </div>
     </div>
-    <button class="btn btn-danger mr-sm-3" id="deleteBtn_000001">Delete</button>
+    <button class="btn btn-warning mr-sm-3" id="imgEditBtn_000001">Edit</button>
   </div>
   </div>
   </div>
@@ -304,6 +306,19 @@
       <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
     </div>
   </div>
+  <div class="container-lg text-center text-capitalize"><h3>Survival Guide</h3></div>
+  <div class="container bg-light rounded-top py-3 px-4 mt-4 mb-0 d-flex justify-content-between
+              border border-dark border-bottom-0">
+    <ul class="nav nav-tabs" id="guideTabList"></ul>
+  </div>
+  <div class="container border border-dark border-top-0 border-bottom-0 py-3 px-4 my-0" id="survGuidePlaceholderText">
+      <p class="d-block w-75 text-muted text-center mb-0 mx-auto"> If you want to take up the challenge of building the 
+      map art by yourself without using commands, this section can help by showing you block-by-block placement of the 
+      processed images !<br/>The options to generate these will appear here after processing an image.</p>
+  </div>
+  <div class="container tab-content border border-dark border-top-0 rounded-bottom py-3 px-4 mt-0 mb-4" 
+       id="guideTabsContainer">
+  </div>
   <div class="mx-auto my-4 px-3 mt-5" id="carouselContainer">
     <div id="demoCarousel" class="carousel slide carousel-fade mx-auto">
       <ol class="carousel-indicators">
@@ -343,7 +358,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 2.0.0<br><br></h6>
+  <h6 class="text-white-50">Version 3.0<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 
@@ -874,9 +889,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"></script>
 <!-- My scripts-->
 <script src="scripts/main.js"></script>
-<script src="scripts/dynamicHtml.js"></script>
 <script src="scripts/imageProcessor.js"></script>
 <script src="scripts/functionWriter.js"></script>
+<script src="scripts/dynamicHtml.js"></script>
 
 </body>
 </html>
