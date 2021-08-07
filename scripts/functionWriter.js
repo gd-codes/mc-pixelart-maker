@@ -99,8 +99,8 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
     }
     if (!linkpos && i<zone_origins.length-1) { //If not linked and there are more zones,
       var nextzone = zone_origins[i+1];        //Shift the user to the origin for next zone
-      fun += "setblock ~".concat(nextzone[0]-x0, " ~ ~", nextzone[1]-z0, 
-                                 " cobblestone 0\n"); //Marker block
+      fun += "setblock ~".concat(nextzone[0]-x0, " ~-1 ~", nextzone[1]-z0, 
+                                 " glowstone 0\n"); //Marker block
       fun += "teleport @p ~".concat(nextzone[0]-x0, " ~ ~", nextzone[1]-z0, "\n")
     }
     fun = fun.replace(/~0/gm, "~");

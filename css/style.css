@@ -149,3 +149,7 @@ table caption {
     overflow-x: scroll;
   }
 }
+
+.spaced-list li {
+  padding-bottom: 10px;
+}

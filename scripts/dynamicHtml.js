@@ -22,7 +22,7 @@ function newImageUpload() {
   $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
       href="#tabPane_${uid}">New Image<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
   
-  // Minified version of content in index.html, with 000001 replaced with new uid
+  // Minified version of content in index.html
   var newpane = [`<div class="tab-pane fade show active" id="tabPane_${uid}"><form id="imageForm_${uid}"><div class="form-group">`,
 `<label for="imgInput_${uid}" class="text-primary font-weight-bold">Select an Image</label><div class="custom-file">`,
 `<input type="file" class="custom-file-input" id="imgInput_${uid}" accept="image/*" required/>`,
@@ -57,9 +57,9 @@ function newImageUpload() {
 `<div class="form-group row collapse" id="extraHeightOption_${uid}">`,
 `<label for="heightInput_${uid}" class="col-sm-2 col-form-label text-primary text-center">Height</label>`,
 `<div class="col-sm-10">`,
-`<small class="form-text text-muted pb-sm-1">Maximum height of the 3D structure, between 5 and 255 blocks:</small>`,
-`<input type="number" class="form-control" id="heightInput_${uid}" min="5" max="255" placeholder="Enter height... `,
-`(at least 50 blocks recommended)"></div></div><div class="form-group row">`,
+`<small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 255 blocks:</small>`,
+`<input type="number" class="form-control" id="heightInput_${uid}" min="5" max="255" placeholder="Enter a height range `,
+`(recommended - at least 50 blocks)"></div></div><div class="form-group row">`,
 `<label for="ditherOption_${uid}" class="col-sm-2 col-form-label text-primary text-center">Dither</label>`,
 `<div class="col-sm-10 pt-sm-2" id="ditherOption_${uid}"><div class="custom-control custom-switch">`,
 `<input type="checkbox" class="custom-control-input" id="ditherSwitch_${uid}"/>`,
