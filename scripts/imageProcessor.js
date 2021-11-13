@@ -84,18 +84,27 @@ function analyseImage(uid, image, area, palette, d3, dither) {
     $("#displayImage").attr('src', image.src)
       .height(image.height)
       .width(image.width);
+    var base64 = converted_image.replace('data:image/png;base64,', '');
+    $('#downloadImageButton').attr('href', image.src);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-original.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewResizedImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', resized_image)
       .height(h*dispScale)
       .width(w*dispScale);
+    var base64 = converted_image.replace('data:image/png;base64,', '');
+    $('#downloadImageButton').attr('href', resized_image);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-resized.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewFinalImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', converted_image)
       .height(h*dispScale)
       .width(w*dispScale);
+    var base64 = converted_image.replace('data:image/png;base64,', '');
+    $('#downloadImageButton').attr('href', converted_image);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-converted.png'));
     $("#imageDisplayModal").modal('show');
   })
 }
@@ -188,4 +197,3 @@ function indexOfArray(a, parent_arr) {
     }
   } //Arrays are in different variables -> normal comparison always false
 }
-
