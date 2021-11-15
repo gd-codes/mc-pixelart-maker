@@ -178,7 +178,7 @@ function refreshColourDisplay(uid) {
   for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
     if (colourmap.get(c)!==undefined) {
       htmlc.push("<span style=\"color:rgb(" + colourmap.get(c).toString() + "); padding: 2px;\">"+
-               icons.square_noborder +"<\span>");
+               icons.square_noborder +"</span>");
     } else {
       continue;
     }

@@ -85,7 +85,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
       .height(image.height)
       .width(image.width);
     $('#downloadImageButton').attr('href', image.src);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-original.png'));
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-original.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewResizedImgBtn_"+uid).click(function() {
@@ -93,7 +93,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
       .height(h*dispScale)
       .width(w*dispScale);
     $('#downloadImageButton').attr('href', resized_image);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-resized.png'));
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-resized.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewFinalImgBtn_"+uid).click(function() {
@@ -101,7 +101,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
       .height(h*dispScale)
       .width(w*dispScale);
     $('#downloadImageButton').attr('href', converted_image);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_000001').val() + '-converted.png'));
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-converted.png'));
     $("#imageDisplayModal").modal('show');
   })
 }
