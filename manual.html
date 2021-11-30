@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Minecraft Map Art Maker">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.16,vanilla,add-on">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -14,48 +14,169 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
   
-<link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="manifest" href="images/site.webmanifest">
-<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ccbb99">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#331100">
 <link rel="shortcut icon" href="images/favicon.ico">
-<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileColor" content="#331100">
 <meta name="msapplication-config" content="images/browserconfig.xml">
-<meta name="theme-color" content="#ccbb99">
+<meta name="theme-color" content="#331100">
 	
 <meta property="og:title" content="Minecraft Map Art Maker - Manual" />
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/manual.html" />
-<meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d5.png" />
+<meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
 <div class="container-lg justify-content-lg-center mx-auto my-5 py-3" id="pageMainContent">
-  <div class="alert alert-warning alert-dismissible fade show">
-    <h4 class="alert-heading">Update !</h4><p></p>
-    <p>This web app is being updated to include the new Minecraft 1.17 blocks, along with many other improved features 
-      to help with making map art in survival...</p>
-    <p>Please check back in around 1-2 weeks !</p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
-    <span aria-hidden="true">&times;</span> </button>
+  <div class="container-lg text-center text-capitalize" id="manual"><h3>Manual<br><hr><br></h3></div>
+  <div class="alert alert-dismissible alert-success fade show">
+    <div class="text-center pt-2">This <em>isn't</em> the main page of this application !</div>
+    <button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span></button>
+    <div class="my-4 row"><div class="col-md-4"></div>
+    <div class="col-md-4 px-2"><a href="index.html" class="btn btn-block btn-success">
+      Back to the App &nbsp;
+      <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-controller" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.119 2.693c.904.19 1.75.495 2.235.98.407.408.779 1.05 1.094 1.772.32.733.599 1.591.805 2.466.206.875.34 1.78.364 2.606.024.815-.059 1.602-.328 2.21a1.42 1.42 0 0 1-1.445.83c-.636-.067-1.115-.394-1.513-.773a11.307 11.307 0 0 1-.739-.809c-.126-.147-.25-.291-.368-.422-.728-.804-1.597-1.527-3.224-1.527-1.627 0-2.496.723-3.224 1.527-.119.131-.242.275-.368.422-.243.283-.494.576-.739.81-.398.378-.877.705-1.513.772a1.42 1.42 0 0 1-1.445-.83c-.27-.608-.352-1.395-.329-2.21.024-.826.16-1.73.365-2.606.206-.875.486-1.733.805-2.466.315-.722.687-1.364 1.094-1.772.486-.485 1.331-.79 2.235-.98.932-.196 2.03-.292 3.119-.292 1.089 0 2.187.096 3.119.292zm-6.032.979c-.877.185-1.469.443-1.733.708-.276.276-.587.783-.885 1.465a13.748 13.748 0 0 0-.748 2.295 12.351 12.351 0 0 0-.339 2.406c-.022.755.062 1.368.243 1.776a.42.42 0 0 0 .426.24c.327-.034.61-.199.929-.502.212-.202.4-.423.615-.674.133-.156.276-.323.44-.505C4.861 9.97 5.978 9.026 8 9.026s3.139.943 3.965 1.855c.164.182.307.35.44.505.214.25.403.472.615.674.318.303.601.468.929.503a.42.42 0 0 0 .426-.241c.18-.408.265-1.02.243-1.776a12.354 12.354 0 0 0-.339-2.406 13.753 13.753 0 0 0-.748-2.295c-.298-.682-.61-1.19-.885-1.465-.264-.265-.856-.523-1.733-.708-.85-.179-1.877-.27-2.913-.27-1.036 0-2.063.091-2.913.27z"/>
+  <path d="M11.5 6.026a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1 1a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1 1a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-7-2.5h1v3h-1v-3z"/>
+  <path d="M3.5 6.526h3v1h-3v-1zM3.051 3.26a.5.5 0 0 1 .354-.613l1.932-.518a.5.5 0 0 1 .258.966l-1.932.518a.5.5 0 0 1-.612-.354zm9.976 0a.5.5 0 0 0-.353-.613l-1.932-.518a.5.5 0 1 0-.259.966l1.932.518a.5.5 0 0 0 .612-.354z"/>
+</svg></a></div>
+  <div class="col-md-4"></div></div>
   </div>
+  <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
+  <p> It is recommended to use this app on a desktop/laptop instead of on mobile! </p> 
+  <p> The app has been tested on recent versions of Google Chrome, Safari and Microsoft Edge. 
+    Internet Explorer is <em>not</em> fully compatible. Since this is a client-side app (It is run entirely by your browser,
+    no data is sent back the server for processing !), some essential functions may not
+    work if your browser hasn't been updated for a long while, or your device places many
+    restrictions on it.</p> <p>Javascript <b><i>must</i></b> be enabled for this site. In additon, it is recommended
+  that atleast 10 MB memory is available (or don't upload too many images into one pack).</p>
+    <p>This site does not use any cookies or local storage.</p>
+  <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Miscellaneous notes<br><br></h4>
+  <ul class="mt-1">
+    <li> When you create the add-on, commands to build all the images that were uploaded <i>and</i> processed
+      will be written into it. Even a single map contains 128&times;128 = 16384 visible blocks to be placed (which is a 
+      lot !), so the commands are split into 2 sets per map and written into seperate function files (they are
+      regular commands like <code>/setblock</code>, but Minecraft can then execute upto 10,000 (by default) of them 
+      <em>at once</em> from these files). More instructions on running the functions are given <a href="#in-mc">below</a>.
+      <br><a href="https://minecraft.gamepedia.com/Function_(Bedrock_Edition)" rel="nofollow noreferrer">
+      Read more</a> about functions in Minecraft.</li><br>
+    <li> The converted images seen after you click the 'Process Image' button may vary slightly (especially in the "noise"
+      generated due to Image Dithering) depending on your device / browser (Since part of the image resizing operations are
+      performed by your browser). This is unavoidable. </li><br>
+    <li> The commands use relative <b>&tilde;</b> (<a  rel="nofollow noreferrer"
+      href="https://minecraft.gamepedia.com/Commands#Relative_world_coordinates:_Tilde_notation">tilde notation</a>) to
+    specify the positon, so that the image can be built wherever you (the player, or a command block if you are using
+    one) are located in your world when starting, instead of a specific area every time.</li><br>
+    <li>For the 3D arrangement, the max height specification only ensures that blocks do not get
+    placed <i>beyond</i> that height, but the limit may not be reached at all - it depends on the colours in the
+    image. You may find, after building it, that the blocks did not reach that height anyway. <br> The limit does not 
+    majorly affect the final appearance. (The shade of each block depends on the height difference between it and the block
+    immediately North of it. This is usually 2 blocks, but may have to abruptly change near the height limit. For this reason,
+    it is recommended not to keep a very low limit.)</li><br>
+  </ul>
+  <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
+  <ol class="spaced-list">
+    <li> Import and apply the behaviour pack to your world(s). <br> <strong class="text-muted">Note : </strong >Cheats &amp;
+      Operator permissions must be enabled to use functions. If you want to earn achievements in that world or keep cheats 
+      off, you'll have to place the blocks manually (You can look at the Survival Guide for some help).</li>
+    <li> Go to the location where the image is to be built, and open a Level 0 (smallest size) map there. Check that the
+      starting block you choose is aligned with the top-left (NW) corner of the map !<br>
+      This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
+      which will extend South and East from here. <br> Height-wise, it will be built at the block in which you are standing (2D),
+      or for the 3D palette, extending from this height till [<i>specified height range</i>] blocks upwards
+      (Also check that this doesn't cross the world build height !).</li>
+    <li> <div class="row"><div class="col-md-8">If your image covers an area of <b><i>a</i></b>x<b><i>b</i></b>
+      maps, there will be <code>2 * <b><i>a</i></b> * <b><i>b</i></b></code> commands to be executed in order,
+      numbered <i>image_name</i>/<b>1</b>, <i>image_name</i>/<b>2</b>, ... so on.
+      Each of these builds a part of the image, covering a vertical half of one map, arranged in order as illustrated
+      in the figure alongside.<br>
+      <ul><li class="py-2">If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
+        you must run all the commands while staying at this same corner only (top-left of the whole image).</li>
+      <li> Otherwise, running each function will teleport you (the nearest player) to the corner of the next zone 
+        (marked by small black squares in the figure) after placing those blocks, so that you "move along" as you're running
+        the functions one-by-one. A glowstone block may also be placed there to identify the corner - you must be standing 
+        <em>exactly on top</em> of it before continuing with the next one.</li></ul></div>
+      <div class="col-md-4"><figure class="figure">
+        <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
+        <figcaption class="figure-caption">Example arrangement for an art covering 2x2 maps.</figcaption></figure></div>
+      </div></li>
+    <li>The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
+    For example, if your image's name was <i>wallpaper</i>, and its size was 2x1 maps, you would need to run
+      the commands <pre class="pl-4 mb-0"><code>/function wallpaper/1
+/function wallpaper/2
+/function wallpaper/3
+/function wallpaper/4</code></pre><br>
+    <strong class="text-muted">Note :</strong> You may need to restart Minecraft and run the <kbd>/reload</kbd> command first,
+      in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
+    <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
+      and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
+      href="https://minecraft.gamepedia.com/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
+      from updating if some other structures are built above them, or if the colour palette changes in future updates.</p>
+    </li>
+  </ol>
+  <br><hr>
+  <h4 class="container-lg text-center text-capitalize" id="example-pack"><br><br>Example behaviour pack<br><br></h4>
+  <p> This is the file structure of an example behaviour pack generated by this app. It contains 2 
+  images - one with the function name "cliff" of size 2x1, and another named "bastion" of
+  size 3x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
+  <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
+  behaviour pack.mcpack
+   |
+   |-- manifest.json
+   |-- pack_icon.png
+   ├-- structures/
+   |    └ mapart/
+   |       ...
+   └-- functions/
+        ├-- cliff/
+        |    |-- 1.mcfunction
+        |    |-- 2.mcfunction
+        |    |-- 3.mcfunction
+        |    └-- 4.mcfunction
+        └-- bastion/
+             |-- 1.mcfunction
+             └-- 2.mcfunction
+             ├     ...
+             └-- 12.mcfunction
+  </code></pre><br>
+  <div class="row"><div class="col-4"></div>
+    <div class="col-4"><a class="btn btn-block btn-warning mx-auto" href="resources/sample_pack.mcpack" 
+                          download="sample_pack.mcpack"> Download a sample pack </a>
+      <!--form method="get" action="resources/all_link_keep.zip">
+      <button class="btn btn-block btn-warning mx-auto" type="submit">Download a sample pack</button></form-->
+    </div><div class="col-4"></div></div><br>
+  <ul><li> The <code>manifest</code> specifies : 
+      <ul> <li> The minimum game version - <code> 1.17.0</code> (of Minecraft)</li> 
+        <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> 
+        <li> The name and description that you entered, will be displayed for the add-on in game.</li>
+        <li> 2 version-4 <a  rel="nofollow noreferrer" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">
+          UUIDs </a> to uniquely identify the pack, generated securely by <a href="https://www.uuidtools.com/" rel="nofollow 
+          noreferrer"> an external service</a>. If their server does not respond, you will be prompted to enter 2 UUIDs manually - any UUID (v4 or other) is sufficient as long as it has not been reused or copied from another existing pack that you are using / may use.</li></ul> 
+      You can always edit the icon or manifest if you prefer to make any changes later on.</li><br></ul>
+  <p>The pack contains some structures (with block data) of a few blocks that may decay or need support (non-solid blocks)
+    etc - these structures are used instead of the setblock command to overcome those limitations. Every pack will contain
+    these even if they are not used in any image(s).</p>
+  <p> To view/edit/replace the files inside, just rename the <code>.mcpack</code> extension to <code>.zip</code>
+  and extract all contents using any Compressed (ZIP) folder utility.</p>
+  <br><hr><br>
+  <div class="text-center lead"><a href="#manual">Back to top &uarr;</a> </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 1.2.0<br><br></h6>
+  <h6 class="text-white-50">Version 3.1<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 

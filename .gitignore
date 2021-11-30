@@ -1,2 +1,4 @@
 .DS_Store
-images/*.zip
+*.mp4
+_git-untracked/**
+localtestingserver.*

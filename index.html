@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Minecraft Map Art Maker">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.16,vanilla,add-on">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -14,51 +14,355 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
   
-<link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="manifest" href="images/site.webmanifest">
-<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ccbb99">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#331100">
 <link rel="shortcut icon" href="images/favicon.ico">
-<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileColor" content="#331100">
 <meta name="msapplication-config" content="images/browserconfig.xml">
-<meta name="theme-color" content="#ccbb99">
+<meta name="theme-color" content="#331100">
 	
 <meta property="og:title" content="Minecraft Map Art Maker" />
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
-<meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d5.png" />
+<meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  
 </head>
 
-<body>
+<body data-confirm-page-unload="0">
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.16) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
+<noscript class="alert alert-danger container-fluid d-block rounded-0">
+  <strong>No script</strong> <br> Javascript appears to be disabled ! Please allow this app to run Javascript 
+  (from your browser settings) in order for it to function.
+</noscript>
 <div class="container-lg justify-content-lg-center mx-auto my-5" id="pageMainContent">
-  <div class="alert alert-warning alert-dismissible fade show">
-    <h4 class="alert-heading">Update !</h4><p></p>
-    <p>This web app is being updated to include the new Minecraft 1.17 blocks, along with many other improved features 
-      to help with making map art in survival...</p>
-    <p>Please check back in around 1-2 weeks !</p>
+  <div class="alert alert-info alert-dismissible fade show">
+    <h4 class="alert-heading">How this app works</h4>
+    <p>Minecraft Map Art Maker pixelates and reduces the colour palette of your uploaded image to one that can be shown 
+      in Minecraft maps using vanilla blocks. It then identifies the coordinates and exact blocks to place in your world for
+			each pixel, so that a map of the area will display the final image !</p>
+    <ul> <li> The placement can be automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
+      href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. These can be readily executed 
+      using a few '/function' commands in-game, through a command block or by a player.</li> <li>The packs are valid for 
+      the latest version of Minecraft on all supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
+    </ul>
+    <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer"
+    href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !</p>
+    <p> Other technical explanation, and an example add-on for download, can be found <a href="manual.html#example-pack"
+    target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
+  </div>
+  <div class="container-lg text-center text-capitalize"><h3>Upload Images</h3></div>
+  <div class="container bg-light rounded-top py-3 px-4 mt-4 mb-0 d-flex justify-content-between
+              border border-dark border-bottom-0">
+    <ul class="nav nav-tabs" id="navbarList">
+      <li class="nav-item" id="link_000001">
+        <a class="nav-link active" data-toggle="tab" href="#tabPane_000001">Image 1
+        <span id="deleteBtn_000001" class="delete-X"> &nbsp; &times;</span></a>
+      </li>
+    </ul>
+    <button class="btn btn-success rounded rounded-pill" id="addNewImgBtn">
+      <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" 
+           xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+    </button>
+  </div>
+  <div class="container tab-content border border-dark border-top-0 rounded-bottom py-3 px-4 mt-0 mb-4" 
+       id="tabContainer">
+  <div class="tab-pane fade show active" id="tabPane_000001">
+  <form id="imageForm_000001">
+    <div class="form-group">
+      <label for="imgInput_000001" class="text-primary font-weight-bold">Select an Image</label>
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="imgInput_000001" accept="image/*" required/>
+        <label for="imgInput_000001" class="custom-file-label">Choose file</label>
+      </div></div>
+    <div class="form-group row">
+      <label for="fnNameInput_000001" class="col-sm-2 col-form-label text-primary text-center">Function name</label>
+      <div class="col-sm-10">
+      <input type="text" id="fnNameInput_000001" class="form-control" pattern="[A-Za-z0-9_&#92;.&#92;-()]+"
+             placeholder="Enter a short identifier for this image..." required/>
+      <small class="form-text text-muted text-sm-left pl-sm-2">The name can only contain alphanumeric characters
+        (case <i>in</i>sensitive), periods, underscores, hyphens and parentheses.</small></div>
+    </div>
+    <div class="form-group row">
+      <label for="mapSizeInput_000001" class="col-sm-2 col-form-label text-primary text-center">Area</label>
+      <div class="col-sm-10">
+        <span class="form-text text-muted">Select the number of Level 0 (128x128) maps that the image should cover :</span>
+        <div id="mapSizeInput_000001">
+          <div class="mx-auto">
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize11_000001" type="radio" 
+                   name="mapsizeopt_000001" value="1x1" required/>
+            <label for="mapSize11_000001" class="form-check-label">1x1&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize21_000001" type="radio" 
+                   name="mapsizeopt_000001" value="2x1"/>
+            <label for="mapSize21_000001" class="form-check-label">2x1&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize31_000001" type="radio" 
+                   name="mapsizeopt_000001" value="3x1"/>
+            <label for="mapSize31_000001" class="form-check-label">3x1&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize41_000001" type="radio" 
+                   name="mapsizeopt_000001" value="4x1"/>
+            <label for="mapSize41_000001" class="form-check-label">4x1</label></div>
+          </div><div class="mx-auto">
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize12_000001" type="radio" 
+                   name="mapsizeopt_000001" value="1x2" required/>
+            <label for="mapSize12_000001" class="form-check-label">1x2&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize22_000001" type="radio" 
+                   name="mapsizeopt_000001" value="2x2"/>
+            <label for="mapSize22_000001" class="form-check-label">2x2</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize32_000001" type="radio" 
+                   name="mapsizeopt_000001" value="3x2"/>
+            <label for="mapSize32_000001" class="form-check-label">3x2</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize42_000001" type="radio" 
+                   name="mapsizeopt_000001" value="4x2"/>
+            <label for="mapSize42_000001" class="form-check-label">4x2</label></div>
+          </div><div class="mx-auto">
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize13_000001" type="radio" 
+                   name="mapsizeopt_000001" value="1x3" required/>
+            <label for="mapSize13_000001" class="form-check-label">1x3&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize23_000001" type="radio" 
+                   name="mapsizeopt_000001" value="2x3"/>
+            <label for="mapSize23_000001" class="form-check-label">2x3</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize33_000001" type="radio" 
+                   name="mapsizeopt_000001" value="3x3"/>
+            <label for="mapSize33_000001" class="form-check-label">3x3</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize43_000001" type="radio" 
+                   name="mapsizeopt_000001" value="4x3"/>
+            <label for="mapSize43_000001" class="form-check-label">4x3</label></div>
+          </div><div class="mx-auto">
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize14_000001" type="radio" 
+                   name="mapsizeopt_000001" value="1x4" required/>
+            <label for="mapSize14_000001" class="form-check-label">1x4&nbsp;</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize24_000001" type="radio" 
+                   name="mapsizeopt_000001" value="2x4"/>
+            <label for="mapSize24_000001" class="form-check-label">2x4</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize34_000001" type="radio" 
+                   name="mapsizeopt_000001" value="3x4"/>
+            <label for="mapSize34_000001" class="form-check-label">3x4</label></div>
+            <div class="form-check form-check-inline">
+            <input class="form-check form-check-input" id="mapSize44_000001" type="radio" 
+                   name="mapsizeopt_000001" value="4x4"/>
+            <label for="mapSize44_000001" class="form-check-label">4x4</label></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="materialOpts_000001" class="col-sm-2 col-form-label text-primary text-center">Palette</label>
+      <div class="col-sm-10" id="materialOpts_000001">
+        <div class="row">
+          <div class="col-auto">
+            <button class="btn btn-info btn-sm my-auto" type="button" id="materialChooseBtn_000001">Customise</button>
+          </div>
+          <div class="col overflow-hidden" style="line-height: 18px;" id="materialOptsDisplay_000001" data-selected="">
+            <i class="text-muted">By default, all colours will be used</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="3dOption_000001" class="col-sm-2 col-form-label text-primary text-center">3D</label>
+      <div class="col-sm-10 pt-sm-2" id="3dOption_000001"><div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="3dSwitch_000001"/>
+        <label for="3dSwitch_000001" class="custom-control-label">Use height variation of blocks to obtain additional 
+          lighter and darker shades of each colour (3x the palette !)
+        </label>
+      </div></div>
+    </div>
+    <div class="form-group row collapse" id="extraHeightOption_000001">
+      <label for="heightInput_000001" class="col-sm-2 col-form-label text-primary text-center">Height</label>
+      <div class="col-sm-10">
+        <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 255 blocks:</small>
+        <input type="number" class="form-control" id="heightInput_000001" min="5" max="255" 
+               placeholder="Enter a height range (recommended - at least 50 blocks)">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="ditherOption_000001" class="col-sm-2 col-form-label text-primary text-center">Dither</label>
+      <div class="col-sm-10 pt-sm-2" id="ditherOption_000001"><div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="ditherSwitch_000001"/>
+        <label for="ditherSwitch_000001" class="custom-control-label">Dither converted image <small>(Recommended)</small>
+        </label> &nbsp;
+        <a data-toggle="tooltip" data-placement="top" data-html="true" title="Apply Floyd-Steinberg Dithering <br> 
+          <a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> 
+          en.wikipedia.org/wiki/Dither</a><br> This is good for photographs, but may not be necessary for cartoons/etc with
+          solid colours (no gradients)" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" 
+        class="text-info add-questionmark"></a>
+      </div></div>
+    </div>
+    <div class="form-group d-flex justify-content-center" id="formActionsPreSubmit_000001">
+      <input type="reset" class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_000001"/>
+      <button class="btn btn-primary mx-md-2" id="processImageBtn_000001" type="submit">Process Image &nbsp; &nbsp;
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-square-fill" fill="currentColor" 
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 8.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+        </svg></button>
+    </div>
+  </form>
+  <div class="row d-none justify-content-between" id="formActionsPostSubmit_000001">
+    <div></div>
+    <div class="d-inline">
+      <span class="text-right mr-md-1"> View Images </span>
+      <div class="btn-group">
+        <button class="btn btn-outline-info" id="viewOrigImgBtn_000001">Original</button>
+        <button class="btn btn-outline-info" id="viewResizedImgBtn_000001">Resized</button>
+        <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_000001">Converted</button>
+      </div>
+    </div>
+    <button class="btn btn-warning mr-sm-3" id="imgEditBtn_000001">Edit</button>
+  </div>
+  </div>
+  </div>
+  <div class="container-lg text-center text-capitalize"><h3>Create the Add-On</h3></div>
+  <div class="container tab-content border border-dark rounded py-3 px-4 my-4" id="packContainer">
+    <form id="packForm" novalidate>
+      <span class="row form-text text-muted px-3 d-block mb-3">Enter a name and an optional description for your behaviour
+        pack (These will be displayed in Minecraft) :</span>
+      <div class="form-group row">
+        <label for="bpackNameInput" class="col-sm-2 col-form-label text-primary text-right">Name</label>
+        <input type="text" id="bpackNameInput" class="col-sm-10 form-control" placeholder="Amazing Pixel Art">
+      </div>
+      <div class="form-group row">
+        <label for="bpackDescInput" class="col-sm-2 col-form-label text-primary text-right">Description</label>
+        <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
+                  placeholder="Created using Minecraft Map Art Maker !"></textarea>
+      </div>
+      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - these are <em>not</em> 
+        recommended/enabled by default </span>
+      <div class="form-group row">
+        <label for="funcOptionsDiv" class="col-sm-2 col-form-label text-primary text-center">Command Options</label>
+        <div id="funcOptionsDiv" class="form-group col-sm-10">
+          <div class="form-check">
+            <input type="checkbox" id="keepBlocks" class="form-check-input" name="keepBlocksOption" value="keep"/>
+            <label for="keepBlocks" class="form-check-label"> Replace only air blocks </label> 
+            <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup"
+            title="Will not overwrite existing structures in the area that the commands are being executed, if there are any.
+            This may result in &quot;gaps&quot in the image." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+           </a>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="useLinkedPos" class="form-check-input" name="linkedPosOption" value="link"/>
+            <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
+            <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" data-html="true" 
+            title="The map will contain atleast 2 commands to be run in sequence to build it.
+              If this option is enabled, you can run all of them from the same location, without moving to the next region
+              each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
+              blocks far away outside loaded chunks <i>may</i> fail, which is why this is unchecked by default." 
+               data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" id="packActionsPreProcess">
+        <div class="col-md-4"></div><div class="col-md-4">
+          <button id="writePackBtn" class="btn btn-primary btn-block">Write Functions</button>
+        </div><div class="col-md-4"></div>
+      </div> 
+    </form>
+    <div class="container d-none" id="packActionsPostProcess"><div class="row my-2">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+          <button id="downloadPackBtn" class="btn btn-success btn-block font-weight-bold">Download &nbsp;
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" 
+               xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+          </svg></button>
+      </div>
+      <div class="col-md-4"></div></div>
+      <div class="text-muted text-center my-3">If the download button doesn't work, try 
+        <a id="altDownloadPack" href="">this link</a> for small packs.</div>
+      <div class="alert alert-warning mt-4">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" 
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
+        just double click it to launch the game and import it on PC, or read the installation steps
+        <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
+      <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
+      for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
+        <u>Read this info page</u></a> for more detailed instructions.</div>
+      <div class="row my-2"><a class="btn-sm btn btn-outline-danger" id="resetAddonDiv"> Reset </a></div>
+    </div>
+  </div>
+  <div class="container-lg text-center text-capitalize"><h3>Survival Guide</h3></div>
+  <div class="container bg-light rounded-top py-3 px-4 mt-4 mb-0 d-flex justify-content-between
+              border border-dark border-bottom-0">
+    <ul class="nav nav-tabs" id="guideTabList"></ul>
+  </div>
+  <div class="container border border-dark border-top-0 border-bottom-0 py-3 px-4 my-0" id="survGuidePlaceholderText">
+      <p class="d-block w-75 text-muted text-center mb-0 mx-auto"> If you want to take up the challenge of building the 
+      map art by yourself without using commands, this section can help by showing you block-by-block placement of the 
+      processed images !<br/>The options to generate these will appear here after processing an image.</p>
+  </div>
+  <div class="container tab-content border border-dark border-top-0 rounded-bottom py-3 px-4 mt-0 mb-4" 
+       id="guideTabsContainer">
+  </div>
+  <div class="mx-auto my-4 px-3 mt-5" id="carouselContainer">
+    <div id="demoCarousel" class="carousel slide carousel-fade mx-auto">
+      <ol class="carousel-indicators">
+        <li data-target="#demoCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#demoCarousel" data-slide-to="1"></li>
+        <li data-target="#demoCarousel" data-slide-to="2"></li>
+        <li data-target="#demoCarousel" data-slide-to="3"></li>
+        <li data-target="#demoCarousel" data-slide-to="4"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active" id="cari1">
+          <img class="d-block w-100" alt="Showcase image 1">
+        </div>
+        <div class="carousel-item" id="cari2">
+          <img class="d-block w-100" alt="Showcase image 2">
+        </div>
+        <div class="carousel-item" id="cari3">
+          <img class="d-block w-100" alt="Showcase image 3">
+        </div>
+        <div class="carousel-item" id="cari4">
+          <img class="d-block w-100" alt="Showcase image 4">
+        </div>
+        <div class="carousel-item" id="cari5">
+          <img class="d-block w-100" alt="Showcase image 5">
+        </div>
+      </div>
+      <a class="carousel-control-prev shadow" href="#demoCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#demoCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon shadow" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
   </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 1.2.0<br><br></h6>
+  <h6 class="text-white-50">Version 3.1<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 
@@ -66,9 +370,532 @@
     <a class="text-white-50" href="">Site Home</a>
   </p><br>
 </div>
+<div class="modal fade" id="imageDisplayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imgModalLabel">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body overflow-auto" id="imgModalContent">
+        <canvas id="imgModalCanvas" class="d-block mx-auto my-auto" width="0" height="0"></canvas>
+        <img id="displayImage" class="d-block mx-auto my-auto" alt="Image Preview">
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <a id="downloadImageButton" class="btn btn-outline-secondary">Download Image</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="colourTableModal" tabindex="-1" 
+     aria-labelledby="Modal displaying the colour list" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="colourModalLabel">Colour Table</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body overflow-auto" id="colourModalContent">
+        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft <strong>1.17.0</strong> :<br> 
+        Tick the blocks you would like to use, and scroll to the end to Save. </p>
+        <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
+          <span> Select : &nbsp;&nbsp;</span>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_All"> All </button>
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_None"> None </button>
+            <button type="button" class="btn btn-outline-primary" id="clrSelBtn_Inv"> Invert Selection </button>
+          </div>
+          <span> &nbsp; &nbsp; </span>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-info" id="clrSelBtn_Dye"> Select only 16 dyes </button>
+          </div>
+          <span> &nbsp; &nbsp; </span>
+          <div class="btn-group btn-group-sm my-1" role="group">
+            <button type="button" class="btn btn-outline-info" id="clrSelBtn_NB"> Unselect biome dependent colours
+            </button>
+          </div>
+        </div>
+        <p></p>
+        <div class="container-fluid w-100" id="colourModalTableArea">
+          <table class="table" id="colourPaletteTable">
+            <thead class="thead-light"><tr>
+              <th scope="col"> Select </th>
+              <th scope="col" colspan="2"> Colour </th>
+              <th scope="col"> Blocks </th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="white"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(220,220,220)"></td>
+                <td> White Dye </td>
+                <td> White Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Snow, Snow layers, 
+                  Powder snow, Shulker box (undyed), Lodestone, Target block </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="lightgrey"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(132,132,132)"></td>
+                <td> Light Grey Dye </td>
+                <td> Light Grey Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Structure blocks </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="grey"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(65,65,65)"></td>
+                <td> Grey Dye </td>
+                <td> Grey Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Acacia planks, Acacia Wood, Stripped Acacia Wood;
+                Tinted Glass </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="black"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(22,22,22)"></td>
+                <td> Black Dye </td>
+                <td> Black Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Coal Block, Respawn Anchors, Netherite block,
+                  Basalt, Polished Basalt &amp; Smooth Basalt, Obsidian, Crying Obsidian, End Portal Tiles, Dragon Egg<br> 
+                  Blackstone / Polished Blackstone / Blackstone bricks and all their slabs, walls, stairs; Blackstone
+                Buttons, Pressure plates, Gilded blackstone</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="brown"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(88,65,44)"></td>
+                <td> Brown Dye </td>
+                <td> Brown Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Dark Oak planks, Logs, Stripped Logs, Wood,
+                  Stripped Wood, Fence Gates, Doors, Trapdoors, Pressure plates, Signs, Slabs and Stairs; 
+                Soul sand, Soul soil; Impulse Command Block</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="red"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(132,44,44)"></td>
+                <td> Red Dye </td>
+                <td> Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: All Beds, Fire Coral Block &amp; Dead Fire Coral
+                  Block; Red Mushroom, Red Mushroom block; Nether Wart Block, Shroomlight; Enchanting table;
+                Brick block, slabs and walls </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="orange"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(186,108,44)"></td>
+                <td> Orange Dye </td>
+                <td> Orange Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Stripped Acacia Logs, Acacia Fence Gates, Doors,
+                  Trapdoors, Pressure plates, Signs, Slabs and stairs <br> Copper / Cut Copper (Waxed or not) and all its
+                  Stairs, Slabs <br> Red Sand, Red Sandstone &amp; all its Cut, Smooth, Chiseled variants, their Slabs, 
+                  Walls, Stairs <br> Honey block, Honeycomb block, Lightning rods; Pumpkins, Carved Pumpkins, Jack O' 
+                  Lanterns</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="yellow"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(198,198,44)"></td>
+                <td> Yellow Dye </td>
+                <td> Yellow Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Horn Coral block &amp; Dead Horn Coral Block;
+                  Hay bales, Bee Nest, Sponge, Wet Sponge</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="lime"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(108,176,22)"></td>
+                <td> Lime Dye </td>
+                <td> Lime Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Melons </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="green"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(88,108,44)"></td>
+                <td> Green Dye </td>
+                <td> Green Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Moss Block, Moss Carpets, Sea Pickles, Dried Kelp
+                Block, End Portal Frame, Chain Command Block</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="cyan"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(66,108,132)"></td>
+                <td> Cyan Dye </td>
+                <td> Cyan Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Warped Fences, Fence Gates, Signs, Pressure Plates,
+                  Trapdoors, Slabs, Warped Fungus, Warped Roots, Nether Sprouts <br> Prismarine blocks, Slabs, Walls 
+                &amp; Stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="lightblue"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(88,132,186)"></td>
+                <td> Light Blue Dye </td>
+                <td> Light Blue Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Soul Fire </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="blue"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(44,66,152)"></td>
+                <td> Blue Dye </td>
+                <td> Blue Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Tube Coral block &amp; Dead Tube Coral Block </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="purple"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(108,55,152)"></td>
+                <td> Purple Dye </td>
+                <td> Purple Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Mycelium; Amethyst block, Budding Amethyst Block
+                  Amethyst Cluster &amp; buds (all sizes); Bubble Coral Block, Dead Bubble Coral Block; 
+                Chorus Plant, Chorus Flower; Repeating Command Block </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="magenta"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(152,66,186)"></td>
+                <td> Magenta Dye </td>
+                <td> Magenta Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Purpur Blocks, Pillars, Slabs &amp; Stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="pink"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(208,108,142)"></td>
+                <td> Pink Dye </td>
+                <td> Pink Concrete, Concrete Powder, Wool, Carpets, Stained Glass, Glass Panes, Shulker boxes, 
+                  Terracotta and Glazed Terracotta <br> <i>Also</i>: Brain Coral Block &amp; Dead Brain Coral Block</td>
+              </tr>
+              <tr style="border-top: 2px solid lightgrey;">
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="oak"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(124,100,60)"></td>
+                <td> Oak </td>
+                <td> Oak Planks, Logs, Stripped Logs, Wood, Stripped Wood, Fence Gates, Doors, Trapdoors, Signs, Slabs
+                  &amp; Stairs; All Wooden Fences (not crimson &amp; warped); All Banners; Bamboo Shoots, Dead Bushes <br>
+                  Crafting Table, Cartography Table, Fletching Table, Smithing table, Bookshelves, Lecterns, Composters, 
+                  Barrels, Beehives, Chests, Trapped Chests, Noteblocks, Daylight Sensors, Looms; Allow block </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="spruce"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(112,74,42)"></td>
+                <td> Spruce </td>
+                <td> Spruce Planks, Logs, Stripped Logs, Wood, Stripped Wood, Fence Gates, Doors, Trapdoors, Signs, Slabs
+                  &amp; Stairs; Campfire, Soul Campfire, Podzol </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="crimson"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(128,54,84)"></td>
+                <td> Crimson </td>
+                <td> Crimson Planks, Logs, Stripped Logs, Doors &amp; Stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="warped"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(50,122,120)"></td>
+                <td> Warped </td>
+                <td> Warped Planks, Logs, Stripped Logs, Doors &amp; Stairs <br> Weathered Copper / Cut Weathered Copper
+                (waxed or not) and its blocks, slabs, stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="dirt"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(130,94,66)"></td>
+                <td> Dirt </td>
+                <td> Coarse Dirt, Dirt, Farmland, Brown Mushroom, Brown Mushroom Block, Mushroom stem, Jukebox <br>
+                Jungle Planks, Logs, Stripped Logs, Wood, Stripped Wood, Fence Gates, Doors, Trapdoors, Signs, Slabs
+                  &amp; Stairs <br> Granite / Polished Granite and all its slabs, walls, stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="sand"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(212,200,140)"></td>
+                <td> Sand </td>
+                <td> Sandstone &amp; all its Cut, Smooth, Chiseled variants, their Slabs, Walls &amp; Stairs; Sand <br>
+                  Birch Planks, Logs, Stripped Logs, Wood, Stripped Wood, Fence Gates, Doors, Trapdoors, Signs, Slabs
+                  &amp; Stairs <br> End Stone, End Stone Bricks and its slabs, walls, stairs <br> Bone Blocks, Glowstone,
+                Scaffolding </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="clay"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(140,144,158)"></td>
+                <td> Clay </td>
+                <td> Clay block, Stone Bricks, Mossy Stone Bricks, All types of Infested Stone, Cracked Stone Bricks,
+                Chiseled Stone Bricks, Mossy Stone Brick Slabs</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="stone"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(96,96,96)"></td>
+                <td> Stone </td>
+                <td> Stone, Cobblestone blocks and all their slabs, stairs, walls; Smooth stone, Smooth stone slabs; <br>
+                   Andesite / Polished Andesite and all their slabs, walls, stairs <br>Cobblestone / Mossy Cobblestone / 
+                   Stone Brick - only slabs, walls and stairs; Mossy Stone Brick walls &amp; stairs; All stone Ores, Gravel
+                  <br> Brick stairs, Furnaces, Blast Furnaces, Smokers, Cauldrons, Stonecutters, Observers, Hoppers, 
+                  Pistons, Sticky pistons, Ender Chests, Dispensers, Droppers, Mob spawners, Bedrock; Deny blocks  </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="deepslate"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(86,86,86)"></td>
+                <td> Deepslate </td>
+                <td> Deepslate, Cobbled / Tiled / Polished Deepslate &amp; Deepslate Bricks and all their stairs, walls 
+                and slabs; Infested deepslate, Chiseled Deepslate; All deepslate Ores </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="nether"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(96,0,0)"></td>
+                <td> Netherrack </td>
+                <td> Netherrack, Magma block, Nether Bricks / Red Nether bricks and all their slabs, walls &amp; stairs,
+                  Cracked Nether Bricks, Chiseled Nether Bricks, Nether Brick Fences; Nether Quartz Ore, Nether Gold Ore
+                  <br> Crimson Fences, Fence Gates, Signs, Pressure Plates, Trapdoors, Slabs; Crimson Fungus, Crimson 
+                  Roots, Weeping vines </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="quartz"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(220,216,210)"></td>
+                <td> Quartz </td>
+                <td> Block of Quartz, Smooth Quartz and their slabs &amp; stairs, Quartz bricks, Quartz pillar, Chiseled
+                  Quartz; Sea Lanterns <br> Diorite / Polished Diorite and all their slabs, stairs, walls</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="expocopper"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(116,92,84)"></td>
+                <td> Exposed Copper </td>
+                <td> Exposed Copper / Cut Exposed Copper (waxed or regular) blocks and their slabs, walls, stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="oxicopper"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(18,108,116)"></td>
+                <td> Oxidised Copper </td>
+                <td> Oxidised Copper / Cut Oxidised Copper (waxed or regular) blocks and their slabs, walls, stairs
+                <br> Warped Nylium </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="foliage"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(0,108,0)"></td>
+                <td> Foliage </td>
+                <td> Azalea leaves, Flowering Azalea Leaves, All short and double tall flowers, All saplings, Cactus,
+                Bamboo, Small Dripleaf, Big Dripleaf, Kelp, Hanging Roots, Spore blossom, Lilypad, Sugarcane, Double tall
+                Grass, Double tall Ferns, Azalea, Flowering Azalea </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="grass"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(125,160,75)"></td>
+                <td> Grass </td>
+                <td> Grass Block &nbsp; &nbsp;<i class="text-danger">* Similar colour only in Plains, Tree/Flower Forests,
+                  Rivers, Ocean biomes &amp; the End </i></td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="oakleaves"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(55,80,20)"></td>
+                <td> Tree Leaves </td>
+                <td> Oak, Dark Oak, Jungle &amp; Acacia leaves &nbsp; &nbsp;<i class="text-danger">* Similar colour only 
+                  in Plains, Tree/Flower Forests, Rivers, Ocean biomes &amp; the End </i></td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="birchleaves"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(60,78,38)"></td>
+                <td> Birch Leaves </td>
+                <td> Birch leaves </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="conifers"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(45,70,45)"></td>
+                <td> Spruce Leaves </td>
+                <td> Spruce Leaves </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="lichen"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(108,144,128)"></td>
+                <td> Lichen </td>
+                <td> Glow Lichen <i class="text-danger">* Needs an opaque block directly below to render on maps</i></td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="darkcrimson"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(80,20,25)"></td>
+                <td> Crimson Bark </td>
+                <td> Crimson Wood, Stripped Crimson Wood </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="darkwarped"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(75,37,52)"></td>
+                <td> Warped Bark </td>
+                <td> Warped Wood, Stripped Warped Wood </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="crimsonylium"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(162,42,42)"></td>
+                <td> Crimson Nylium </td>
+                <td> Crimson Nylium </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="warpwart"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(15,155,115)"></td>
+                <td> Warped Wart </td>
+                <td> Warped Wart Blocks </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="turquoise"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(78,188,182)"></td>
+                <td> Turquoise </td>
+                <td> Diamond Blocks, Beacons, Ancient Debris, Conduits, Prismarine Bricks / Dark Prismarine and their
+                slabs &amp; stairs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="steel"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(144,144,144)"></td>
+                <td> Iron </td>
+                <td> Iron Blocks, Iron Bars, Iron Doors &amp; Trapdoors, Anvils (and damaged stages), Lanterns, Soul 
+                  Lanterns, Brewing Stands, Grindstones</td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="brightred"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(220,0,0)"></td>
+                <td> Redstone </td>
+                <td> Redstone Blocks, Lava, Fire, TNT </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="gold"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(215,205,65)"></td>
+                <td> Gold </td>
+                <td> Gold Blocks, Blocks of Raw Gold, Bells </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="emerald"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(0,188,50)"></td>
+                <td> Emerald </td>
+                <td> Emerald Blocks </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="lapis"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(64,110,220)"></td>
+                <td> Lapis </td>
+                <td> Lapis Lazuli blocks </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="rawiron"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(185,150,125)"></td>
+                <td> Raw Iron </td>
+                <td> Blocks of Raw Iron </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="calcite"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(180,150,140)"></td>
+                <td> Calcite </td>
+                <td> Calcite </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="tuff"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(50,35,30)"></td>
+                <td> Tuff </td>
+                <td> Tuff </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="dripstone"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(65,42,30)"></td>
+                <td> Dripstone </td>
+                <td> Blocks of Dripstone </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="slime"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(108,152,48)"></td>
+                <td> Slime </td>
+                <td> Slime Blocks </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="web"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(170,170,170)"></td>
+                <td> Web </td>
+                <td> Cobwebs </td>
+              </tr><tr>
+                <td class><div class="form-check checkbox-scaled">
+                  <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="ice"/>
+                </div></td>
+                <td class="colour-insert display-4" data-colour="rgb(138,138,220)"></td>
+                <td> Ice </td>
+                <td> Blue Ice, Packed Ice, Ice </td>
+              </tr>
+            </tbody>
+          </table>
+          <p> Not included : Water, Vines and blocks that are transparent on maps </p>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-success" data-dismiss="modal" role="button" id="saveColoursBtn"> 
+        Save Changes </button>
+      </div>
+        </div>
+    </div>
+</div> 
+<div class="d-none" id="spinnerModal" tabindex="-1" aria-hidden="true">
+  <div class="mx-auto mt-5">
+    <h4 class="text-white text-center" id="spinnerModalHeading">Processing...</h4>
+    <div class="spinner-border text-info my-4 text-center mx-auto d-block" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
 <div class="d-none sizezero" id="hiddenDiv">
   <canvas id="testCanvas"></canvas>
   <img id="logoImg" src="images/logo_128px.png"/>
 </div>
+  
+<!--Order of importing scripts is important ! -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"></script>
+<!-- My scripts-->
+<script src="scripts/main.js"></script>
+<script src="scripts/imageProcessor.js"></script>
+<script src="scripts/functionWriter.js"></script>
+<script src="scripts/dynamicHtml.js"></script>
+
 </body>
 </html>

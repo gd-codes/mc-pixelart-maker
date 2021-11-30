@@ -1,42 +1,46 @@
+/*
+Minecraft Pixel Art Maker
+© gd-codes 2020
+https://gd-codes.github.io/mc-pixelart-maker/
+*/
 
-const dye_colours = [
-  [218,218,218], [175,112,55], [140,72,175], [95,130,180],
-  [195,195,75], [125,175,56], [195,115,135], [64,64,64],
-  [128,128,128], [64,108,128], [108,53,150], [42,64,150],
-  [88,64,42], [88,108,42], [128,42,42], [20,20,20]
-]; 
-//None of these values should be > 220
-const base_colours = dye_colours.concat([
-  [218,218,205], [136,136,218], [96,96,96], [128,96,64],
-  [120,100,60], [54,78,21], [45,70,45], [96,0,0],
-  [218,0,0], [218,128,0], [0,104,0], [218,160,80],
-  [120,70,42], [78,185,180], [64,108,218], [0,184,48],
-  [0,0,0], [146,28,28], [16,128,112], [75,58,48],
-  [208,208,64], [169,169,169], [208,198,138], [139,144,156],
-  [108,150,48], [64,108,128]
+/*None of these values should be > 220
+The keys also must match the `value`s of checkboxes in the colour table modal
+The order of this Map is important !*/
+const colourmap = new Map([
+  ["white", [220, 220, 220]], ["lightgrey", [132, 132, 132]], ["grey", [65, 65, 65]], ["black", [22, 22, 22]], 
+  ["brown", [88, 65, 44]], ["red", [132, 44, 44]], ["orange", [186, 108, 44]], ["yellow", [198, 198, 44]], 
+  ["lime", [108, 176, 22]], ["green", [88, 108, 44]], ["cyan", [66, 108, 132]], ["lightblue", [88, 132, 186]], 
+  ["blue", [44, 66, 152]], ["purple", [108, 55, 152]], ["magenta", [152, 66, 186]], ["pink", [208, 108, 142]], 
+  ["oak", [124, 100, 60]], ["spruce", [112, 74, 42]], ["crimson", [128, 54, 84]], ["warped", [50, 122, 120]], 
+  ["dirt", [130, 94, 66]], ["sand", [212, 200, 140]], ["clay", [140, 144, 158]], ["stone", [96, 96, 96]], 
+  ["deepslate", [86, 86, 86]], ["nether", [96, 0, 0]], ["quartz", [220, 216, 210]], ["expocopper", [116, 92, 84]], 
+  ["oxicopper", [18, 108, 116]], ["foliage", [0, 108, 0]], ["oakleaves", [55, 80, 20]], ["birchleaves", [60, 78, 38]], 
+  ["conifers", [45, 70, 45]], ["lichen", [108, 144, 128]], ["darkcrimson", [80, 20, 25]], 
+  ["darkwarped", [75, 37, 52]], ["crimsonylium", [162, 42, 42]], ["warpwart", [15, 155, 115]], 
+  ["turquoise", [78, 188, 182]], ["steel", [144, 144, 144]], ["brightred", [220, 0, 0]], ["gold", [215, 205, 65]], 
+  ["emerald", [0, 188, 50]], ["lapis", [64, 110, 220]], ["rawiron", [185, 150, 125]], ["calcite", [180, 150, 140]], 
+  ["tuff", [50, 35, 30]], ["dripstone", [65, 42, 30]], ["slime", [108, 152, 48]], ["web", [170, 170, 170]], 
+  ["ice", [138, 138, 220]], ["grass", [125, 160, 75]]
 ]);
-const all_colours = base_colours.concat(
-  base_colours.map(function(c){
-    return [Math.round(255/220*c[0]), Math.round(255/220*c[1]), Math.round(255/220*c[2])]}),
-  base_colours.map(function(c){
-    return [Math.round(180/220*c[0]), Math.round(180/220*c[1]), Math.round(180/220*c[2])]})
-); //Don't change the indices/order of any of these lists
-const base_blocks = [
-  "concrete 0", "concrete 1", "concrete 2", "concrete 3",
-  "concrete 4", "concrete 5", "concrete 6", "concrete 7", 
-  "concrete 8", "concrete 9", "concrete 10", "concrete 11", 
-  "concrete 12", "concrete 13", "concrete 14", "concrete 15",
-  "quartz_block 0", "blue_ice 0", "stone 0", " dirt 1",
-  "crafting_table 0", "leaves 12", "leaves 13", "netherrack 0",
-  "redstone_block 0", "shroomlight 0", "dried_kelp_block 0", "glowstone 0",
-  "redstone_lamp 0", "diamond_block 0", "lapis_block 0", "emerald_block 0",
-  "netherite_block 0", "crimson_nylium 0", "warped_nylium 0", "soul_soil 0",
-  "gold_block 0", "web 0", "end_stone 0", "iron_block 0",
-  "slime 0", "prismarine 0"
-];
+
+function lightPixel(rgb) {
+  return [Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])];
+}
+function darkPixel(rgb) {
+  return [Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])];
+}
+
+var colourlist = [];
+colourmap.forEach(function(value, key) {
+  colourlist.push(value); // Order is important
+  colourlist.push(darkPixel(value));
+  colourlist.push(lightPixel(value));
+});
+var colourtokens = Array.from(colourmap.keys());
 
 
-function analyseImage(uid, image, area, palette, dither) {
+function analyseImage(uid, image, area, palette, d3, dither) {
   //Manage the display etc
   var canv = $("#testCanvas")[0];
   var ctx = canv.getContext('2d');
@@ -52,47 +56,52 @@ function analyseImage(uid, image, area, palette, dither) {
     default:
       dispScale = 1;      
   }
+  var p = [];
+  for (var cn of palette.split(" ")) {
+    if (colourmap.get(cn) !== undefined) {
+      var rgb = (colourmap.get(cn)); p.push(rgb);
+      if (d3) {
+        p.push(darkPixel(rgb)); p.push(lightPixel(rgb));
+      }
+    }
+  }
   ctx.drawImage(image, 0, 0, image.width, image.height);
-  //var origCanvImg = ctx.getImageData(0,0,image.width,image.height);
   ctx.clearRect(0,0,canv.width,canv.height);
   canv.height = h; canv.width = w;
   ctx.drawImage(image, 0, 0, w, h);
   var imgData = ctx.getImageData(0,0,w,h);
   var resized_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
-  var finalImgData ;
-  switch (palette) {
-    case "basic" :
-      finalImgData = convertPalette(dye_colours, imgData, dither);
-      break;
-    case "standard" :
-      finalImgData = convertPalette(base_colours, imgData, dither);
-      break;
-    case "extended" :
-      finalImgData = convertPalette(all_colours, imgData, dither);
-      break;
-  }
+  
+  var finalImgData = convertPalette(p, imgData, dither);
   ctx.putImageData(finalImgData, 0, 0);
   var converted_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
   $("#imageForm_"+uid).data('finalimage', finalImgData);
   
+  // Processing done, configure the preview buttons
   $("#viewOrigImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', image.src)
       .height(image.height)
       .width(image.width);
+    $('#downloadImageButton').attr('href', image.src);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-original.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewResizedImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', resized_image)
       .height(h*dispScale)
       .width(w*dispScale);
+    $('#downloadImageButton').attr('href', resized_image);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-resized.png'));
     $("#imageDisplayModal").modal('show');
   });
   $("#viewFinalImgBtn_"+uid).click(function() {
     $("#displayImage").attr('src', converted_image)
       .height(h*dispScale)
       .width(w*dispScale);
+    $('#downloadImageButton').attr('href', converted_image);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-converted.png'));
     $("#imageDisplayModal").modal('show');
   })
 }
@@ -168,5 +177,20 @@ function makeLogo(images) {
     return canv.toDataURL('image/png');
   } catch (err) {
     return "data:image/png;base64,";
+    console.error("Error forming a pack icon", err);
   } 
+}
+
+function getPixelAt(x, z, dataobj) {
+  // Return RGB of pixel (x,z) from image's continuous (1D) data byte seq
+  let i = 4*(dataobj.width*(z) + x);
+  return [dataobj.data[i], dataobj.data[i+1], dataobj.data[i+2]];
+}
+
+function indexOfArray(a, parent_arr) {
+  for (var i=0; i<parent_arr.length; i++) {
+    if (a[0]==parent_arr[i][0] && a[1]==parent_arr[i][1] && a[2]==parent_arr[i][2]) {
+      return i;
+    }
+  } //Arrays are in different variables -> normal comparison always false
 }
