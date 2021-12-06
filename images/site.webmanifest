@@ -1,6 +1,6 @@
 {
-    "name": "Minecraft Map Art Maker",
-    "short_name": "MC Map Art Maker",
+    "name": "Map Art Maker for Minecraft",
+    "short_name": "Map Art",
     "icons": [
         {
             "src": "/images/android-chrome-192x192.png",
@@ -13,7 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#331100",
-    "background_color": "#331100",
-    "display": "standalone"
+    "theme_color": "#C0C0C0",
+    "background_color": "#C0C0C0",
+    "display": "standalone",
+    "start_url": "/"
 }

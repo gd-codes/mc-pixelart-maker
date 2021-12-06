@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Minecraft Map Art Maker</title>
+<title>Map Art Maker for Minecraft</title>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="title" content="Minecraft Map Art Maker">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
+<meta name="title" content="Map Art Maker for Minecraft">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,1.18,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -18,27 +18,42 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="manifest" href="images/site.webmanifest">
-<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#331100">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#C0C0C0">
 <link rel="shortcut icon" href="images/favicon.ico">
-<meta name="msapplication-TileColor" content="#331100">
+<meta name="msapplication-TileColor" content="#C0C0C0">
 <meta name="msapplication-config" content="images/browserconfig.xml">
-<meta name="theme-color" content="#331100">
+<meta name="theme-color" content="#C0C0C0">
 	
-<meta property="og:title" content="Minecraft Map Art Maker" />
+<meta property="og:title" content="Map Art Maker for Minecraft" />
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
+
+<!--Order of importing scripts is important ! -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous" defer></script>
+<!-- My scripts-->
+<script src="scripts/main.js" defer></script>
+<script src="scripts/imageProcessor.js" defer></script>
+<script src="scripts/functionWriter.js" defer></script>
+<script src="scripts/dynamicHtml.js" defer></script>
   
 </head>
 
 <body data-confirm-page-unload="0">
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
-		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
+		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image and create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -49,18 +64,18 @@
 <div class="container-lg justify-content-lg-center mx-auto my-5" id="pageMainContent">
   <div class="alert alert-info alert-dismissible fade show">
     <h4 class="alert-heading">How this app works</h4>
-    <p>Minecraft Map Art Maker pixelates and reduces the colour palette of your uploaded image to one that can be shown 
+    <p>Map Art Maker for Minecraft pixelates and reduces the colour palette of your uploaded image to one that can be shown 
       in Minecraft maps using vanilla blocks. It then identifies the coordinates and exact blocks to place in your world for
 			each pixel, so that a map of the area will display the final image !</p>
-    <ul> <li> The placement can be automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
+    <ul> <li> The placement is automated by writing commands into a <a class="alert-link" rel="nofollow noreferrer"
       href="https://www.minecraft.net/en-us/addons" target="_blank"> behaviour pack </a>. These can be readily executed 
       using a few '/function' commands in-game, through a command block or by a player.</li> <li>The packs are valid for 
-      the latest version of Minecraft on all supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
+      the latest version of Minecraft on supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
-    <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer"
-    href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !</p>
+    <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer" href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !
+      It is <a class="alert-link" target="_blank" href="about.html">not</a> officially associated with Minecraft or Mojang.</p>
     <p> Other technical explanation, and an example add-on for download, can be found <a href="manual.html#example-pack"
-    target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
+      target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
   </div>
@@ -73,7 +88,7 @@
         <span id="deleteBtn_000001" class="delete-X"> &nbsp; &times;</span></a>
       </li>
     </ul>
-    <button class="btn btn-success rounded rounded-pill" id="addNewImgBtn">
+    <button class="btn btn-success rounded rounded-pill" id="addNewImgBtn" title="Add Another Image">
       <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" 
            xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
@@ -199,8 +214,8 @@
     <div class="form-group row collapse" id="extraHeightOption_000001">
       <label for="heightInput_000001" class="col-sm-2 col-form-label text-primary text-center">Height</label>
       <div class="col-sm-10">
-        <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 255 blocks:</small>
-        <input type="number" class="form-control" id="heightInput_000001" min="5" max="255" 
+        <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 380 blocks:</small>
+        <input type="number" class="form-control" id="heightInput_000001" min="5" max="380" 
                placeholder="Enter a height range (recommended - at least 50 blocks)">
       </div>
     </div>
@@ -252,7 +267,7 @@
       <div class="form-group row">
         <label for="bpackDescInput" class="col-sm-2 col-form-label text-primary text-right">Description</label>
         <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
-                  placeholder="Created using Minecraft Map Art Maker !"></textarea>
+                  placeholder="Created using Map Art Maker for Minecraft !"></textarea>
       </div>
       <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - these are <em>not</em> 
         recommended/enabled by default </span>
@@ -301,7 +316,8 @@
       <div class="alert alert-warning mt-4">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" 
              xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
+          <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; 
+          The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
         just double click it to launch the game and import it on PC, or read the installation steps
         <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
@@ -361,8 +377,8 @@
   </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
-  <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 3.1<br><br></h6>
+  <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
+  <h6 class="text-white-50">Version 4.0<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 
@@ -401,7 +417,7 @@
           </button>
       </div>
       <div class="modal-body overflow-auto" id="colourModalContent">
-        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft <strong>1.17.0</strong> :<br> 
+        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft <strong>1.18.0</strong> (unchanged since 1.17) :<br> 
         Tick the blocks you would like to use, and scroll to the end to Save. </p>
         <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
           <span> Select : &nbsp;&nbsp;</span>
@@ -881,21 +897,6 @@
   <canvas id="testCanvas"></canvas>
   <img id="logoImg" src="images/logo_128px.png"/>
 </div>
-  
-<!--Order of importing scripts is important ! -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"></script>
-<!-- My scripts-->
-<script src="scripts/main.js"></script>
-<script src="scripts/imageProcessor.js"></script>
-<script src="scripts/functionWriter.js"></script>
-<script src="scripts/dynamicHtml.js"></script>
 
 </body>
 </html>
