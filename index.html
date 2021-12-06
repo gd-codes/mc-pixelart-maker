@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Map Art Maker for Minecraft">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,1.18,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -18,19 +18,34 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="manifest" href="images/site.webmanifest">
-<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#331100">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#C0C0C0">
 <link rel="shortcut icon" href="images/favicon.ico">
-<meta name="msapplication-TileColor" content="#331100">
+<meta name="msapplication-TileColor" content="#C0C0C0">
 <meta name="msapplication-config" content="images/browserconfig.xml">
-<meta name="theme-color" content="#331100">
+<meta name="theme-color" content="#C0C0C0">
 	
 <meta property="og:title" content="Map Art Maker for Minecraft" />
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
+
+<!--Order of importing scripts is important ! -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous" defer></script>
+<!-- My scripts-->
+<script src="scripts/main.js" defer></script>
+<script src="scripts/imageProcessor.js" defer></script>
+<script src="scripts/functionWriter.js" defer></script>
+<script src="scripts/dynamicHtml.js" defer></script>
   
 </head>
 
@@ -38,7 +53,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image and create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -199,8 +214,8 @@
     <div class="form-group row collapse" id="extraHeightOption_000001">
       <label for="heightInput_000001" class="col-sm-2 col-form-label text-primary text-center">Height</label>
       <div class="col-sm-10">
-        <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 255 blocks:</small>
-        <input type="number" class="form-control" id="heightInput_000001" min="5" max="255" 
+        <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 380 blocks:</small>
+        <input type="number" class="form-control" id="heightInput_000001" min="5" max="380" 
                placeholder="Enter a height range (recommended - at least 50 blocks)">
       </div>
     </div>
@@ -363,7 +378,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 3.1<br><br></h6>
+  <h6 class="text-white-50">Version 4.0<br><br></h6>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 
@@ -402,7 +417,7 @@
           </button>
       </div>
       <div class="modal-body overflow-auto" id="colourModalContent">
-        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft <strong>1.17.0</strong> :<br> 
+        <p> Following is the list of 52 colours used by default blocks in Vanilla Minecraft <strong>1.18.0</strong> (unchanged since 1.17) :<br> 
         Tick the blocks you would like to use, and scroll to the end to Save. </p>
         <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
           <span> Select : &nbsp;&nbsp;</span>
@@ -882,21 +897,6 @@
   <canvas id="testCanvas"></canvas>
   <img id="logoImg" src="images/logo_128px.png"/>
 </div>
-  
-<!--Order of importing scripts is important ! -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"></script>
-<!-- My scripts-->
-<script src="scripts/main.js"></script>
-<script src="scripts/imageProcessor.js"></script>
-<script src="scripts/functionWriter.js"></script>
-<script src="scripts/dynamicHtml.js"></script>
 
 </body>
 </html>

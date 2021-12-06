@@ -100,12 +100,12 @@ $(document).ready(function() {
   $("#resetImageFormBtn_000001").click();
   
   $("#materialOptsDisplay_000001").data("selected", default_palette);
+  refreshColourDisplay("000001");
   
   $('[data-toggle="tooltip"]').tooltip();
 });
 
 $(window).on('load', function() {
-  refreshColourDisplay("000001");
   
   for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
@@ -133,7 +133,7 @@ function resetImgHandler(elem) {
     $("#ditherSwitch_"+uid).prop("checked", true);
     $("#mapSize11_"+uid).prop("checked", true);
     $("#materialOptsDisplay_"+uid).data("selected", default_palette);
-    $("#materialOptsDisplay_"+uid).html("<i class=\"text-muted\">By default, all colours will be used</i>");
+    refreshColourDisplay(uid);
     $("#3dSwitch_"+uid).prop('checked', false);
     $("#extraHeightOption_"+uid).collapse('hide');
     $("input#heightInput_"+uid).attr("required", false);
