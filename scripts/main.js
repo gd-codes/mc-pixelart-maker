@@ -278,6 +278,13 @@ function editImgForm(elem) {
   //console.info("Re-enabled editing of image "+uid);
 }
 
+function uuidv4() {
+  // https://stackoverflow.com/a/2117523
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
 function startCreateBhvPack(event) {
   event.preventDefault();
   var f, processed=[];
@@ -297,27 +304,7 @@ function startCreateBhvPack(event) {
   $("#spinnerModal").addClass('d-block');
   $("#spinnerModal").removeClass('d-none');
   
-  $.ajax({
-    url: "https://www.uuidtools.com/api/generate/v4/count/2",
-    success: function(data) {
-      console.log("Succesfully received uuids ", data);
-      writeBhvPack(processed, data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error(jqXHR, textStatus, errorThrown);
-      var manual = confirm("Error\n\nThe server at www.uuidtools.com did not\
-respond with the requested data. Do you want to specify 2 UUIDs manually ?");
-      if (manual) {
-        var uuid1 = prompt("Enter a UUID (any version - ensure that it is in the valid format)", 
-                           "00000000-0000-0000-0000-000000000000");
-        var uuid2 = prompt("Enter another UUID", "00000000-0000-0000-0000-000000000000");
-        writeBhvPack(processed, [uuid1, uuid2]);
-      } else {
-        $("#spinnerModal").addClass('d-none');
-        $("#spinnerModal").removeClass('d-block');
-      }
-    }
-  });
+  writeBhvPack(processed, [uuidv4(), uuidv4()]);
 }
 
 function writeBhvPack(images, uuids) {
