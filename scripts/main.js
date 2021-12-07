@@ -25,6 +25,12 @@ const structures = {
   glow_lichen:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAIAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwIAAAAAAAAAAQAAAAMCAAAA//////////8JCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgIAAAAIBABuYW1lFQBtaW5lY3JhZnQ6Y29iYmxlc3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZRUAbWluZWNyYWZ0Omdsb3dfbGljaGVuCgYAc3RhdGVzAxkAbXVsdGlfZmFjZV9kaXJlY3Rpb25fYml0cz8AAAAAAwcAdmVyc2lvbgPSEAEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABjEgAAZQAAAFoAAAAA"
 };
 
+
+/* Check for events
+1. Ask user to confirm before closing the tab
+2. Bind all UI elements to appropriate callbacks when DOM is loaded
+3. Lazy-load carousel images after page loads */
+
 window.addEventListener('beforeunload', function (event) {
   if (Number($("body").data("confirm-page-unload"))) {
     event.preventDefault();
@@ -32,6 +38,7 @@ window.addEventListener('beforeunload', function (event) {
     return '';
   }
 });
+
 
 $(document).ready(function() {
   //Bind buttons and links to their actions
@@ -96,7 +103,6 @@ $(document).ready(function() {
     $("input[name='clrSelect']").eq(31).prop('checked', false);
   });
   
-  
   //Initial setup
   $("#resetImageFormBtn_000001").click();
   
@@ -106,13 +112,18 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
+
+
 $(window).on('load', function() {
-  
   for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
 });
+
+
+
+/* Begin Callback definitions */
 
 function fileInputHandler(elem, file) {
   /*Image is stored as data: URI in the input's HTML data-imagecontent
@@ -128,6 +139,7 @@ function fileInputHandler(elem, file) {
   reader.readAsDataURL(file);
 }
 
+
 function resetImgHandler(elem) {
   var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
@@ -141,6 +153,7 @@ function resetImgHandler(elem) {
   });
 }
 
+
 function displayPaletteOptions(elem) {
   //Display the correct extra options
   var uid = $(elem).attr('id').slice(-6);
@@ -152,6 +165,7 @@ function displayPaletteOptions(elem) {
     $("input#heightInput_"+uid).attr("required", false);
   }
 }
+
 
 function configureColourModal(elem) {
   var uid = $(elem).attr('id').slice(-6);
@@ -173,6 +187,7 @@ function configureColourModal(elem) {
   $("#colourTableModal").modal('show');
 }
 
+
 function refreshColourDisplay(uid) {
   //colourmap is defined in imageProcessor.js
   var htmlc = [];
@@ -191,6 +206,7 @@ function refreshColourDisplay(uid) {
   } 
   $("#materialOptsDisplay_"+uid).html(content);
 }
+
 
 function submitImgFormHandler(elem, event) {
   /*Client side validation, 
@@ -247,6 +263,7 @@ function submitImgFormHandler(elem, event) {
   image.src = $("#imgInput_"+uid).data('imagecontent');
 }
 
+
 function deleteImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
@@ -260,6 +277,7 @@ function deleteImgForm(elem) {
     $("#navbarList a.nav-link").first().click();
   }
 }
+
 
 function editImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
@@ -277,6 +295,7 @@ function editImgForm(elem) {
   $("#imageForm_"+uid).removeData('finalimage');
   //console.info("Re-enabled editing of image "+uid);
 }
+
 
 function uuidv4() {
   // https://stackoverflow.com/a/2117523
@@ -306,6 +325,8 @@ function startCreateBhvPack(event) {
   
   writeBhvPack(processed, [uuidv4(), uuidv4()]);
 }
+
+
 
 function writeBhvPack(images, uuids) {
   var pack = new JSZip();
@@ -374,6 +395,8 @@ function writeBhvPack(images, uuids) {
   });
 }
 
+
+
 function setSaveAsZip(blob) {
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
@@ -389,6 +412,7 @@ function clearBehaviourPack() {
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
 }
+
 
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
@@ -421,6 +445,7 @@ id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"><
   });
   $("#guidelink_"+uid+" a").click();
 }
+
 
 function deleteSurvivalGuide(uid, readd=false) {
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
