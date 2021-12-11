@@ -1,3 +1,4 @@
+
 @font-face {
 	font-family: Minecraft;
 	src: url("../resources/Minecraft-Regular.otf")
@@ -20,7 +21,7 @@
 	margin-bottom: 0px;
 }
 #pagesubtitle {
-	background-color: rgba(60,60,60,0.5);
+  background-color: rgba(60,60,60,0.5);
   color: white;
 	padding: 10px;
 	margin-top: 0px;
@@ -38,12 +39,82 @@
   color: white;
 }
 
+body, .modal-content, .table {
+  background-color: #333;
+  color: ghostwhite;
+}
+
+.alert-info {
+  color: #d1ecf1;
+  background-color: #0c3060;
+}
+.alert-info .alert-link {
+  color: azure;
+}
+.alert-success {
+  color: #d4edda;
+  background-color: #155724;
+}
+.alert-success .alert-link {
+  color: lightcyan;
+}
+
 .modal-backdrop.show {
   opacity: 0.7;
 }
 .bg-light {
-  background-color: rgb(240,240,240) !important;
+  background-color: #606060 !important;
 }
+.bg-dark {
+  background-color: black !important;
+}
+.text-muted {
+  color: rgb(180,180,180) !important;
+}
+.form-control, .form-control:active, 
+.table .thead-light th,
+.custom-file-label {
+  background-color: darkslategray;
+  border-color: #606060;
+  color: ghostwhite;
+}
+.custom-file-label::after,
+.nav-tabs .nav-link.active {
+  background-color: lightslategray;
+  border-color: #606060;
+  color: ghostwhite;
+}
+.text-primary {
+  color: #399fff !important;
+}
+a {
+  color: darkturquoise;
+}
+.custom-control-label::before {
+  background-color: #333;
+}
+.border-dark {
+  border-color: #606060 !important;
+}
+.form-control:disabled,
+.custom-file-input:disabled~.custom-file-label,
+.custom-control-input:disabled~.custom-control-label::before {
+  background-color: #555555;
+  color: lightgray !important;
+}
+.btn-outline-secondary {
+  color: lightgray;
+  border-color: lightgray;
+}
+.btn-outline-danger {
+  color: rgb(255, 50, 50);
+  border-color: rgb(255, 50, 50);
+}
+.page-link {
+  color: #399fff;
+  background-color: #606060;
+}
+
 .sizezero {
   height: 0px;
   width: 0px;
@@ -52,6 +123,18 @@
 kbd {
   background-color: #555555;
   white-space: nowrap;
+}
+code {
+  color: #ff70b3;
+}
+pre code {
+  color: beige;
+}
+.figure-img, .carousel-item img {
+  opacity: 80%;
+}
+.figure-caption {
+  color: lightgray;
 }
 
 /* Don't use bootstrap's .modal as static or it will never close */
