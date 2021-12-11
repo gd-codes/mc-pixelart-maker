@@ -49,6 +49,14 @@
 <script src="scripts/imageProcessor.js" defer></script>
 <script src="scripts/functionWriter.js" defer></script>
 <script src="scripts/dynamicHtml.js" defer></script>
+<!-- PWA service worker, to use the web app offline -->
+<script>
+if ('serviceWorker' in window.navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js');
+  });
+}
+</script>
   
 </head>
 
@@ -76,8 +84,8 @@
       the latest version of Minecraft on supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
     <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer" href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !
-      It is <a class="alert-link" target="_blank" href="about.html">not</a> officially associated with Minecraft or Mojang.</p>
-    <p> Other technical explanation, and an example add-on for download, can be found <a href="manual.html#example-pack"
+      It is <a class="alert-link" target="_blank" href="./about.html">not</a> officially associated with Minecraft or Mojang.</p>
+    <p> Other technical explanation, and an example add-on for download, can be found <a href="./manual.html#example-pack"
       target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>

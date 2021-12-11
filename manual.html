@@ -11,7 +11,8 @@
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
   
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" crossorigin="anonymous"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" />
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
   
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -30,6 +31,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!" />
   
+<!-- PWA service worker, to use the web app offline -->
+<script>
+  if ('serviceWorker' in window.navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js');
+    });
+  }
+</script>
+
 </head>
 
 <body>
