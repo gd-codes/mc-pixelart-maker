@@ -11,13 +11,16 @@
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
   
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" crossorigin="anonymous"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" />
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style-dark.css" rel="stylesheet" type="text/css"/>
+<meta id="colorSchemeMetaTag" name="color-scheme" content="light dark"/>
   
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-<link rel="manifest" href="images/site.webmanifest">
+<link rel="manifest" href="site.webmanifest">
 <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#C0C0C0">
 <link rel="shortcut icon" href="images/favicon.ico">
 <meta name="msapplication-TileColor" content="#C0C0C0">
@@ -33,15 +36,18 @@
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
 
 <!--Order of importing scripts is important ! -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js" crossorigin="anonymous" 
+        integrity="sha384-Qg00WFl9r0Xr6rUqNLv1ffTSSKEFFCDCKVyHZ+sVt8KuvG99nWw5RNvbhuKgif9z" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" crossorigin="anonymous"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" crossorigin="anonymous"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" crossorigin="anonymous" 
+        integrity="sha384-1TnLllROlqdfubCplhpvvtq7tqGCLWzUlyOQ5Z/ng1PjYbjoSOTPZjDnqfSs7mBv" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" crossorigin="anonymous"
+        integrity="sha384-Am74NQ3uTJzrL9/oVeHH9mtj2Vabxh7LjdkDS0pzqNgZ9MSYl3DrklSXtv+/4+CE" defer></script>
 <!-- My scripts-->
+<script src="scripts/theme_pwa.js" defer></script>
 <script src="scripts/main.js" defer></script>
 <script src="scripts/imageProcessor.js" defer></script>
 <script src="scripts/functionWriter.js" defer></script>
@@ -73,8 +79,8 @@
       the latest version of Minecraft on supported Bedrock edition devices - Win 10, Android, iOS, etc </li>
     </ul>
     <p> This web app is <a class="alert-link" target="_blank" rel="noreferrer" href="https://github.com/gd-codes/mc-pixelart-maker">open source</a> !
-      It is <a class="alert-link" target="_blank" href="about.html">not</a> officially associated with Minecraft or Mojang.</p>
-    <p> Other technical explanation, and an example add-on for download, can be found <a href="manual.html#example-pack"
+      It is <a class="alert-link" target="_blank" href="./about.html">not</a> officially associated with Minecraft or Mojang.</p>
+    <p> Other technical explanation, and an example add-on for download, can be found <a href="./manual.html#example-pack"
       target="_blank" rel="nofollow" class="alert-link">here</a>.</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
@@ -378,7 +384,26 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.0<br><br></h6>
+  <h6 class="text-white-50">Version 4.1</h6>
+  <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
+    <div class="custom-control custom-switch">
+      <div class="d-inline" style="padding-right: 2.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">
+          <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+      </div>
+      <div class="d-inline mt-2">
+        <input type="checkbox" class="custom-control-input" id="light-dark-toggle"/>
+        <label class="custom-control-label" for="light-dark-toggle" id="light-dark-toggle-label"></label>
+      </div>
+      <div class="d-inline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">
+          <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="btn btn-sm btn-outline-secondary ml-5" id="tryOfflineBtn">Try Offline</div> 
+  </div>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="manual.html">Manual</a> | 

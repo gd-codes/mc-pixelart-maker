@@ -1,0 +1,116 @@
+
+.dark-theme,
+.dark-theme .modal-content,
+.dark-theme table {
+  background-color: #222;
+  color: ghostwhite;
+}
+
+.dark-theme .alert-info {
+  color: #d1ecf1;
+  background-color: #101e33;
+}
+.dark-theme .alert-info .alert-link {
+  color: azure;
+}
+.dark-theme .alert-success {
+  color: #d4edda;
+  background-color: #155724;
+}
+.dark-theme .alert-success .alert-link {
+  color: lightcyan;
+}
+.dark-theme .alert-warning {
+  color: #fff3cd;
+  background-color: #221900;
+}
+.dark-theme .alert-warning .alert-link {
+  color: ghostwhite;
+}
+
+.dark-theme .bg-light {
+  background-color: #606060 !important;
+}
+.dark-theme .bg-dark {
+  background-color: black !important;
+}
+.dark-theme .text-muted {
+  color: rgb(180,180,180) !important;
+}
+.dark-theme .form-control, 
+.dark-theme .form-control:active, 
+.dark-theme .table .thead-light th,
+.dark-theme .custom-file-label {
+  background-color: #101e33;
+  border-color: #606060;
+  color: ghostwhite;
+}
+.dark-theme .custom-file-label::after,
+.dark-theme .nav-tabs .nav-link.active {
+  background-color: lightslategray;
+  border-color: #606060;
+  color: ghostwhite;
+}
+.dark-theme .text-primary {
+  color: #399fff !important;
+}
+.dark-theme a:not(.btn) {
+  color: darkturquoise;
+}
+
+.dark-theme .custom-control-label::before {
+  background-color: #222;
+}
+.dark-theme .border-dark {
+  border-color: #606060 !important;
+}
+.dark-theme .form-control:disabled,
+.dark-theme .custom-file-input:disabled~.custom-file-label,
+.dark-theme .custom-control-input:disabled~.custom-control-label::before {
+  background-color: #555555 !important;
+  color: lightgray !important;
+}
+.dark-theme .btn-outline-secondary {
+  color: lightgray;
+  border-color: lightgray;
+}
+.dark-theme .btn-outline-danger {
+  color: rgb(255, 50, 50);
+  border-color: rgb(255, 50, 50);
+}
+.dark-theme .page-link {
+  color: #399fff;
+  background-color: #606060;
+}
+
+.dark-theme kbd {
+  background-color: #555555;
+  white-space: nowrap;
+}
+.dark-theme code {
+  color: #ff70b3;
+}
+.dark-theme pre code {
+  color: beige;
+}
+.dark-theme .figure-img, 
+.dark-theme .carousel-item img {
+  filter: brightness(75%);
+}
+.dark-theme .figure-caption {
+  color: lightgray;
+}
+
+.dark-theme .popover {
+  color: #212529;
+}
+
+.dark-theme .table-hover tbody tr:hover {
+  color: beige;
+  background-color: #555555;
+}
+
+.dark-theme #github-icon {
+  color: white !important;
+}
+
