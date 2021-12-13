@@ -4,7 +4,7 @@ https://gd-codes.github.io/mc-pixelart-maker/
 Cached site should require only ~ 3 MB space
 */
 
-const CURRENT_CACHE_VERSION = 'mapart-cache-4.0.0';
+const CURRENT_CACHE_VERSION = 'mapart-cache-4.1.0';
 
 const CACHE_URLS_LOCAL = [
     /* Important : `/` doesn't automatically fetch `/index` locally */
@@ -15,6 +15,7 @@ const CACHE_URLS_LOCAL = [
     'site.webmanifest',
     'LICENSE.txt',
     'css/style.css',
+    'css/style-dark.css',
     'resources/Minecraft-Regular.otf',
     'resources/sample_pack.mcpack',
     'images/headercover.png',
@@ -37,7 +38,8 @@ const CACHE_URLS_LOCAL = [
     'scripts/main.js',
     'scripts/imageProcessor.js',
     'scripts/functionWriter.js',
-    'scripts/dynamicHtml.js'
+    'scripts/dynamicHtml.js',
+    'scripts/theme_pwa.js'
 ];
 const CACHE_URLS_EXTERNAL = [
     'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css',

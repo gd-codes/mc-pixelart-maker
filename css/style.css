@@ -4,7 +4,7 @@
 }
 
 .headercover {
-	font-family: Minecraft;
+	font-family: Minecraft, Verdana, sans-serif;
 	background-image: url("../images/headercover.png");
 	background-attachment: fixed;
 	background-repeat: no-repeat;
@@ -152,4 +152,12 @@ table caption {
 
 .spaced-list li {
   padding-bottom: 10px;
+}
+
+#light-dark-toggle-label::before {
+  background-color: black;
+  top: 0.35em;
+}
+#light-dark-toggle-label::after {
+  top: calc(0.35em + 2px);
 }

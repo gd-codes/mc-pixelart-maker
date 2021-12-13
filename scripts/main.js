@@ -110,6 +110,13 @@ $(document).ready(function() {
   refreshColourDisplay("000001");
   
   $('[data-toggle="tooltip"]').tooltip();
+
+  // Prevent links in PWA window opening in browser
+  const isPWA = window.matchMedia('(display-mode: standalone)');
+  if (isPWA.matches) {
+    $('a.alert-link[target="_blank"]').removeAttr('target');
+  }
+  
 });
 
 
