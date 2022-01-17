@@ -68,7 +68,7 @@
     restrictions on it. Javascript <b><i>must</i></b> be enabled for this site.</p>
   <p>This site does not use any cookies.</p>
   <p><strong class="h6">PWA :</strong> This app can work offline, using the features of Progressive Web Apps <a class="text-info" rel="nofollow noreferrer"
-      href="https://en.wikipedia.org/wiki/Progressive_web_application" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/>
+      href="https://en.wikipedia.org/wiki/Progressive_web_application" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
         <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
       </svg></a> &nbsp;. Click the '<i class="text-monospace">Try Offline</i>' button in the footer to cache the resources 
       to do so (this will only take around 3 MB of space). If your browser supports these features, it will show you an option
@@ -132,7 +132,7 @@
 /function wallpaper/2
 /function wallpaper/3
 /function wallpaper/4</code></pre><br>
-    <strong class="text-muted">Note :</strong> You may need to restart Minecraft and run the <kbd>/reload</kbd> command first,
+    <strong class="text-muted">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
       in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
     <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
@@ -147,23 +147,23 @@
   size 3x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
   <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
   behaviour pack.mcpack
-   |
-   |-- manifest.json
-   |-- pack_icon.png
-   ├-- structures/
-   |    └ mapart/
-   |       ...
-   └-- functions/
-        ├-- cliff/
-        |    |-- 1.mcfunction
-        |    |-- 2.mcfunction
-        |    |-- 3.mcfunction
-        |    └-- 4.mcfunction
-        └-- bastion/
-             |-- 1.mcfunction
-             └-- 2.mcfunction
-             ├     ...
-             └-- 12.mcfunction
+   &boxv;
+   &boxvr;&boxh; manifest.json
+   &boxvr;&boxh; pack_icon.png
+   &boxvr;&boxh; structures/
+   &boxv;    &boxur;&boxh; mapart/
+   &boxv;         &boxur;   ...
+   &boxur;&boxh; functions/
+        &boxvr;&boxh; cliff/
+        &boxv;    &boxvr;&boxh; 1.mcfunction
+        &boxv;    &boxvr;&boxh; 2.mcfunction
+        &boxv;    &boxvr;&boxh; 3.mcfunction 
+        &boxv;    &boxur;&boxh; 4.mcfunction
+        &boxur;&boxh; bastion/
+             &boxvr;&boxh; 1.mcfunction
+             &boxvr;&boxh; 2.mcfunction
+             &boxvr;     ...
+             &boxur;&boxh; 12.mcfunction
   </code></pre><br>
   <div class="row"><div class="col-4"></div>
     <div class="col-4"><a class="btn btn-block btn-warning mx-auto" href="resources/sample_pack.mcpack" 
@@ -176,8 +176,7 @@
         <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> 
         <li> The name and description that you entered, will be displayed for the add-on in game.</li>
         <li> 2 version-4 <a  rel="nofollow noreferrer" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">
-          UUIDs </a> to uniquely identify the pack, generated securely by <a href="https://www.uuidtools.com/" rel="nofollow 
-          noreferrer"> an external service</a>. If their server does not respond, you will be prompted to enter 2 UUIDs manually - any UUID (v4 or other) is sufficient as long as it has not been reused or copied from another existing pack that you are using / may use.</li></ul> 
+          UUIDs </a> to uniquely identify the pack, generated randomly using the JS web Crypto API.</li></ul> 
       You can always edit the icon or manifest if you prefer to make any changes later on.</li><br></ul>
   <p>The pack contains some structures (with block data) of a few blocks that may decay or need support (non-solid blocks)
     etc - these structures are used instead of the setblock command to overcome those limitations. Every pack will contain

@@ -42,10 +42,15 @@ function installPWA(event) {
         navigator.serviceWorker.getRegistrations().then(function(regs) {
             if (regs[0] != undefined && regs[0].active) {
                 alert('Installed !');
+            } else {
+                alert(`Attempting to install the Offline website... \nClose this dialog to continue.\n
+Note : The cached website will not persist in an Incognito/Private tab. Please ensure that you are trying this in a regular browser tab \
+with Storage & ServiceWorker permissions allowed, to be able to download the Web App for Desktop.`);
             }
         });
-        // console.log(window.location.pathname);
+        // Path will be relative to the HTML file
         navigator.serviceWorker.register('./sw.js');
+    
     } else {
         alert(`Oops ! It looks like your browser does not support local caching currently.\n
 Ensure that this page is not open in an Incognito / Private window and that Service Workers / Cache Storage are allowed in Site / Cookie settings.\n
