@@ -4,13 +4,11 @@ Minecraft Pixel Art Maker
 https://gd-codes.github.io/mc-pixelart-maker/
 */
 
-const materialnames = ["White Dye", "Light Grey Dye", "Grey Dye", "Black Dye", "Brown Dye", "Red Dye", "Orange Dye", 
-    "Yellow Dye", "Lime Dye", "Green Dye", "Cyan Dye", "Light Blue Dye", "Blue Dye", "Purple Dye", "Magenta Dye", "Pink Dye",
-    "Oak", "Spruce", "Crimson", "Warped", "Dirt", "Sand", "Clay", "Stone", "Deepslate", "Netherrack", "Quartz", 
-    "Exposed Copper", "Oxidised Copper", "Foliage", "Tree Leaves", "Birch Leaves", "Spruce Leaves", "Lichen", "Crimson Bark",
-    "Warped Bark", "Crimson Nylium", "Warped Wart", "Turquoise", "Iron", "Redstone", "Gold", "Emerald", "Lapis", 
-    "Raw Iron", "Calcite", "Tuff", "Dripstone", "Slime", "Web", "Ice", "Grass"];
-// Ordered to match `colourmap` from imageProcessor.js. Do not change.
+const materialnames = [];
+Colours.forEach(function(value, key) {
+  materialnames.push(value.name)
+});
+const colourtokens = Array.from(Colours.keys());
 
 function newImageUpload() {
   var uid = "";

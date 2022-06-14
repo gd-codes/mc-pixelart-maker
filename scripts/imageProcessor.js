@@ -4,26 +4,6 @@ Minecraft Pixel Art Maker
 https://gd-codes.github.io/mc-pixelart-maker/
 */
 
-/*None of these values should be > 220
-The keys also must match the `value`s of checkboxes in the colour table modal
-The order of this Map is important !*/
-const colourmap = new Map([
-  ["white", [220, 220, 220]], ["lightgrey", [132, 132, 132]], ["grey", [65, 65, 65]], ["black", [22, 22, 22]], 
-  ["brown", [88, 65, 44]], ["red", [132, 44, 44]], ["orange", [186, 108, 44]], ["yellow", [198, 198, 44]], 
-  ["lime", [108, 176, 22]], ["green", [88, 108, 44]], ["cyan", [66, 108, 132]], ["lightblue", [88, 132, 186]], 
-  ["blue", [44, 66, 152]], ["purple", [108, 55, 152]], ["magenta", [152, 66, 186]], ["pink", [208, 108, 142]], 
-  ["oak", [124, 100, 60]], ["spruce", [112, 74, 42]], ["crimson", [128, 54, 84]], ["warped", [50, 122, 120]], 
-  ["dirt", [130, 94, 66]], ["sand", [212, 200, 140]], ["clay", [140, 144, 158]], ["stone", [96, 96, 96]], 
-  ["deepslate", [86, 86, 86]], ["nether", [96, 0, 0]], ["quartz", [220, 216, 210]], ["expocopper", [116, 92, 84]], 
-  ["oxicopper", [18, 108, 116]], ["foliage", [0, 108, 0]], ["oakleaves", [55, 80, 20]], ["birchleaves", [60, 78, 38]], 
-  ["conifers", [45, 70, 45]], ["lichen", [108, 144, 128]], ["darkcrimson", [80, 20, 25]], 
-  ["darkwarped", [75, 37, 52]], ["crimsonylium", [162, 42, 42]], ["warpwart", [15, 155, 115]], 
-  ["turquoise", [78, 188, 182]], ["steel", [144, 144, 144]], ["brightred", [220, 0, 0]], ["gold", [215, 205, 65]], 
-  ["emerald", [0, 188, 50]], ["lapis", [64, 110, 220]], ["rawiron", [185, 150, 125]], ["calcite", [180, 150, 140]], 
-  ["tuff", [50, 35, 30]], ["dripstone", [65, 42, 30]], ["slime", [108, 152, 48]], ["web", [170, 170, 170]], 
-  ["ice", [138, 138, 220]], ["grass", [125, 160, 75]]
-]);
-
 function lightPixel(rgb) {
   return [Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])];
 }
@@ -31,13 +11,12 @@ function darkPixel(rgb) {
   return [Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])];
 }
 
-var colourlist = [];
-colourmap.forEach(function(value, key) {
-  colourlist.push(value); // Order is important
-  colourlist.push(darkPixel(value));
-  colourlist.push(lightPixel(value));
+const colourlist = [];
+Colours.forEach(function(value, key) {
+  colourlist.push(value.rgb); // Order is important
+  colourlist.push(darkPixel(value.rgb));
+  colourlist.push(lightPixel(value.rgb));
 });
-var colourtokens = Array.from(colourmap.keys());
 
 
 function analyseImage(uid, image, area, palette, d3, dither) {
@@ -58,8 +37,8 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   }
   var p = [];
   for (var cn of palette.split(" ")) {
-    if (colourmap.get(cn) !== undefined) {
-      var rgb = (colourmap.get(cn)); p.push(rgb);
+    if (Colours.get(cn) !== undefined) {
+      var rgb = (Colours.get(cn).rgb); p.push(rgb);
       if (d3) {
         p.push(darkPixel(rgb)); p.push(lightPixel(rgb));
       }

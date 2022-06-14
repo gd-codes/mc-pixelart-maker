@@ -14,16 +14,7 @@ const icons = {
   infosquare : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>`
 };
 
-const default_palette = "white lightgrey grey black brown red orange yellow lime green cyan "+
-   "lightblue blue purple magenta pink oak spruce crimson warped dirt sand clay stone deepslate nether quartz expocopper "+
-   "oxicopper foliage birchleaves conifers lichen darkcrimson darkwarped crimsonylium warpwart turquoise steel "+
-   "brightred gold emerald lapis rawiron calcite tuff dripstone slime web ice";
-
-const structures = {
-  azalea_leaves:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OmF6YWxlYV9sZWF2ZXMKBgBzdGF0ZXMBDgBwZXJzaXN0ZW50X2JpdAEBCgB1cGRhdGVfYml0AAADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAE0SAABiAAAAcAAAAAA=",
-  glowstone:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAMAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwMAAAAAAAAAAQAAAAEAAAADAwAAAP///////////////wkIAGVudGl0aWVzAAAAAAAKBwBwYWxldHRlCgcAZGVmYXVsdAkNAGJsb2NrX3BhbGV0dGUKAgAAAAgEAG5hbWUTAG1pbmVjcmFmdDpnbG93c3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZQ0AbWluZWNyYWZ0OmFpcgoGAHN0YXRlcwADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEYBAABFAAAAxf7//wA=",
-  glow_lichen:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAIAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwIAAAAAAAAAAQAAAAMCAAAA//////////8JCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgIAAAAIBABuYW1lFQBtaW5lY3JhZnQ6Y29iYmxlc3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZRUAbWluZWNyYWZ0Omdsb3dfbGljaGVuCgYAc3RhdGVzAxkAbXVsdGlfZmFjZV9kaXJlY3Rpb25fYml0cz8AAAAAAwcAdmVyc2lvbgPSEAEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABjEgAAZQAAAFoAAAAA"
-};
+const default_palette = Array.from(Colours.keys()).join(' ');
 
 
 /* Check for events
@@ -74,18 +65,8 @@ $(document).ready(function() {
   $("#resetAddonDiv").click(function(event) {
     clearBehaviourPack();
   });
-  
-  /*Colour Palette modalview and related UI*/
-  $(".colour-insert").each(function (index, elem) {
-    let h = $(elem).html();
-    $(elem).html("<span style=\"color:"+$(elem).data('colour')+";\">"+icons.square+"</span>"+h);
-  });
-  $(".add-questionmark").each(function (index, elem) {
-    let h = $(elem).html();
-    $(elem).html(h+icons.questionmark);
-  });
-  
-  //Bind Colour table modal's selection controls
+
+  //Construct Colour table modal and setup controls
   $("#clrSelBtn_All").click(function() { $("input[name='clrSelect']").prop('checked', true); });
   $("#clrSelBtn_None").click(function() { $("input[name='clrSelect']").prop('checked', false); });
   $("#clrSelBtn_Inv").click(function() {  
@@ -95,15 +76,40 @@ $(document).ready(function() {
   });
   $("#clrSelBtn_Dye").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', ((index < 16)? true : false));
+      $(elem).prop('checked', Boolean($(elem).data('dye')));
     });
   });
   $("#clrSelBtn_NB").click(function() { 
-    $("input[name='clrSelect']").eq(30).prop('checked', false);
-    $("input[name='clrSelect']").eq(31).prop('checked', false);
+    $("input[name='clrSelect']").each(function(index, elem) {
+      if (Boolean($(elem).data('biome')))
+        $(elem).prop('checked', false);
+    });
   });
+
+  let clrTable = "";
+  Colours.forEach(function(value, key) {
+      clrTable += `<tr>
+      <td><div class="form-check checkbox-scaled">
+        <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="${key}" 
+        data-dye="${value.is_dye}" data-biome="${value.is_biomevar}"/>
+      </div></td>
+      <td class="colour-insert display-4" data-colour="rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]})">
+        <span style="color: rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]});">${icons.square}</span>
+      </td>
+      <td> ${value.name} </td>
+      <td> ${value.description} </td>
+    </tr>`;
+  });
+  $("#colourPaletteTable tbody").html(clrTable);
   
+
   //Initial setup
+
+  $(".add-questionmark").each(function (index, elem) {
+    let h = $(elem).html();
+    $(elem).html(h+icons.questionmark);
+  });
+
   $("#resetImageFormBtn_000001").click();
   
   $("#materialOptsDisplay_000001").data("selected", default_palette);
@@ -119,8 +125,7 @@ $(document).ready(function() {
   
 });
 
-
-
+// Lazy-load carousel images
 $(window).on('load', function() {
   for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
@@ -196,15 +201,11 @@ function configureColourModal(elem) {
 
 
 function refreshColourDisplay(uid) {
-  //colourmap is defined in imageProcessor.js
   var htmlc = [];
   for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
-    if (colourmap.get(c)!==undefined) {
-      htmlc.push("<span style=\"color:rgb(" + colourmap.get(c).toString() + "); padding: 2px;\">"+
-               icons.square_noborder +"</span>");
-    } else {
-      continue;
-    }
+    let cd = Colours.get(c);
+    if (cd!==undefined)
+      htmlc.push(`<span style="color:rgb(${cd.rgb[0]},${cd.rgb[1]},${cd.rgb[2]}); padding: 2px;">${icons.square_noborder}</span>`);
   }
   var content = htmlc.join("");
   if (content.search(/\w/i) < 0) {
@@ -375,9 +376,9 @@ function writeBhvPack(images, uuids) {
     }
   }
   var strfolder = pack.folder('structures');
-  strfolder.file("mapart/azalea_leaves.mcstructure", structures.azalea_leaves, {base64:true});
-  strfolder.file("mapart/glow_lichen.mcstructure", structures.glow_lichen, {base64:true});
-  strfolder.file("mapart/glowstone.mcstructure", structures.glowstone, {base64:true});
+  strfolder.file("mapart/azalea_leaves.mcstructure", Structures.azalea_leaves, {base64:true});
+  strfolder.file("mapart/glow_lichen.mcstructure", Structures.glow_lichen, {base64:true});
+  strfolder.file("mapart/glowstone.mcstructure", Structures.glowstone, {base64:true});
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
         setSaveAsZip(blob);
