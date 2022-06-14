@@ -1,0 +1,135 @@
+
+.dark-theme,
+.dark-theme .modal-content,
+.dark-theme table {
+  background-color: #1b1b1b;
+  color: ghostwhite;
+}
+
+.dark-theme .alert-info {
+  color: #def;
+  border-color: #258;
+  background-color: #0a2a4a;
+}
+.dark-theme .alert-info .alert-link {
+  color: white;
+}
+.dark-theme .alert-success {
+  color: #d4edda;
+  border-color: #285;
+  background-color: #155724;
+}
+.dark-theme .alert-success .alert-link {
+  color: lightcyan;
+}
+.dark-theme .alert-warning {
+  color: #dca;
+  border-color: #885;
+  background-color: #221900;
+}
+.dark-theme .alert-warning .alert-link {
+  color: ivory;
+}
+
+.dark-theme .bg-light {
+  background-color: #555 !important;
+}
+.dark-theme .bg-dark {
+  background-color: black !important;
+}
+.dark-theme .text-muted {
+  color: rgb(180,180,180) !important;
+}
+.dark-theme .form-control, 
+.dark-theme .form-control:active, 
+.dark-theme .table .thead-light th,
+.dark-theme .custom-file-label {
+  background-color: #101010;
+  border-color: #606060;
+  color: ghostwhite;
+}
+.dark-theme .custom-file-label::after,
+.dark-theme .nav-tabs .nav-link.active {
+  background-color: #222;
+  border-color: #606060;
+  color: ghostwhite;
+}
+
+.dark-theme .table td, .dark-theme .table th {
+  border-top: 1px solid #888;
+}
+
+.dark-theme .nav-tabs {
+  border-bottom: 1px solid lightslategray;
+}
+
+.dark-theme .text-primary {
+  color: #399fff !important;
+}
+.dark-theme .text-dark {
+  color: #f0ffef!important;
+}
+
+.dark-theme a:not(.btn) {
+  color: darkturquoise;
+}
+
+.dark-theme .custom-control-label::before {
+  background-color: #222;
+}
+.dark-theme .border-dark {
+  border-color: #888 !important;
+}
+.dark-theme .form-control:disabled,
+.dark-theme .custom-file-input:disabled~.custom-file-label,
+.dark-theme .custom-control-input:disabled~.custom-control-label::before {
+  background-color: #444 !important;
+  color: lightgray !important;
+}
+.dark-theme .btn-outline-secondary {
+  color: lightgray;
+  border-color: lightgray;
+}
+.dark-theme .btn-outline-danger {
+  color: rgb(255, 50, 50);
+  border-color: rgb(255, 50, 50);
+}
+.dark-theme .btn-outline-danger:hover {
+  color: white;
+}
+.dark-theme .page-link {
+  color: #399fff;
+  background-color: #606060;
+}
+
+.dark-theme kbd {
+  background-color: #555555;
+  white-space: nowrap;
+}
+.dark-theme code {
+  color: #ff70b3;
+}
+.dark-theme pre code {
+  color: beige;
+}
+.dark-theme .figure-img, 
+.dark-theme .carousel-item img {
+  filter: brightness(85%);
+}
+.dark-theme .figure-caption {
+  color: lightgray;
+}
+
+.dark-theme .popover {
+  color: #212529;
+}
+
+.dark-theme .table-hover tbody tr:hover {
+  color: beige;
+  background-color: #555555;
+}
+
+.dark-theme #github-icon {
+  color: white !important;
+}
+

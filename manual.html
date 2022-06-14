@@ -1,42 +1,46 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Minecraft Map Art Maker &#8226; Manual</title>
+<title>Manual &#8226; Map Art Maker for Minecraft</title>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="title" content="Minecraft Map Art Maker">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,vanilla,add-on,caves,cliffs">
+<meta name="title" content="Map Art Maker for Minecraft">
+<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.17,1.18,vanilla,add-on,caves,cliffs">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
   
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" crossorigin="anonymous"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" />
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style-dark.css" rel="stylesheet" type="text/css"/>
+<meta id="colorSchemeMetaTag" name="color-scheme" content="light dark"/>
   
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-<link rel="manifest" href="images/site.webmanifest">
-<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#331100">
+<link rel="manifest" href="site.webmanifest">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#C0C0C0">
 <link rel="shortcut icon" href="images/favicon.ico">
-<meta name="msapplication-TileColor" content="#331100">
+<meta name="msapplication-TileColor" content="#C0C0C0">
 <meta name="msapplication-config" content="images/browserconfig.xml">
-<meta name="theme-color" content="#331100">
+<meta name="theme-color" content="#C0C0C0">
 	
-<meta property="og:title" content="Minecraft Map Art Maker - Manual" />
+<meta property="og:title" content="Manual - Map Art Maker for Minecraft" />
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/manual.html" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!" />
-  
+<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!" />
+ 
+<script src="scripts/theme_pwa.js" defer></script>
 </head>
 
 <body>
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
-		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Minecraft Map Art Maker</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.17) that builds the image in your world, to view it on a map!</h5>
+		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.18) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -56,14 +60,23 @@
   <div class="col-md-4"></div></div>
   </div>
   <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
-  <p> It is recommended to use this app on a desktop/laptop instead of on mobile! </p> 
+  <p> It is recommended to use this app on a desktop/laptop instead of on mobile. </p> 
   <p> The app has been tested on recent versions of Google Chrome, Safari and Microsoft Edge. 
     Internet Explorer is <em>not</em> fully compatible. Since this is a client-side app (It is run entirely by your browser,
     no data is sent back the server for processing !), some essential functions may not
     work if your browser hasn't been updated for a long while, or your device places many
-    restrictions on it.</p> <p>Javascript <b><i>must</i></b> be enabled for this site. In additon, it is recommended
-  that atleast 10 MB memory is available (or don't upload too many images into one pack).</p>
-    <p>This site does not use any cookies or local storage.</p>
+    restrictions on it. Javascript <b><i>must</i></b> be enabled for this site.</p>
+  <p>This site does not use any cookies.</p>
+  <p><strong class="h6">PWA :</strong> This app can work offline, using the features of Progressive Web Apps <a class="text-info" rel="nofollow noreferrer"
+      href="https://en.wikipedia.org/wiki/Progressive_web_application" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+      </svg></a> &nbsp;. Click the '<i class="text-monospace">Try Offline</i>' button in the footer to cache the resources 
+      to do so (this will only take around 3 MB of space). If your browser supports these features, it will show you an option
+      to install this website as a native application on your system ! On mobile, you can equivalently save it to the Home Screen.<br>
+      Note : On desktop, PWAs may not be fully supported in browsers other than recent versions of Chrome, Edge & Safari. 
+      Even without the installable app, you will be able to use the website without an internet connection.
+      You can clear the cached website from your browser settings if you wish to do so.
+  </p>
   <h4 class="container-lg text-center text-capitalize" id="web-app"><br>Miscellaneous notes<br><br></h4>
   <ul class="mt-1">
     <li> When you create the add-on, commands to build all the images that were uploaded <i>and</i> processed
@@ -105,9 +118,9 @@
       in the figure alongside.<br>
       <ul><li class="py-2">If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
         you must run all the commands while staying at this same corner only (top-left of the whole image).</li>
-      <li> Otherwise, running each function will teleport you (the nearest player) to the corner of the next zone 
-        (marked by small black squares in the figure) after placing those blocks, so that you "move along" as you're running
-        the functions one-by-one. A glowstone block may also be placed there to identify the corner - you must be standing 
+      <li> Otherwise (this is the normal method), running each function will teleport you (the nearest player) to the corner of 
+        the next zone (marked by small black squares in the figure) after placing those blocks, so that you "move along" as you're 
+        running the functions one-by-one. A glowstone block may also be placed there to identify the corner - you must be standing 
         <em>exactly on top</em> of it before continuing with the next one.</li></ul></div>
       <div class="col-md-4"><figure class="figure">
         <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
@@ -119,7 +132,7 @@
 /function wallpaper/2
 /function wallpaper/3
 /function wallpaper/4</code></pre><br>
-    <strong class="text-muted">Note :</strong> You may need to restart Minecraft and run the <kbd>/reload</kbd> command first,
+    <strong class="text-muted">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
       in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
     <li><span class="lead">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
@@ -134,23 +147,23 @@
   size 3x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
   <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
   behaviour pack.mcpack
-   |
-   |-- manifest.json
-   |-- pack_icon.png
-   ├-- structures/
-   |    └ mapart/
-   |       ...
-   └-- functions/
-        ├-- cliff/
-        |    |-- 1.mcfunction
-        |    |-- 2.mcfunction
-        |    |-- 3.mcfunction
-        |    └-- 4.mcfunction
-        └-- bastion/
-             |-- 1.mcfunction
-             └-- 2.mcfunction
-             ├     ...
-             └-- 12.mcfunction
+   &boxv;
+   &boxvr;&boxh; manifest.json
+   &boxvr;&boxh; pack_icon.png
+   &boxvr;&boxh; structures/
+   &boxv;    &boxur;&boxh; mapart/
+   &boxv;         &boxur;   ...
+   &boxur;&boxh; functions/
+        &boxvr;&boxh; cliff/
+        &boxv;    &boxvr;&boxh; 1.mcfunction
+        &boxv;    &boxvr;&boxh; 2.mcfunction
+        &boxv;    &boxvr;&boxh; 3.mcfunction 
+        &boxv;    &boxur;&boxh; 4.mcfunction
+        &boxur;&boxh; bastion/
+             &boxvr;&boxh; 1.mcfunction
+             &boxvr;&boxh; 2.mcfunction
+             &boxvr;     ...
+             &boxur;&boxh; 12.mcfunction
   </code></pre><br>
   <div class="row"><div class="col-4"></div>
     <div class="col-4"><a class="btn btn-block btn-warning mx-auto" href="resources/sample_pack.mcpack" 
@@ -163,8 +176,7 @@
         <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> 
         <li> The name and description that you entered, will be displayed for the add-on in game.</li>
         <li> 2 version-4 <a  rel="nofollow noreferrer" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">
-          UUIDs </a> to uniquely identify the pack, generated securely by <a href="https://www.uuidtools.com/" rel="nofollow 
-          noreferrer"> an external service</a>. If their server does not respond, you will be prompted to enter 2 UUIDs manually - any UUID (v4 or other) is sufficient as long as it has not been reused or copied from another existing pack that you are using / may use.</li></ul> 
+          UUIDs </a> to uniquely identify the pack, generated randomly using the JS web Crypto API.</li></ul> 
       You can always edit the icon or manifest if you prefer to make any changes later on.</li><br></ul>
   <p>The pack contains some structures (with block data) of a few blocks that may decay or need support (non-solid blocks)
     etc - these structures are used instead of the setblock command to overcome those limitations. Every pack will contain
@@ -175,8 +187,27 @@
   <div class="text-center lead"><a href="#manual">Back to top &uarr;</a> </div>
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
-  <br><h6 class="text-white" id="footertitle">Minecraft Map Art Maker</h6>
-  <h6 class="text-white-50">Version 3.1<br><br></h6>
+  <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
+  <h6 class="text-white-50">Version 4.1</h6>
+  <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
+    <div class="custom-control custom-switch">
+      <div class="d-inline" style="padding-right: 2.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">
+          <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+      </div>
+      <div class="d-inline mt-2">
+        <input type="checkbox" class="custom-control-input" id="light-dark-toggle"/>
+        <label class="custom-control-label" for="light-dark-toggle" id="light-dark-toggle-label"></label>
+      </div>
+      <div class="d-inline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">
+          <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="btn btn-sm btn-outline-secondary ml-5" id="tryOfflineBtn">Try Offline</div> 
+  </div>
   <p>
     <a class="text-white-50" href="#">Web App</a> | 
     <a class="text-white-50" href="#">Manual</a> | 

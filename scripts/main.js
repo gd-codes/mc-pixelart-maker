@@ -21,8 +21,15 @@ const default_palette = "white lightgrey grey black brown red orange yellow lime
 
 const structures = {
   azalea_leaves:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OmF6YWxlYV9sZWF2ZXMKBgBzdGF0ZXMBDgBwZXJzaXN0ZW50X2JpdAEBCgB1cGRhdGVfYml0AAADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAE0SAABiAAAAcAAAAAA=",
+  glowstone:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAMAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwMAAAAAAAAAAQAAAAEAAAADAwAAAP///////////////wkIAGVudGl0aWVzAAAAAAAKBwBwYWxldHRlCgcAZGVmYXVsdAkNAGJsb2NrX3BhbGV0dGUKAgAAAAgEAG5hbWUTAG1pbmVjcmFmdDpnbG93c3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZQ0AbWluZWNyYWZ0OmFpcgoGAHN0YXRlcwADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEYBAABFAAAAxf7//wA=",
   glow_lichen:"CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAIAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwIAAAAAAAAAAQAAAAMCAAAA//////////8JCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgIAAAAIBABuYW1lFQBtaW5lY3JhZnQ6Y29iYmxlc3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZRUAbWluZWNyYWZ0Omdsb3dfbGljaGVuCgYAc3RhdGVzAxkAbXVsdGlfZmFjZV9kaXJlY3Rpb25fYml0cz8AAAAAAwcAdmVyc2lvbgPSEAEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABjEgAAZQAAAFoAAAAA"
 };
+
+
+/* Check for events
+1. Ask user to confirm before closing the tab
+2. Bind all UI elements to appropriate callbacks when DOM is loaded
+3. Lazy-load carousel images after page loads */
 
 window.addEventListener('beforeunload', function (event) {
   if (Number($("body").data("confirm-page-unload"))) {
@@ -31,6 +38,7 @@ window.addEventListener('beforeunload', function (event) {
     return '';
   }
 });
+
 
 $(document).ready(function() {
   //Bind buttons and links to their actions
@@ -95,23 +103,34 @@ $(document).ready(function() {
     $("input[name='clrSelect']").eq(31).prop('checked', false);
   });
   
-  
   //Initial setup
   $("#resetImageFormBtn_000001").click();
   
   $("#materialOptsDisplay_000001").data("selected", default_palette);
-  
-  $('[data-toggle="tooltip"]').tooltip();
-});
-
-$(window).on('load', function() {
   refreshColourDisplay("000001");
   
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // Prevent links in PWA window opening in browser
+  const isPWA = window.matchMedia('(display-mode: standalone)');
+  if (isPWA.matches) {
+    $('a.alert-link[target="_blank"]').removeAttr('target');
+  }
+  
+});
+
+
+
+$(window).on('load', function() {
   for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
 });
+
+
+
+/* Begin Callback definitions */
 
 function fileInputHandler(elem, file) {
   /*Image is stored as data: URI in the input's HTML data-imagecontent
@@ -127,18 +146,20 @@ function fileInputHandler(elem, file) {
   reader.readAsDataURL(file);
 }
 
+
 function resetImgHandler(elem) {
   var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
     $("#ditherSwitch_"+uid).prop("checked", true);
     $("#mapSize11_"+uid).prop("checked", true);
     $("#materialOptsDisplay_"+uid).data("selected", default_palette);
-    $("#materialOptsDisplay_"+uid).html("<i class=\"text-muted\">By default, all colours will be used</i>");
+    refreshColourDisplay(uid);
     $("#3dSwitch_"+uid).prop('checked', false);
     $("#extraHeightOption_"+uid).collapse('hide');
     $("input#heightInput_"+uid).attr("required", false);
   });
 }
+
 
 function displayPaletteOptions(elem) {
   //Display the correct extra options
@@ -151,6 +172,7 @@ function displayPaletteOptions(elem) {
     $("input#heightInput_"+uid).attr("required", false);
   }
 }
+
 
 function configureColourModal(elem) {
   var uid = $(elem).attr('id').slice(-6);
@@ -172,6 +194,7 @@ function configureColourModal(elem) {
   $("#colourTableModal").modal('show');
 }
 
+
 function refreshColourDisplay(uid) {
   //colourmap is defined in imageProcessor.js
   var htmlc = [];
@@ -190,6 +213,7 @@ function refreshColourDisplay(uid) {
   } 
   $("#materialOptsDisplay_"+uid).html(content);
 }
+
 
 function submitImgFormHandler(elem, event) {
   /*Client side validation, 
@@ -246,6 +270,7 @@ function submitImgFormHandler(elem, event) {
   image.src = $("#imgInput_"+uid).data('imagecontent');
 }
 
+
 function deleteImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
@@ -259,6 +284,7 @@ function deleteImgForm(elem) {
     $("#navbarList a.nav-link").first().click();
   }
 }
+
 
 function editImgForm(elem) {
   var uid = $(elem).attr('id').slice(-6);
@@ -275,6 +301,14 @@ function editImgForm(elem) {
   $("#viewFinalImgBtn_"+uid).off('click');
   $("#imageForm_"+uid).removeData('finalimage');
   //console.info("Re-enabled editing of image "+uid);
+}
+
+
+function uuidv4() {
+  // https://stackoverflow.com/a/2117523
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
 }
 
 function startCreateBhvPack(event) {
@@ -296,28 +330,10 @@ function startCreateBhvPack(event) {
   $("#spinnerModal").addClass('d-block');
   $("#spinnerModal").removeClass('d-none');
   
-  $.ajax({
-    url: "https://www.uuidtools.com/api/generate/v4/count/2",
-    success: function(data) {
-      console.log("Succesfully received uuids ", data);
-      writeBhvPack(processed, data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error(jqXHR, textStatus, errorThrown);
-      var manual = confirm("Error\n\nThe server at www.uuidtools.com did not\
-respond with the requested data. Do you want to specify 2 UUIDs manually ?");
-      if (manual) {
-        var uuid1 = prompt("Enter a UUID (any version - ensure that it is in the valid format)", 
-                           "00000000-0000-0000-0000-000000000000");
-        var uuid2 = prompt("Enter another UUID", "00000000-0000-0000-0000-000000000000");
-        writeBhvPack(processed, [uuid1, uuid2]);
-      } else {
-        $("#spinnerModal").addClass('d-none');
-        $("#spinnerModal").removeClass('d-block');
-      }
-    }
-  });
+  writeBhvPack(processed, [uuidv4(), uuidv4()]);
 }
+
+
 
 function writeBhvPack(images, uuids) {
   var pack = new JSZip();
@@ -361,6 +377,7 @@ function writeBhvPack(images, uuids) {
   var strfolder = pack.folder('structures');
   strfolder.file("mapart/azalea_leaves.mcstructure", structures.azalea_leaves, {base64:true});
   strfolder.file("mapart/glow_lichen.mcstructure", structures.glow_lichen, {base64:true});
+  strfolder.file("mapart/glowstone.mcstructure", structures.glowstone, {base64:true});
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
         setSaveAsZip(blob);
@@ -385,6 +402,8 @@ function writeBhvPack(images, uuids) {
   });
 }
 
+
+
 function setSaveAsZip(blob) {
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
@@ -400,6 +419,7 @@ function clearBehaviourPack() {
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
 }
+
 
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
@@ -432,6 +452,7 @@ id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"><
   });
   $("#guidelink_"+uid+" a").click();
 }
+
 
 function deleteSurvivalGuide(uid, readd=false) {
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
