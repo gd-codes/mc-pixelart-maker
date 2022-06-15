@@ -155,8 +155,8 @@ function makeLogo(images) {
   try {
     return canv.toDataURL('image/png');
   } catch (err) {
-    return "data:image/png;base64,";
     console.error("Error forming a pack icon", err);
+    return "data:image/png;base64,";
   } 
 }
 

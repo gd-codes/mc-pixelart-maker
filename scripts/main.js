@@ -79,6 +79,11 @@ $(document).ready(function() {
       $(elem).prop('checked', Boolean($(elem).data('dye')));
     });
   });
+  $("#clrSelBtn_greys").click(function() {
+    $("input[name='clrSelect']").each(function(index, elem) {
+      $(elem).prop('checked', Boolean($(elem).data('grey')));
+    });
+  });
   $("#clrSelBtn_NB").click(function() { 
     $("input[name='clrSelect']").each(function(index, elem) {
       if (Boolean($(elem).data('biome')))
@@ -91,7 +96,7 @@ $(document).ready(function() {
       clrTable += `<tr>
       <td><div class="form-check checkbox-scaled">
         <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="${key}" 
-        data-dye="${value.is_dye}" data-biome="${value.is_biomevar}"/>
+        data-dye="${value.is_dye}" data-biome="${value.is_biomevar}" data-grey="${value.is_greyscale}"/>
       </div></td>
       <td class="colour-insert display-4" data-colour="rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]})">
         <span style="color: rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]});">${icons.square}</span>
