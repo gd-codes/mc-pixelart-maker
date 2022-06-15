@@ -76,18 +76,17 @@ $(document).ready(function() {
   });
   $("#clrSelBtn_Dye").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Boolean($(elem).data('dye')));
+      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_dye);
     });
   });
   $("#clrSelBtn_greys").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Boolean($(elem).data('grey')));
+      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_greyscale);
     });
   });
   $("#clrSelBtn_NB").click(function() { 
     $("input[name='clrSelect']").each(function(index, elem) {
-      if (Boolean($(elem).data('biome')))
-        $(elem).prop('checked', false);
+      if (Colours.get($(elem).attr('value')).is_biomevar) $(elem).prop('checked', false);
     });
   });
 
@@ -95,8 +94,7 @@ $(document).ready(function() {
   Colours.forEach(function(value, key) {
       clrTable += `<tr>
       <td><div class="form-check checkbox-scaled">
-        <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="${key}" 
-        data-dye="${value.is_dye}" data-biome="${value.is_biomevar}" data-grey="${value.is_greyscale}"/>
+        <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="${key}"/>
       </div></td>
       <td class="colour-insert display-4" data-colour="rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]})">
         <span style="color: rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]});">${icons.square}</span>
@@ -350,7 +348,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,17,0]
+      min_engine_version: [1,19,0]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + new Date().toDateString(),
