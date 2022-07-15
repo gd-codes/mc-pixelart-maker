@@ -30,6 +30,14 @@
 .dark-theme .alert-warning .alert-link {
   color: ivory;
 }
+.dark-theme .alert-danger {
+  color: #f6e6e7;
+  border-color: #9a414a;
+  background-color: #36060b;
+}
+.dark-theme .alert-danger .alert-link {
+  color: #ffe6e7;
+}
 
 .dark-theme .bg-light {
   background-color: #555 !important;
