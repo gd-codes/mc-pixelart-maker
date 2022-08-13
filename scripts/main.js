@@ -369,11 +369,12 @@ function writeBhvPack(images, uuids) {
   pack.file('pack_icon.png', icon.split(',')[1], {base64:true});
   var keep = Boolean($("#keepBlocks:checked").length > 0);
   var link = Boolean($("#useLinkedPos:checked").length > 0);
+  var strucs = Boolean($("#buildWithStructures:checked").length > 0);
   var fnfolder = pack.folder('functions');
   for (let o of images) {
     let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
     let extrainfo = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
-    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link);
+    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link, strucs);
     for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
@@ -382,6 +383,11 @@ function writeBhvPack(images, uuids) {
   strfolder.file("mapart/azalea_leaves.mcstructure", Structures.azalea_leaves, {base64:true});
   strfolder.file("mapart/glow_lichen.mcstructure", Structures.glow_lichen, {base64:true});
   strfolder.file("mapart/glowstone.mcstructure", Structures.glowstone, {base64:true});
+  if (strucs) {
+    Colours.forEach(function(value, key){
+      strfolder.file(`mapart/${key}.mcstructure`, value.structure, {base64:true});
+    })
+  }
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
         setSaveAsZip(blob);
@@ -398,7 +404,7 @@ function writeBhvPack(images, uuids) {
      uri = "data:application/zip;base64," + uri;
       $("#altDownloadPack").click(function(event) {
         event.preventDefault();
-        saveAs(uri, "pixelart.mcpack");
+        saveAs(uri, "mapart.mcpack");
       })
     }, function(err) {
       alert("Uh oh\nSomething went wrong !");
@@ -412,7 +418,7 @@ function setSaveAsZip(blob) {
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
   $("#downloadPackBtn").click(function() {
-    saveAs(blob, "pixelart.mcpack");
+    saveAs(blob, "mapart.mcpack");
   });
 }
 

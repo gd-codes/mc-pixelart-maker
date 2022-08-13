@@ -132,16 +132,25 @@
 /function wallpaper/2
 /function wallpaper/3
 /function wallpaper/4</code></pre><br>
-    <strong class="text-muted">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
+    <strong class="text-black">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
       in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
     <li><span class="lead" id="in-mc-done">You're Done !</span><p> Once you've constructed the image, map the entire area covered by it
       and build a map wall for your pixel art !<br> It's also a good idea to <a rel="nofollow noreferrer"
       href="https://minecraft.gamepedia.com/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
       from updating if some other structures are built above them, or if the colour palette changes in future updates.</p>
-      <br/><strong class="text-muted">Note :</strong> If you see that many blocks are missing, especially in a zig-zag like pattern
-      along chunk borders near the bottom half of each zone, it is probably due to your simulation distance being too low. 
-      Increase it (from world settings) to ≥ 10 chunks and try building the map again. Or, ask another player to stand nearby to
-      keep those chunks loaded while you are running the functions.
+      <br/><p>
+        <strong class="text-black">Note :</strong> If you see that many blocks are missing, especially in a zig-zag like pattern
+        along chunk borders near the bottom half of each zone (see <a href="https://github.com/gd-codes/mc-pixelart-maker/issues/5" target="_blank">
+          Issue#5</a> on GitHub), it is probably due to your simulation distance being too low. You can try the following fixes :
+        <ul>
+          <li>Ensure that the '<i class="text-monospace">Use same starting coordinates</i>' option is disabled. Re-generate the add on if you had used it.</li>
+          <li>Increase your simulation distance further (at least equal to or more than 10 chunks). Although the upper limit allowed by Minecraft is device-depenedent.</li>
+          <li>Ask a friend or other player to join your world and stand near that opposite corner to keep those chunks loaded while you run the commands</li>
+          <li>Enable '<i class="text-monospace">Use only structures</i>' in the addon generator command options and try again. If you use this,
+            ensure to once move to the other end of each zone to briefly bring those chunks into simulation distance and complete loading, before moving back to the next corner
+            marker where you were teleported and then running the next function.<br/>You can also use this option if placed leaves (esp. Azalea) are decaying.</li>
+        </ul>
+      </p>
     </li>
   </ol>
   <br><hr>
@@ -192,7 +201,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.2</h6>
+  <h6 class="text-white-50">Version 4.3</h6>
   <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
     <div class="custom-control custom-switch">
       <div class="d-inline" style="padding-right: 2.5rem;">

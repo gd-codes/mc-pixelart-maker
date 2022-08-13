@@ -6,7 +6,7 @@ https://gd-codes.github.io/mc-pixelart-maker/
 
 const blocks = [];
 Colours.forEach(function(value, key) {
-  blocks.push(value.id)
+  blocks.push(key)
 });
 
 function findYMap(imgdata, maxY) {
@@ -41,7 +41,7 @@ function findYMap(imgdata, maxY) {
   return Ymap;
 }
 
-function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
+function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs) {
   var zone_origins=[], x0, z0, i, fnlist=[], yMap, ymax=1;
   //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (z0=0; z0<imobj.height; z0+=128) {
@@ -59,8 +59,8 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
     fun += "say Running commands ".concat((i+1), "/", zone_origins.length, 
             " of function group ", name, " (x=", x0, "-", x0+63, ", z=",
             z0, "-", z0+127, ")\nsay Common coords : ", linkpos,
-            " | Do not destroy : ", keep, " | Colours : ", palette.length, 
-            " | Height : ", ymax, "\n");
+            " | Do not destroy : ", keep, " | Structures : ", strucs,
+            " | Colours : ", palette.length, " | Height : ", ymax, "\n");
     /* If positions are linked, coordinates for each zone have same origin (image's top left)
     Else iterate from (0,0) each time - user will have to shift by x=64/z=128 for each zone*/
     xloop = (linkpos)? x0 : 0;
@@ -77,18 +77,13 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos) {
         pix = (linkpos)? getPixelAt(x,z,imobj) : getPixelAt(x+x0,z+z0,imobj);
         code = blocks[Math.floor(indexOfArray(pix, colourlist) / 3)];
         y = (extrainfo <= 1)? 0 : ((linkpos)? yMap[x][z] : yMap[x+x0][z+z0]);
-        switch (code) {
-            // Anomalies - some blocks must be loaded as structures
-          case "azalea_leaves 1":
-            fun += ((keep)?`execute @p ~ ~ ~ detect ~${x} ~${y} ~${z} air -1 `:"") + 
-              `structure load mapart:azalea_leaves ~${x} ~${y} ~${z}\n`;
-            break;
-          case "glow_lichen 0":
-            fun += ((keep)?`execute @p ~ ~ ~ detect ~${x} ~${y-1} ~${z} air -1 `:"") + 
-              `structure load mapart:glow_lichen ~${x} ~${y-1} ~${z}\n`;
-            break;
-          default : // Normal case, direct placement for most of the blocks
-            fun += `setblock ~${x} ~${y} ~${z} ${code}${replMode}`;
+        if (strucs) {
+          // Load block as structure
+          fun += ((keep)?`execute @p ~ ~ ~ detect ~${x} ~${y} ~${z} air -1 `:"") + 
+              `structure load mapart:${code} ~${x} ~${y} ~${z}\n`;
+        } else {
+          // Regular placement
+          fun += `setblock ~${x} ~${y} ~${z} ${Colours.get(code).id}${replMode}`;
         }
       }
     }

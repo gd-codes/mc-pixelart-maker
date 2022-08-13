@@ -86,15 +86,6 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
     <span aria-hidden="true">&times;</span> </button>
   </div>
-  <div class="alert alert-danger alert-dismissible fade show">
-    <h4 class="alert-heading">Notice</h4>
-    <p>There is currently an issue with the generated packs due to which blocks in any unloaded chunks diagonally opposite to the player may not be placed, resulting in incomplete maps (recent versions of Minecraft 1.19).
-      This notice will be removed once it is fixed. Updates to the issue will be posted on <a class="alert-link" href="https://github.com/gd-codes/mc-pixelart-maker/issues/5" target="_blank" nofollow>this thread</a>,
-      and temporary workarounds are listed in the last note <a class="alert-link" href="./manual.html#in-mc-done" target="_blank">here</a>. Pull requests are also welcome!
-    </p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
-    <span aria-hidden="true">&times;</span> </button>
-  </div>
   <div class="container-lg text-center text-capitalize"><h3>Upload Images</h3></div>
   <div class="container bg-light rounded-top py-3 px-4 mt-4 mb-0 d-flex justify-content-between
               border border-dark border-bottom-0">
@@ -303,10 +294,19 @@
             <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" data-html="true" 
             title="The map will contain atleast 2 commands to be run in sequence to build it.
-              If this option is enabled, you can run all of them from the same location, without moving to the next region
-              each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
-              blocks far away outside loaded chunks <i>may</i> fail, which is why this is unchecked by default." 
-               data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
+            If this option is enabled, you can run all of them from the same location, without moving to the next region
+            each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
+            blocks far away outside loaded chunks <i>may</i> fail, which is why this is unchecked by default." 
+            data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="buildWithStructures" class="form-check-input" name="useStructuresOption" value="structs"/>
+            <label for="useStructuresOption" class="form-check-label"> Use only structures instead of the setblock command </label>
+            <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup" data-html="true" 
+            title="Use this to include all used blocks as structures and load them with the <code>/structure load</code> command instead
+            of placing regular blocks with <code>/setblock</code>. This <em>may</em> avoid gaps in the map due to blocks not being placed outside 
+            low simulation distance, but may be a bit slower to run or cause lag initially." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            </a>
           </div>
         </div>
       </div>
@@ -335,7 +335,8 @@
           <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg> &nbsp; 
           The pack is a zip file with a '.mcpack' extension. If Minecraft is already installed, 
         just double click it to launch the game and import it on PC, or read the installation steps
-        <a class="alert-link" href="https://www.minecraft.net/en-us/addons"  rel="nofollow noreferrer" target="_blank"> for your device</a>.
+        <a href="https://docs.microsoft.com/en-us/minecraft/creator/documents/addonpackinstallation?tabs=Windows10#installing-add-on-instructions"
+         class="alert-link" rel="nofollow noreferrer" target="_blank"> for your device</a>.
       <br>Apply it to your world (cheats must be enabled) and run each of the functions - there will be 2 to 32
       for each image depending on the selected area. <a class="alert-link" href="manual.html#in-mc" target="_blank">
         <u>Read this info page</u></a> for more detailed instructions.</div>
@@ -394,7 +395,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.2</h6>
+  <h6 class="text-white-50">Version 4.3</h6>
   <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
     <div class="custom-control custom-switch">
       <div class="d-inline" style="padding-right: 2.5rem;">
