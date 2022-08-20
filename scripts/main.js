@@ -16,46 +16,36 @@ const icons = {
 
 const default_palette = Array.from(Colours.keys()).join(' ');
 
+/* NOTE
+Many other constants used here are defined in `data.js` and methods in other JS files.
+See the order of <script> tags in index.html
+*/
 
-/* Check for events
+
+/*---------------------------------------------------------
+                  Check for events
 1. Ask user to confirm before closing the tab
 2. Bind all UI elements to appropriate callbacks when DOM is loaded
-3. Lazy-load carousel images after page loads */
-
-window.addEventListener('beforeunload', function (event) {
-  if (Number($("body").data("confirm-page-unload"))) {
-    event.preventDefault();
-    event.returnValue = '';
-    return '';
-  }
-});
+3. Lazy-load carousel images after page loads 
+-----------------------------------------------------------*/
 
 
-$(document).ready(function() {
+
+
+function setup() {
   //Bind buttons and links to their actions
+  // ---------------------------------------------
   console.log("Minecraft Pixel Art Maker - Document Ready !");
-  $("input.custom-file-input").on('change', function(event){
-    fileInputHandler(this, event.target.files[0]);
-    $("body").data("confirm-page-unload", "1");
-  }); 
-  $("input[type='reset']").closest('form').on('reset', function() {
-    resetImgHandler(this);
-  }); 
-  $("div[id^='3dOption']").on('click', function() {
-    displayPaletteOptions(this);
-  });
-  $("button[id^='materialChooseBtn']").on('click', function() {
-    configureColourModal(this);
-  });
-  $("form[id^='imageForm']").submit(function(event){
-    submitImgFormHandler(this, event);
-  });
-  $("span[id^='deleteBtn']").click( function() { 
-    deleteImgForm(this); 
-  });
-  $("button[id^='imgEditBtn']").click(function() {
-    editImgForm(this);
-  });
+  
+  // Create the first form that is visible when page is opened
+  newImageUpload("000001");
+  /* NOTE
+  Dynamically generated image forms (green plus button to add extra images) have a random 6 character suffix
+  in HTML ids of all DOM elements within the form that have an `id` attribute. 
+  This is refered to as `uid` in most functions that use it here in JS.
+  The uid of the one form already on the page when the website is opened (index.html) is "000001"
+   */
+
   $("#addNewImgBtn").click(newImageUpload);
   
   $("#writePackBtn").click(function(event) {
@@ -113,11 +103,6 @@ $(document).ready(function() {
     $(elem).html(h+icons.questionmark);
   });
 
-  $("#resetImageFormBtn_000001").click();
-  
-  $("#materialOptsDisplay_000001").data("selected", default_palette);
-  refreshColourDisplay("000001");
-  
   $('[data-toggle="tooltip"]').tooltip();
 
   // Prevent links in PWA window opening in browser
@@ -126,27 +111,45 @@ $(document).ready(function() {
     $('a.alert-link[target="_blank"]').removeAttr('target');
   }
   
-});
+  //----------------------------------------------
+  // End of setup function
+}
 
-// Lazy-load carousel images
-$(window).on('load', function() {
+
+function confirmCloseTab(event) {
+  if (Number($("body").data("confirm-page-unload"))) {
+    event.preventDefault();
+    event.returnValue = '';
+    return '';
+  }
+}
+
+function lazyload() {
+  // Add the carousel images to index.html
   for (var i=1; i<=5; i++) {
     $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
   }
   $("#demoCarousel").carousel({interval: 2000});
-});
+}
 
 
 
-/* Begin Callback definitions */
+window.addEventListener('beforeunload', confirmCloseTab);
+$(document).ready(setup);
+$(window).on('load', lazyload);
+
+
+
+
+/* --------------------- Begin Callback definitions ------------------------ */
 
 function fileInputHandler(elem, file) {
-  /*Image is stored as data: URI in the input's HTML data-imagecontent
-  attribute till retrieved later */
+  /* When a file is chosen, save it as a data: URI in the `PictureData` global object */
   $(elem).next('.custom-file-label').html(file.name);
+  var uid = $(elem).attr('id').slice(-6);
   var reader = new FileReader();
   reader.onload = function(loadevent){
-    $(elem).data('imagecontent', loadevent.target.result);
+    PictureData[uid]['originalImage'] = loadevent.target.result;
   }
   reader.onerror = function(e){
     alert("Error\n\nThere was a problem loading this image.");
@@ -156,6 +159,8 @@ function fileInputHandler(elem, file) {
 
 
 function resetImgHandler(elem) {
+  /* Reset an image upload form to its default blank state, 
+  and also pre-select default options in checkboxes/radiobuttons */
   var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
     $("#ditherSwitch_"+uid).prop("checked", true);
@@ -170,7 +175,7 @@ function resetImgHandler(elem) {
 
 
 function displayPaletteOptions(elem) {
-  //Display the correct extra options
+  /* Display the correct extra fields in the image upload form */
   var uid = $(elem).attr('id').slice(-6);
   if ($("#3dSwitch_"+uid).prop('checked')) {
     $("#extraHeightOption_"+uid).collapse('show');
@@ -183,6 +188,8 @@ function displayPaletteOptions(elem) {
 
 
 function configureColourModal(elem) {
+  /* Set the state of the checkboxes in the colour table modal to match the selected values
+  in the material/palette. Called initially and whenever the modal is opened. */
   var uid = $(elem).attr('id').slice(-6);
   var sel = $("#materialOptsDisplay_"+uid).data("selected");
   $("input[name='clrSelect']").each(function(index, chekbox) {
@@ -204,6 +211,8 @@ function configureColourModal(elem) {
 
 
 function refreshColourDisplay(uid) {
+  /* Set the small square colour markers in the currently selected palette display on the image upload form.
+   Called initially and whenever the selected palette changes */
   var htmlc = [];
   for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
     let cd = Colours.get(c);
@@ -222,10 +231,11 @@ function refreshColourDisplay(uid) {
 function submitImgFormHandler(elem, event) {
   /*Client side validation, 
   disable fields to prevent changes as some data is retrieved again later,
-  then process the image (analyseImage of imageProcessor.js)*/
+  then process the image (`analyseImage` of imageProcessor.js)*/
   event.preventDefault();
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
+  // Validate no duplicate/conflicting names in multiple images
   for (var x of $("input[id^=fnName]")) {
     var otherid = $(x).attr('id').slice(-6);
     if ((otherid!=uid) && 
@@ -236,12 +246,14 @@ function submitImgFormHandler(elem, event) {
       return;
     }
   }
+  // Collect all data from image upload form fields
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   var area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   area = [Number(area[0]), Number(area[2])];
   var palette = $("#materialOptsDisplay_"+uid).data("selected");
   var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
   var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
+  // Read the uploaded image data from stored base64 URI, and disable the form and begin analysis
   var image = new Image();
   image.onload = function() {
     var analysis = analyseImage(uid, image, area, palette, d3, dither);
@@ -271,11 +283,12 @@ function submitImgFormHandler(elem, event) {
     alert("Error\n\nThere was a problem reading the uploaded image !");
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
-  image.src = $("#imgInput_"+uid).data('imagecontent');
+  image.src = PictureData[uid]['originalImage'];
 }
 
 
 function deleteImgForm(elem) {
+  /* Delete an image upload form and all its associated data */
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
   if (! name) {name = "this image form";}
@@ -283,6 +296,7 @@ function deleteImgForm(elem) {
   if (verify) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
+    delete PictureData[uid];
     console.info("Removed image form ", uid);
     deleteSurvivalGuide(uid);
     $("#navbarList a.nav-link").first().click();
@@ -291,6 +305,7 @@ function deleteImgForm(elem) {
 
 
 function editImgForm(elem) {
+  /* Un-disable a submitted image form's fields */
   var uid = $(elem).attr('id').slice(-6);
   $("form#imageForm_"+uid+" :input").prop('disabled', false);
   $("form#imageForm_"+uid+" :radio").prop('disabled', false);
@@ -303,26 +318,29 @@ function editImgForm(elem) {
   $("#viewOrigImgBtn_"+uid).off('click');
   $("#viewResizedImgBtn_"+uid).off('click');
   $("#viewFinalImgBtn_"+uid).off('click');
-  $("#imageForm_"+uid).removeData('finalimage');
-  //console.info("Re-enabled editing of image "+uid);
 }
 
 
 function uuidv4() {
   // https://stackoverflow.com/a/2117523
+  // Used to generate UUIDs for the behaviour pack
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
 
 function startCreateBhvPack(event) {
+  /* Collect all processed image data on the page, generate 2 UUIDs, and proceed to write
+  the behaviour pack containing all images that have complete data (submitted forms) */
   event.preventDefault();
   var f, processed=[];
   for (f of $("form[id^='imageForm']")) {
-    if ($(f).data('finalimage')!=undefined) {
-      processed.push({uid: $(f).attr('id').slice(-6),
-                      name: $("#fnNameInput_"+$(f).attr('id').slice(-6)).val(),
-                      pic: $(f).data('finalimage')});
+    let uid = $(f).attr('id').slice(-6);
+    if (PictureData[uid]['finalImage']!=undefined) {
+      processed.push({uid: uid,
+                      name: $("#fnNameInput_"+uid).val(),
+                      pic: PictureData[uid]['finalImage']
+                    });
     } 
   }
   var l = $("form[id^='imageForm']").length - processed.length;
@@ -340,7 +358,9 @@ function startCreateBhvPack(event) {
 
 
 function writeBhvPack(images, uuids) {
+  /* Create the Add-on ZIP file and make it available for download */
   var pack = new JSZip();
+  // Manifest
   var manifest = JSON.stringify({
     format_version: 2,
     header: {
@@ -358,6 +378,7 @@ function writeBhvPack(images, uuids) {
     }]
   }, null, 2);
   pack.file('manifest.json', manifest);
+  // Icon, containing site logo and preview of up to 4 images that are in the pack
   var icon;
   if (images.length>4) {
     icon = makeLogo(images.reverse().slice(-4).map(x => x.pic));
@@ -367,18 +388,22 @@ function writeBhvPack(images, uuids) {
     icon = makeLogo(images.reverse().map(x => x.pic));
   }
   pack.file('pack_icon.png', icon.split(',')[1], {base64:true});
+  // Get values of pack settings
   var keep = Boolean($("#keepBlocks:checked").length > 0);
   var link = Boolean($("#useLinkedPos:checked").length > 0);
   var strucs = Boolean($("#buildWithStructures:checked").length > 0);
+  // Write the functions for each image - see `functionWriter.js`
   var fnfolder = pack.folder('functions');
   for (let o of images) {
     let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
     let extrainfo = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
-    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link, strucs);
+    let shm = PictureData[o.uid]['shadeMap'];
+    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link, strucs, shm);
     for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
   }
+  // Include structures
   var strfolder = pack.folder('structures');
   strfolder.file("mapart/azalea_leaves.mcstructure", Structures.azalea_leaves, {base64:true});
   strfolder.file("mapart/glow_lichen.mcstructure", Structures.glow_lichen, {base64:true});
@@ -388,6 +413,7 @@ function writeBhvPack(images, uuids) {
       strfolder.file(`mapart/${key}.mcstructure`, value.structure, {base64:true});
     })
   }
+  // Prepare the ZIP file for download
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
         setSaveAsZip(blob);
@@ -415,6 +441,7 @@ function writeBhvPack(images, uuids) {
 
 
 function setSaveAsZip(blob) {
+  /* Configure download link for the generated ZIP above */
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
   $("#downloadPackBtn").click(function() {
@@ -423,6 +450,7 @@ function setSaveAsZip(blob) {
 }
 
 function clearBehaviourPack() {
+  /* Reset the generate addon form */
   $("#packActionsPostProcess").addClass('d-none');
   $("#packActionsPreProcess").removeClass('d-none');
   $("#downloadPackBtn").off("click");
@@ -432,6 +460,8 @@ function clearBehaviourPack() {
 
 
 function addSurvGuideGenerator(uid) {
+  /* Add the generate survival guide form for an image. 
+  Called after an image form is succesfully submitted. */
   let fname = $("#fnNameInput_"+uid).val();
   let big = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   big = Number(big[0]) * Number(big[2]); // Additional warning for large picures
@@ -465,6 +495,8 @@ id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"><
 
 
 function deleteSurvivalGuide(uid, readd=false) {
+  /* Remove the survival guide - either because the image for which it was generated has been edited 
+  (must be re-added with new settings), or deleted */
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   setTimeout( function() {
     $("#guideTab_"+uid).remove();

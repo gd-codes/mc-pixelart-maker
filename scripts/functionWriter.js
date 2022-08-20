@@ -9,27 +9,26 @@ Colours.forEach(function(value, key) {
   blocks.push(key)
 });
 
-function findYMap(imgdata, maxY) {
-  var Ymap = [], x, z, column, c, type, lastY, min;
+function findYMap(imgdata, maxY, shademap) {
+  var Ymap = [], x, z, column, type, lastY, min;
   for (x=0; x<imgdata.width; x++) {
     column = [0]; min=0;
-    for (z=0; z<imgdata.height; z++) {
-      c = indexOfArray(getPixelAt(x,z,imgdata), colourlist);
-      type = c % 3;
-      // type 0 if it is in base colours, 1 if darker, 2 if brighter shade
-      //Block must be at same height; lower; higher; than the one N of it
+    for (z=1; z<imgdata.height; z++) {
+      type = shademap[x][z];
+      // type 255 if it is in base colours, 254 if darker, 253 if brighter shade
+      //Block must be at same height; lower; higher; than the one N of it accordingly
       lastY = column[column.length - 1];
       switch (type) {
-        case 0: 
+        case 255: 
           column.push(lastY);
           break;
-        case 1:
+        case 254:
           column.push(lastY - 2);
           if (lastY-2 < min) {
             min = lastY-2;
           }
           break;
-        case 2:
+        case 253:
           column.push(lastY + 2);
           break;
       }
@@ -41,7 +40,7 @@ function findYMap(imgdata, maxY) {
   return Ymap;
 }
 
-function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs) {
+function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs, shademap) {
   var zone_origins=[], x0, z0, i, fnlist=[], yMap, ymax=1;
   //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (z0=0; z0<imobj.height; z0+=128) {
@@ -51,7 +50,7 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs) {
   } 
   if (extrainfo > 1) {
     ymax = extrainfo;             //If extended, extrainfo contains the max height
-    yMap = findYMap(imobj, ymax); // Get the (y) heights if it is a 3D arrangement
+    yMap = findYMap(imobj, ymax, shademap); // Get the (y) heights if it is a 3D arrangement
   }
   for (i=0; i<zone_origins.length; i++) {
     var fun="", x, y, z, xloop, zloop, pix, code, replMode;

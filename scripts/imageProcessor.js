@@ -4,20 +4,6 @@ Minecraft Pixel Art Maker
 https://gd-codes.github.io/mc-pixelart-maker/
 */
 
-function lightPixel(rgb) {
-  return [Math.round(255/220*rgb[0]), Math.round(255/220*rgb[1]), Math.round(255/220*rgb[2])];
-}
-function darkPixel(rgb) {
-  return [Math.round(180/220*rgb[0]), Math.round(180/220*rgb[1]), Math.round(180/220*rgb[2])];
-}
-
-const colourlist = [];
-Colours.forEach(function(value, key) {
-  colourlist.push(value.rgb); // Order is important
-  colourlist.push(darkPixel(value.rgb));
-  colourlist.push(lightPixel(value.rgb));
-});
-
 
 function analyseImage(uid, image, area, palette, d3, dither) {
   //Manage the display etc
@@ -38,9 +24,9 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   var p = [];
   for (var cn of palette.split(" ")) {
     if (Colours.get(cn) !== undefined) {
-      var rgb = (Colours.get(cn).rgb); p.push(rgb);
+      var clr = Colours.get(cn); p.push(clr.rgb);
       if (d3) {
-        p.push(darkPixel(rgb)); p.push(lightPixel(rgb));
+        p.push(clr.rgb_d); p.push(clr.rgb_l);
       }
     }
   }
@@ -52,11 +38,16 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   var resized_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
   
-  var finalImgData = convertPalette(p, imgData, dither);
+  PictureData[uid]['shadeMap'] = new Array(w);
+  for (let i=0; i<w; i++)
+    PictureData[uid]['shadeMap'][i] = new Array(h); 
+  
+  var finalImgData = convertPalette(p, imgData, dither, PictureData[uid]['shadeMap']);
   ctx.putImageData(finalImgData, 0, 0);
   var converted_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
-  $("#imageForm_"+uid).data('finalimage', finalImgData);
+  // $("#imageForm_"+uid).data('finalimage', finalImgData);
+  PictureData[uid]['finalImage'] = finalImgData;
   
   // Processing done, configure the preview buttons
   $("#viewOrigImgBtn_"+uid).click(function() {
@@ -107,7 +98,7 @@ function closestColour(r, g, b, palette) {
   return clr;
 }
 
-function convertPalette(pal, pixels, dither) {
+function convertPalette(pal, pixels, dither, shademap) {
   //Quantize the image
   var c, dr, dg, db, i, j;
   var data = pixels.data;
@@ -134,7 +125,12 @@ function convertPalette(pal, pixels, dither) {
       
     }
     data[i] = c[0]; data[i+1] = c[1]; data[i+2] = c[2]; data[i+3] = 255;
-    //No transparent pixels allowed
+    if (shademap !== undefined) {
+      let x = (i/4) % pixels.width;
+      let y = Math.floor(i/4 / pixels.width);
+      shademap[x][y] = c[3];
+    }
+    //No transparent pixels allowed in the actual image, alpha value copied into shademap
   }
   return pixels;
 }
@@ -161,9 +157,9 @@ function makeLogo(images) {
 }
 
 function getPixelAt(x, z, dataobj) {
-  // Return RGB of pixel (x,z) from image's continuous (1D) data byte seq
+  // Return RGBA of pixel (x,z) from image's continuous (1D) data byte seq
   let i = 4*(dataobj.width*(z) + x);
-  return [dataobj.data[i], dataobj.data[i+1], dataobj.data[i+2]];
+  return [dataobj.data[i], dataobj.data[i+1], dataobj.data[i+2], dataobj.data[i+3]];
 }
 
 function indexOfArray(a, parent_arr) {
