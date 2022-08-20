@@ -181,7 +181,7 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
     <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z"/></svg></a></li>`];
 
   try {
-    var image = PictureData[uid]['finalImage']; //$("#imageForm_"+uid).data('finalimage');
+    var image = PictureData[uid]['finalImage']; 
     //let fname = $("#fnNameInput_"+uid).val();
     var pal = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
   } catch (err) {
@@ -201,15 +201,21 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   if (ymax > 1) {
     yMap = findYMap(image, ymax, PictureData[uid]['shadeMap']); // Defined in `functionwriter.js`
   }
+
+  // Begin creating the data for each zone
   // `table` has a matcing coloured cell for every pixel in the image
   // `countlist` is a table of the total occurrences
   // Repeat these for each of the zones & append to html as seperate pages
-  for (var i=0; i<zone_origins.length; i++) {
-    let counts = new Array(materialnames.length).fill(0);
+  var counts = new Array(zone_origins.length).fill(0);
+  counts[0] = new Array(materialnames.length).fill(0);
+  // counts[0] has total block counts across all zones, 1..N contain zone-wise counts
+  for (let i=0; i<zone_origins.length; i++) { // begin outer for loop ------------------------
+    counts[i+1] = new Array(materialnames.length).fill(0);
     let table = [`<table class="table table-responsive">`], 
-        countlist = [`<table class="table table-hover table-sm"><caption class="text-dark">Palette Usage - Zone ${i+1}`,
-                     `</caption><thead class="thead-light"><tr class="py-3"><th scope="col" class="pl-3">Material</th>`,
-                     `<th scope="col">Count</th></tr></thead><tbody>`];
+        countlist = [`<table class="table table-hover table-sm" id="countlistTable_${i}_${uid}">`,
+                     `<caption class="text-dark">Palette Usage - Zone ${i+1}</caption><thead class="thead-light"><tr class="py-3">`,
+                     `<th scope="col" class="pl-3">Material</th><th scope="col">Count</th><th scope="col" class="d-none">Count</th>`,
+                     `<th scope="col" class="d-none">Count (Total)</th><th scope="col" class="d-none">Count (Total)</th></tr></thead><tbody>`];
     let pix, pixnorm, code, y;
     x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
     for (let z=0; z<128; z++) {
@@ -222,16 +228,13 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
         table.push(`<td tabindex="0" style="background-color: rgb(${pixnorm[0]},${pixnorm[1]},${pixnorm[2]});" `+
         `data-trigger="focus" data-content="Position : &lt;b&gt;~${x} ~${y} ~${z}&lt;/b&gt;" data-html="true" ` + 
         `data-placement="top" title="${materialnames[code]}"></td>`);
-        counts[code] += 1;
+        counts[i+1][code] += 1;
+        counts[0][code] += 1;
       }
       table.push("</tr>");
     }
     table.push("</table>");
     
-    for (let ct of pal) {
-      let indexn = colourtokens.indexOf(ct);
-      countlist.push(`<tr><td class="pl-4">${materialnames[indexn]}</td><td>${counts[indexn]}</td></tr>`);
-    }
     countlist.push(`</tbody></table>`);
     
     htm = [`<div class="collapse" id="guidePage_${i+1}_map_${uid}" data-parent="#survGuide_${uid}">`,
@@ -240,14 +243,22 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
            `<p>Click on any of the squares in the table to view a popup with its block type and coordinates.`,
            `<br/>You can also use the <code>Tab</code> key to navigate row-by-row.</p>`+
            ((ymax <= 1) ? `` : `<p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>`),
-           `</div>`].concat(
-          countlist, [`</div><div class="col-md-8 guide-tableareas" id="survGuideTableArea_${i+1}_${uid}">`], 
-          table, [`</div></div></div>`]);
+           `</div><div class="px-2 py-2"><input type="checkbox" class="mx-2" id="guideTotalBlockCount_${i}_${uid}"/>`,
+           `<label for="guideTotalBlockCount_${i}_${uid}">View total count for all zones</label><br/>`,
+           `<input type="checkbox" class="mx-2" id="guideStackViewCount_${i}_${uid}"/><label for="guideStackViewCount_${i}_${uid}">Display values in stacks of 64</label></div>`
+          ].concat(
+        countlist, 
+        [`</div><div class="col-md-8 guide-tableareas" id="survGuideTableArea_${i+1}_${uid}">`], 
+        table, 
+        [`</div></div></div>`]);
+    
     navlist.push(`<li class="page-item"><a class="page-link" data-toggle="collapse" ` + 
                  `href="#guidePage_${i+1}_map_${uid}">${i+1}</a></li>`);
     divlist.push(htm.join(""));
-  }
+  // end outer for loop ------------------------
+  } 
   
+  // Add the html string to DOM
   $("#guideTab_"+uid).html([`<nav aria-label="Pagination" id="guidePageBar_${uid}">`,
       `<ul class="pagination justify-content-center">`,
       navlist.join(""), 
@@ -257,6 +268,21 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
   $(`#guidePageBar_${uid} li.page-item`).click(function() {
     switchActiveGuidePage(this);
   });
+
+  // Populate values in the counts table
+  for (let i=0; i<zone_origins.length; i++) {
+    var tdata = "";
+    for (let ct of pal) {
+      let indexn = colourtokens.indexOf(ct);
+      tdata += `<tr><td class="pl-4">${materialnames[indexn]}</td><td class="text-right pr-3">${counts[i+1][indexn]}</td>
+              <td class="d-none text-right pr-3">${Math.floor(counts[i+1][indexn] / 64)}s + ${counts[i+1][indexn] % 64}</td>
+              <td class="d-none text-right pr-3">${counts[0][indexn]}</td>
+              <td class="d-none text-right pr-3">${Math.floor(counts[0][indexn] / 64)}s + ${counts[0][indexn] % 64}</td>
+              </tr>`;
+    }
+    $(`#countlistTable_${i}_${uid} > tbody`).html(tdata);
+  }
+
   // Keeping 16,000+ popovers at once = horrible performance. Hence create and destroy active one each time while focused
   $(`.guide-tableareas td`).focus(function() {
     $(this).data('toggle', 'popover');
@@ -266,10 +292,35 @@ the commands</a> are), 2 halves per map. <br/>Coordinates in each zone are speci
     $(this).popover('dispose');
     $(this).removeData('toggle');
   });
+  // Bind count control checkboxes
+  for (let i=0; i<zone_origins.length; i++) {
+    $(`#guideTotalBlockCount_${i}_${uid}`).click( function() {
+      toggleCountListView(uid, zone_origins.length, $(this).prop('checked'), $(`#guideStackViewCount_${i}_${uid}`).prop('checked'))
+    });
+    $(`#guideStackViewCount_${i}_${uid}`).click( function() {
+      toggleCountListView(uid, zone_origins.length, $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked'), $(this).prop('checked'))
+    });
+  }
   // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
 }
+
+
+function toggleCountListView(uid, l, total, stacks) {
+  // Show the correct column in countlist table
+  for (let i=0; i<l; i++) {
+    $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked', total)
+    $(`#guideStackViewCount_${i}_${uid}`).prop('checked', stacks)
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(2)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(3)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(4)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(5)`).addClass('d-none');
+    var n = (total) ? ((stacks) ? 5 : 4) : ((stacks) ? 3 : 2);
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(${n})`).removeClass('d-none');
+  }
+}
+
 
 function switchActiveGuidePage(pagelink) {
   // Pagination active status does not change automatically
