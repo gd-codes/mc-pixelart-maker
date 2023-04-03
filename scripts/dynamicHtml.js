@@ -129,6 +129,7 @@ function newImageUpload(uid) {
   </div>
   </div>
   `;
+  $("#tempErrDialog").remove();
   $("#tabContainer").append(formHTMLcontent);
   
   console.info("New image form with id suffix", uid);

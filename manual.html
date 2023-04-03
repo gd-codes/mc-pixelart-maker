@@ -5,7 +5,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Map Art Maker for Minecraft">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!">
+<meta name="description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!">
 <meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.19,vanilla,add-on,wild update">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
@@ -31,7 +31,7 @@
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/manual.html" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!" />
  
 <script src="scripts/theme_pwa.js" defer></script>
 </head>
@@ -40,7 +40,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image to create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -99,6 +99,9 @@
     majorly affect the final appearance. (The shade of each block depends on the height difference between it and the block
     immediately North of it. This is usually 2 blocks, but may have to abruptly change near the height limit. For this reason,
     it is recommended not to keep a very low limit.)</li><br>
+    <li>The fill commands to clear the map volume of existing blocks (default, unless you checked the "Replace only air blocks"
+       option) may fail in case your simulation distance is too low. In this case, existing terrain above and below the 3D map blocks
+      will remain, possibly hiding the blocks that were placed there.</li><br>
   </ul>
   <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
   <ol class="spaced-list">
@@ -110,18 +113,19 @@
       This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
       which will extend South and East from here. <br> Height-wise, it will be built at the block in which you are standing (2D),
       or for the 3D palette, extending from this height till [<i>specified height range</i>] blocks upwards
-      (Also check that this doesn't cross the world build height !).</li>
+      (Also check that this doesn't cross the world build height!).</li>
     <li> <div class="row"><div class="col-md-8">If your image covers an area of <b><i>a</i></b>x<b><i>b</i></b>
       maps, there will be <code>2 * <b><i>a</i></b> * <b><i>b</i></b></code> commands to be executed in order,
       numbered <i>image_name</i>/<b>1</b>, <i>image_name</i>/<b>2</b>, ... so on.
       Each of these builds a part of the image, covering a vertical half of one map, arranged in order as illustrated
       in the figure alongside.<br>
-      <ul><li class="py-2">If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
-        you must run all the commands while staying at this same corner only (top-left of the whole image).</li>
-      <li> Otherwise (this is the normal method), running each function will teleport you (the nearest player) to the corner of 
-        the next zone (marked by small black squares in the figure) after placing those blocks, so that you "move along" as you're 
+      <ul><li class="py-2"> By default, running each function will teleport you (the nearest player) to the corner of 
+        the next zone (marked by small black squares in the figure) after it executes, so that you "move along" as you're 
         running the functions one-by-one. A glowstone block may also be placed there to identify the corner - you must be standing 
-        <em>exactly on top</em> of it before continuing with the next one.</li></ul></div>
+        <em>exactly on top</em> of it before continuing with the next one.</li>
+        <li>If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
+          you will not be teleported and must run all the commands while staying at this same corner only (top-left of the whole image).</li>
+      </ul></div>
       <div class="col-md-4"><figure class="figure">
         <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
         <figcaption class="figure-caption">Example arrangement for an art covering 2x2 maps.</figcaption></figure></div>
@@ -157,7 +161,7 @@
   <h4 class="container-lg text-center text-capitalize" id="example-pack"><br><br>Example behaviour pack<br><br></h4>
   <p> This is the file structure of an example behaviour pack generated by this app. It contains 2 
   images - one with the function name "cliff" of size 2x1, and another named "bastion" of
-  size 3x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
+  size 2x2. You can run the commands as <a href="#in-mc">described above</a> to build these images.</p>
   <pre class="bg-light px-3 mx-3 my-2 border border-dark rounded"><code>
   behaviour pack.mcpack
    &boxv;
@@ -176,7 +180,7 @@
              &boxvr;&boxh; 1.mcfunction
              &boxvr;&boxh; 2.mcfunction
              &boxvr;     ...
-             &boxur;&boxh; 12.mcfunction
+             &boxur;&boxh; 8.mcfunction
   </code></pre><br>
   <div class="row"><div class="col-4"></div>
     <div class="col-4"><a class="btn btn-block btn-warning mx-auto" href="resources/sample_pack.mcpack" 
@@ -185,8 +189,8 @@
       <button class="btn btn-block btn-warning mx-auto" type="submit">Download a sample pack</button></form-->
     </div><div class="col-4"></div></div><br>
   <ul><li> The <code>manifest</code> specifies : 
-      <ul> <li> The minimum game version - <code> 1.19.0</code> (of Minecraft)</li> 
-        <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default</li> 
+      <ul> <li> The minimum game version - <code> 1.19.70</code> (of Minecraft)</li> 
+        <li> Behaviour pack version - <code>1.0.0</code> is used for each pack by default. (Only this sample pack has version 4.4.0)</li> 
         <li> The name and description that you entered, will be displayed for the add-on in game.</li>
         <li> 2 version-4 <a  rel="nofollow noreferrer" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">
           UUIDs </a> to uniquely identify the pack, generated randomly using the JS web Crypto API.</li></ul> 
@@ -201,7 +205,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.3</h6>
+  <h6 class="text-white-50">Version 4.4</h6>
   <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
     <div class="custom-control custom-switch">
       <div class="d-inline" style="padding-right: 2.5rem;">

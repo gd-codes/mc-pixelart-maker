@@ -5,7 +5,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Map Art Maker for Minecraft">
-<meta name="description" content="Upload an image to create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!">
+<meta name="description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!">
 <meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.19,vanilla,add-on,wild update">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
@@ -31,7 +31,7 @@
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload an image to create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
 
@@ -60,7 +60,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload an image and create an Add-On (Bedrock edition 1.19) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -101,6 +101,7 @@
   <div class="container tab-content border border-dark border-top-0 rounded-bottom py-3 px-4 mt-0 mb-4" 
        id="tabContainer">
   <!-- Filled by JS -->
+  <p class="text-danger" id="tempErrDialog">Oops, the Javascript did not finish loading correctly! Please refresh the page.</p>
   </div>
   <div class="container-lg text-center text-capitalize"><h3>Create the Add-On</h3></div>
   <div class="container tab-content border border-dark rounded py-3 px-4 my-4" id="packContainer">
@@ -235,7 +236,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.3</h6>
+  <h6 class="text-white-50">Version 4.4</h6>
   <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
     <div class="custom-control custom-switch">
       <div class="d-inline" style="padding-right: 2.5rem;">
@@ -293,7 +294,7 @@
           </button>
       </div>
       <div class="modal-body overflow-auto" id="colourModalContent">
-        <p> Following is the list of 54 colours used by default blocks in Vanilla Minecraft <strong>1.19.0</strong> :<br> 
+        <p> Following is the list of 64 colours used by default blocks in Vanilla Minecraft <strong>1.19.71</strong> :<br> 
         Tick the blocks you would like to use, and scroll to the end to Save. </p>
         <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
           <span> Select : &nbsp;&nbsp;</span>
@@ -327,7 +328,7 @@
             </tr></thead>
             <tbody><!--filled by JS--></tbody>
           </table>
-          <p> Not included : Water, Vines and blocks that are transparent on maps </p>
+          <p> Not included : Water, Lava, Beds, Vines and blocks that are transparent on maps </p>
         </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
