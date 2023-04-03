@@ -26,7 +26,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
     if (Colours.get(cn) !== undefined) {
       var clr = Colours.get(cn); p.push(clr.rgb);
       if (d3) {
-        p.push(clr.rgb_d); p.push(clr.rgb_l);
+        p.push(darkPixel(clr.rgb)); p.push(lightPixel(clr.rgb));
       }
     }
   }

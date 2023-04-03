@@ -68,7 +68,7 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs, s
     if (!keep) { //Replace any existing blocks with air
       for (var j=0; j<=ymax; j++) {
         fun+="fill ~".concat(xloop, " ~", j, " ~", zloop, " ~", xloop+63, 
-                             " ~", j, " ~", zloop+127, " air 0 replace\n");
+                             " ~", j, " ~", zloop+127, " air [] replace\n");
       }
     }
     for (x=xloop; x < xloop+64; x++) {
@@ -78,7 +78,7 @@ function writeCommands(name, imobj, palette, extrainfo, keep, linkpos, strucs, s
         y = (extrainfo <= 1)? 0 : ((linkpos)? yMap[x][z] : yMap[x+x0][z+z0]);
         if (strucs) {
           // Load block as structure
-          fun += ((keep)?`execute @p ~ ~ ~ detect ~${x} ~${y} ~${z} air -1 `:"") + 
+          fun += ((keep)?`execute if block ~${x} ~${y} ~${z} air run `:"") + 
               `structure load mapart:${code} ~${x} ~${y} ~${z}\n`;
         } else {
           // Regular placement
