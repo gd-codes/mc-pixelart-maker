@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="title" content="Map Art Maker for Minecraft">
-<meta name="description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!">
-<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.19,vanilla,add-on,wild update">
+<meta name="description" content="Upload images and create an Add-On (Bedrock edition 1.20.0+) that builds the image in your world, to view it on a map!">
+<meta name="keywords" content="minecraft,map art,pixel art,bedrock,free,online,generator,1.20,vanilla,add-on,trails,tales">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="language" content="English">
 <meta name="author" content="gd-codes">
@@ -31,7 +31,7 @@
 <meta property="og:url" content="https://gd-codes.github.io/mc-pixelart-maker/" />
 <meta property="og:image" content="https://gd-codes.github.io/mc-pixelart-maker/images/d1.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!" />
+<meta property="og:description" content="Upload images and create an Add-On (Bedrock edition 1.20.0+) that builds the image in your world, to view it on a map!" />
 <!-- For SEO -->
 <meta name="google-site-verification" content="jVgwAmx3DeM-0C7xDBhXemQCh9WBk4i1quSp7y3WirE" />
 
@@ -60,7 +60,7 @@
 <div class="container-fluid headercover" id="pageHead">
 	<div class="container-sm">
 		<h1 class="text-center text-white rounded-top" id="pagemaintitle">Map Art Maker for Minecraft</h1>
-		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload images and create an Add-On (Bedrock edition 1.19.70+) that builds the image in your world, to view it on a map!</h5>
+		<h5 class="text-center text-white rounded-bottom py-md-1" id="pagesubtitle">Upload images and create an Add-On (Bedrock edition 1.20.0+) that builds the image in your world, to view it on a map!</h5>
 	</div>
 </div>
 <div class="container-fluid bg-dark"><br></div>
@@ -117,8 +117,7 @@
         <textarea id="bpackDescInput" class="col-sm-10 form-control" rows="3"
                   placeholder="Created using Map Art Maker for Minecraft !"></textarea>
       </div>
-      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - these are <em>not</em> 
-        recommended/enabled by default </span>
+      <span class="row form-text text-muted px-3 d-block mb-3">Some additional settings - the default values are recommended</span>
       <div class="form-group row">
         <label for="funcOptionsDiv" class="col-sm-2 col-form-label text-primary text-center">Command Options</label>
         <div id="funcOptionsDiv" class="form-group col-sm-10">
@@ -145,8 +144,8 @@
             <label for="useStructuresOption" class="form-check-label"> Use only structures instead of the setblock command </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup" data-html="true" 
             title="Use this to include all used blocks as structures and load them with the <code>/structure load</code> command instead
-            of placing regular blocks with <code>/setblock</code>. This <em>may</em> avoid gaps in the map due to blocks not being placed outside 
-            low simulation distance, but may be a bit slower to run or cause lag initially." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            of placing regular blocks with <code>/setblock</code>. This can avoid gaps in the map due to blocks not being placed outside 
+            the simulation distance, but may be a bit slower to run or cause lag initially." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
             </a>
           </div>
         </div>
@@ -236,7 +235,7 @@
 </div>
 <div class="container-fluid bg-dark text-center" id="pageFooter">
   <br><h6 class="text-white" id="footertitle">Map Art Maker for Minecraft</h6>
-  <h6 class="text-white-50">Version 4.4</h6>
+  <h6 class="text-white-50">Version 4.5</h6>
   <div class="dark-theme d-flex justify-content-center my-4" style="background-color: transparent;">
     <div class="custom-control custom-switch">
       <div class="d-inline" style="padding-right: 2.5rem;">
@@ -294,7 +293,7 @@
           </button>
       </div>
       <div class="modal-body overflow-auto" id="colourModalContent">
-        <p> Following is the list of 64 colours used by default blocks in Vanilla Minecraft <strong>1.19.71</strong> :<br> 
+        <p> Following is the list of 65 colours used by default blocks in Vanilla Minecraft <strong>1.20.0</strong> :<br> 
         Tick the blocks you would like to use, and scroll to the end to Save. </p>
         <div class="btn-toolbar" role="toolbar" aria-label="Selection controls" id="colourModalSelections">
           <span> Select : &nbsp;&nbsp;</span>
