@@ -1,40 +1,36 @@
 /*
 Minecraft Pixel Art Maker
 © gd-codes 2020
-https://gd-codes.github.io/mc-pixelart-maker/
 */
-const icons = {
-  square : "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
-      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" style=\"border: 1px solid black; border-radius: 15%;\">"+
-      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>",
-  square_noborder : "<svg width=\"1.0em\" height=\"1.0em\" viewBox=\"0 0 16 16\" class=\"bi bi-square-fill\" "+
-      "fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">"+
-      "<path d=\"M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z\"/></svg>",
-  questionmark : "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\" class=\"bi bi-question-circle\" > <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/><path d=\"M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z\"/></svg>",
-  infosquare : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>`
-};
 
+/** Colours that are selected on creation of a new image form. */
 const default_palette = Array.from(Colours.keys()).join(' ');
 
-/* NOTE
-Many other constants used here are defined in `data.js` and methods in other JS files.
-See the order of <script> tags in index.html
-*/
+/** 
+ * Stores the raw & processed image data for all uploaded pictures,
+ * indexed by the 6-digit random uid.
+ */
+const PictureData = {
+  "000001": {
+      originalImage: undefined,
+      finalImage: undefined,
+      shadeMap: undefined
+  }
+};
 
 
-/*---------------------------------------------------------
-                  Check for events
-1. Ask user to confirm before closing the tab
-2. Bind all UI elements to appropriate callbacks when DOM is loaded
-3. Lazy-load carousel images after page loads 
------------------------------------------------------------*/
+// 1. Ask user to confirm before closing the tab
+window.addEventListener('beforeunload', confirmCloseTab);
+// 2. Bind all UI elements to appropriate callbacks when DOM is loaded
+$(document).ready(setup);
+// 3. Lazy-load carousel images after page loads 
+$(window).on('load', lazyload);
 
 
-
-
+/**
+ * Binds all document UI callbacks and displays initial dynamic page content on page load.
+ */
 function setup() {
-  //Bind buttons and links to their actions
-  // ---------------------------------------------
   console.log("Minecraft Pixel Art Maker - Document Ready !");
   
   // Create the first form that is visible when page is opened
@@ -56,7 +52,7 @@ function setup() {
     clearBehaviourPack();
   });
 
-  //Construct Colour table modal and setup controls
+  // Construct Colour palette selection table modal and its controls
   $("#clrSelBtn_All").click(function() { $("input[name='clrSelect']").prop('checked', true); });
   $("#clrSelBtn_None").click(function() { $("input[name='clrSelect']").prop('checked', false); });
   $("#clrSelBtn_Inv").click(function() {  
@@ -80,30 +76,19 @@ function setup() {
     });
   });
 
-  let clrTable = "";
-  Colours.forEach(function(value, key) {
-      clrTable += `<tr>
-      <td><div class="form-check checkbox-scaled">
-        <input type="checkbox" class="form-check-input position-static" name="clrSelect" value="${key}"/>
-      </div></td>
-      <td class="colour-insert display-4" data-colour="rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]})">
-        <span style="color: rgb(${value.rgb[0]},${value.rgb[1]},${value.rgb[2]});">${icons.square}</span>
-      </td>
-      <td> ${value.name} </td>
-      <td> ${value.description} </td>
-    </tr>`;
-  });
-  $("#colourPaletteTable tbody").html(clrTable);
-  
+  // Populate the colour palette selection table
+  $("#colourPaletteTable tbody").html(ejs.render(EJStemplates.colourSelectionTable, {}));
 
-  //Initial setup
-
+  // add-questionmark indicators for tooltip helptext
   $(".add-questionmark").each(function (index, elem) {
     let h = $(elem).html();
-    $(elem).html(h+icons.questionmark);
+    $(elem).html(h+SVGicons.questionmark);
   });
 
+  // Activate all bootstrap tooltips
   $('[data-toggle="tooltip"]').tooltip();
+
+  // Setup default behaviour pack generation settings
   $('#buildWithStructures').prop('checked', true);
 
   // Prevent links in PWA window opening in browser
@@ -112,11 +97,9 @@ function setup() {
     $('a.alert-link[target="_blank"]').removeAttr('target');
   }
   
-  //----------------------------------------------
-  // End of setup function
 }
 
-
+/** Make the browser display a confirmation prompt to the user on attempting to close the tab */
 function confirmCloseTab(event) {
   if (Number($("body").data("confirm-page-unload"))) {
     event.preventDefault();
@@ -125,6 +108,7 @@ function confirmCloseTab(event) {
   }
 }
 
+/** Add image sources to and intialise the demoCarousel */
 function lazyload() {
   // Add the carousel images to index.html
   for (var i=1; i<=5; i++) {
@@ -134,18 +118,71 @@ function lazyload() {
 }
 
 
+/** 
+ * Generate a new Image Upload Form 
+ * @param {string} uid - Optional 6 character suffix to uniquely image & elements of this form.
+ *  Will be randomly generated if unspecified.
+ */
+function newImageUpload(uid) {
+  var charset = "abcdefghijklmnopqrstuvwxyz1234567890";
+  if (typeof(uid) !== 'string' || uid.length !== 6) {
+    uid = "";
+    for(var rb=0; rb<6; rb++) {
+      uid += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+  }
+  // random 6-char uid appended to the HTML DOM id of all elements makes them distinguishable
+  $("#navbarList").append(ejs.render(EJStemplates.imageNavTab, {uid: uid}));
+  
+  $("#tempErrDialog").remove();
+  $("#tabContainer").append(ejs.render(EJStemplates.imageForm, {uid: uid}));
+  
+  console.info("New image form with id suffix", uid);
+  
+  // Perform all callback bindings of UI elements
+  $("#imgInput_"+uid).on('change', function(event) {
+    fileInputHandler(this, event.target.files[0]);
+    $("body").data("confirm-page-unload", "1");
+  }); 
+  $("#resetImageFormBtn_"+uid).closest('form').on('reset', function() {
+    resetImgHandler(this);
+  }); 
+  $("#3dOption_"+uid).on('click', function() {
+    displayPaletteOptions(this);
+  });
+  $("#materialChooseBtn_"+uid).on('click', function() {
+    configureColourModal(this);
+  });
+  $("#imageForm_"+uid).submit(function(event){
+    submitImgFormHandler(this, event);
+  });
+  $("#deleteBtn_"+uid).click( function() { 
+    deleteImgForm(this); 
+  });
+  $("#imgEditBtn_"+uid).click(function() {
+    editImgForm(this);
+  });
+  $("#materialOptsDisplay_"+uid).data("selected", default_palette);
+  $('[data-toggle="tooltip"]').tooltip();
+  $("li#link_"+uid+" a").click();
+  $("#resetImageFormBtn_"+uid).click();
+  
+  PictureData[uid] = {
+    originalImage: undefined,
+    finalImage: undefined,
+    shadeMap: undefined
+  }
 
-window.addEventListener('beforeunload', confirmCloseTab);
-$(document).ready(setup);
-$(window).on('load', lazyload);
+  refreshColourDisplay(uid);
+}
 
 
-
-
-/* --------------------- Begin Callback definitions ------------------------ */
-
+/** 
+ * Grab content of uploaded images and save it as a data-URI in `PictureData`.
+ * @param {HTMLElement} elem - input type='file' of the upload
+ * @param {File} file - Uploaded target file
+ */
 function fileInputHandler(elem, file) {
-  /* When a file is chosen, save it as a data: URI in the `PictureData` global object */
   $(elem).next('.custom-file-label').html(file.name);
   var uid = $(elem).attr('id').slice(-6);
   var reader = new FileReader();
@@ -158,10 +195,11 @@ function fileInputHandler(elem, file) {
   reader.readAsDataURL(file);
 }
 
-
+/**
+ * Reset an image upload form to its default blank state, and also pre-select default options.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function resetImgHandler(elem) {
-  /* Reset an image upload form to its default blank state, 
-  and also pre-select default options in checkboxes/radiobuttons */
   var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
     $("#ditherSwitch_"+uid).prop("checked", true);
@@ -174,9 +212,11 @@ function resetImgHandler(elem) {
   });
 }
 
-
+/**
+ * Show or hide the extra fields in the image upload form for 3D data input.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function displayPaletteOptions(elem) {
-  /* Display the correct extra fields in the image upload form */
   var uid = $(elem).attr('id').slice(-6);
   if ($("#3dSwitch_"+uid).prop('checked')) {
     $("#extraHeightOption_"+uid).collapse('show');
@@ -187,10 +227,14 @@ function displayPaletteOptions(elem) {
   }
 }
 
-
+/**
+ * On opening the globally shared colour palette selection modal from a specific image form,
+ * set the selection state of the checkboxes to match the stored palette values for the image.
+ * Re-bind the callback to save the new palette to the same image form's data.
+ * Then display the modal.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function configureColourModal(elem) {
-  /* Set the state of the checkboxes in the colour table modal to match the selected values
-  in the material/palette. Called initially and whenever the modal is opened. */
   var uid = $(elem).attr('id').slice(-6);
   var sel = $("#materialOptsDisplay_"+uid).data("selected");
   $("input[name='clrSelect']").each(function(index, chekbox) {
@@ -210,29 +254,34 @@ function configureColourModal(elem) {
   $("#colourTableModal").modal('show');
 }
 
-
+/**
+ * Update the visual colour palette indicators on the image upload form.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function refreshColourDisplay(uid) {
-  /* Set the small square colour markers in the currently selected palette display on the image upload form.
-   Called initially and whenever the selected palette changes */
   var htmlc = [];
   for (var c of $("#materialOptsDisplay_"+uid).data("selected").split(" ")) {
-    let cd = Colours.get(c);
-    if (cd!==undefined)
-      htmlc.push(`<span style="color:rgb(${cd.rgb[0]},${cd.rgb[1]},${cd.rgb[2]}); padding: 2px;">${icons.square_noborder}</span>`);
+    let colourdata = Colours.get(c);
+    if (colourdata!==undefined)
+      htmlc.push(ejs.render(EJStemplates.colourPaletteIcon, {colourdata: colourdata}));
   }
   var content = htmlc.join("");
   if (content.search(/\w/i) < 0) {
-    content = "<i class=\"text-muted\">By default, all colours will be used</i>";
+    content = EJStemplates.colourPaletteFallback;
     $("#materialOptsDisplay_"+uid).data("selected", default_palette);
   } 
   $("#materialOptsDisplay_"+uid).html(content);
 }
 
-
+/**
+ * Perform client-side validation of a completed image upload form,
+ * disable input fields, process the image data in it and also reset
+ * the linked survival guide, if any.
+ * Also prevents the form submission event reloading the page.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ * @param {Event} event - Form submit event
+ */
 function submitImgFormHandler(elem, event) {
-  /*Client side validation, 
-  disable fields to prevent changes as some data is retrieved again later,
-  then process the image (`analyseImage` of imageProcessor.js)*/
   event.preventDefault();
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
@@ -247,7 +296,7 @@ function submitImgFormHandler(elem, event) {
       return;
     }
   }
-  // Collect all data from image upload form fields
+  // Collect all data from form fields
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   var area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   area = [Number(area[0]), Number(area[2])];
@@ -267,9 +316,8 @@ function submitImgFormHandler(elem, event) {
       $("#formActionsPreSubmit_"+uid).removeClass("d-flex");
       $("#formActionsPostSubmit_"+uid).addClass("d-flex");
       $("#formActionsPostSubmit_"+uid).removeClass("d-none");
-      $("#navbarList li[id='link_"+uid+"'] a").html(
-        name + `<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span>`
-      );
+      $("#navbarList li[id='link_"+uid+"'] a").html(ejs.render(EJStemplates.deleteX, 
+        {fname:name, uid:uid}));
       $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
       
       deleteSurvivalGuide(uid, true);
@@ -287,9 +335,11 @@ function submitImgFormHandler(elem, event) {
   image.src = PictureData[uid]['originalImage'];
 }
 
-
+/**
+ * Delete an image upload form and all its associated data.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function deleteImgForm(elem) {
-  /* Delete an image upload form and all its associated data */
   var uid = $(elem).attr('id').slice(-6);
   var name = $("#fnNameInput_"+uid).val();
   if (! name) {name = "this image form";}
@@ -304,9 +354,11 @@ function deleteImgForm(elem) {
   }
 }
 
-
+/**
+ * Re-enable a submitted image form's input fields and unbind callbacks, allowing editing.
+ * @param {HTMLElement} elem - Any element from the target form, containing its uid.
+ */
 function editImgForm(elem) {
-  /* Un-disable a submitted image form's fields */
   var uid = $(elem).attr('id').slice(-6);
   $("form#imageForm_"+uid+" :input").prop('disabled', false);
   $("form#imageForm_"+uid+" :radio").prop('disabled', false);
@@ -321,18 +373,23 @@ function editImgForm(elem) {
   $("#viewFinalImgBtn_"+uid).off('click');
 }
 
-
+/**
+ * Used to generate UUIDs for the behaviour pack.
+ * Credit: https://stackoverflow.com/a/2117523
+ * @returns A Type-4 UUID string
+ */
 function uuidv4() {
-  // https://stackoverflow.com/a/2117523
-  // Used to generate UUIDs for the behaviour pack
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
 
+/**
+ * Collect processed image data from all complete forms on the page, 
+ * and proceed to write the behaviour pack containing those images.
+ * @param {MouseEvent} event - Click event from the Generate Pack button.
+ */
 function startCreateBhvPack(event) {
-  /* Collect all processed image data on the page, generate 2 UUIDs, and proceed to write
-  the behaviour pack containing all images that have complete data (submitted forms) */
   event.preventDefault();
   var f, processed=[];
   for (f of $("form[id^='imageForm']")) {
@@ -357,9 +414,13 @@ function startCreateBhvPack(event) {
 }
 
 
-
+/**
+ * Create the Add-on ZIP file structure and make it available for download via the UI.
+ * @param {Array<{uid: string, name: string, pic: string}>} images -
+ *  Collection of images to be added to the pack
+ * @param {[string, string]} uuids - 2 UUIDs for pack manifest
+ */
 function writeBhvPack(images, uuids) {
-  /* Create the Add-on ZIP file and make it available for download */
   var pack = new JSZip();
   // Manifest
   var manifest = JSON.stringify({
@@ -372,7 +433,8 @@ function writeBhvPack(images, uuids) {
       min_engine_version: [1,20,0]
     },
     modules: [{
-      description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + new Date().toDateString(),
+      description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + 
+        new Date().toDateString(),
       type: "data",
       uuid: uuids[1],
       version: [1,0,0]
@@ -399,7 +461,7 @@ function writeBhvPack(images, uuids) {
     let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
     let extrainfo = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
     let shm = PictureData[o.uid]['shadeMap'];
-    let fnlist = writeCommands(o.name, o.pic, palette, extrainfo, keep, link, strucs, shm);
+    let fnlist = writeCommands(o.name, o.pic, palette.length, extrainfo, keep, link, strucs, shm);
     for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
@@ -440,9 +502,11 @@ function writeBhvPack(images, uuids) {
 }
 
 
-
+/**
+ * Configure download link for the generated ZIP mcpack
+ * @param {Blob} blob - ZIP file data in Blob format
+ */
 function setSaveAsZip(blob) {
-  /* Configure download link for the generated ZIP above */
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
   $("#downloadPackBtn").click(function() {
@@ -450,8 +514,8 @@ function setSaveAsZip(blob) {
   });
 }
 
+/** Reset the generate addon form  */
 function clearBehaviourPack() {
-  /* Reset the generate addon form */
   $("#packActionsPostProcess").addClass('d-none');
   $("#packActionsPreProcess").removeClass('d-none');
   $("#downloadPackBtn").off("click");
@@ -460,44 +524,121 @@ function clearBehaviourPack() {
 }
 
 
+/**
+ * Add the UI pane in which the survival guide for an image can be generated, 
+ * after the image form data has been processed.
+ * @param {string} uid - The image for which to generate the guide.
+ */
 function addSurvGuideGenerator(uid) {
-  /* Add the generate survival guide form for an image. 
-  Called after an image form is succesfully submitted. */
   let fname = $("#fnNameInput_"+uid).val();
   let big = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   big = Number(big[0]) * Number(big[2]); // Additional warning for large picures
-  if (big > 6) {
-    $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
-<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
-id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div>
-<div class="alert alert-danger mx-auto p-2 mt-3 mb-0"><p class="text-center mb-0"><strong class="text-dark">Warning &nbsp; </strong>
-Generating the detailed guide for such a large image may possibly cause lag/performance issues. Proceed with caution.
-</p></div></div>`);
-  } else {
-    $("#guideTabsContainer").append(`<div class="tab-pane fade show" id="guideTab_${uid}">
-<div class="row mb-2"><div class="col-md-4"></div><div class="col-md-4 btn btn-outline-info btn-block" 
-id="genGuideBtn_${uid}">View Map Guide for ${fname}</div><div class="col-md-4"></div></div></div>`);
-  }
+  $("#guideTabsContainer").append(ejs.render(EJStemplates.guideTab, 
+      {uid:uid, fname:fname, big: (big > 6)}));
   
-  $("#guideTabList").append(`<li class="nav-item" id="guidelink_${uid}"><a class="nav-link" data-toggle="tab" 
-      href="#guideTab_${uid}">${fname} <span id="deleteGuide_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
+  $("#guideTabList").append(ejs.render(EJStemplates.guideNavTab,
+      {uid:uid, fname:fname}));
   
   $("#deleteGuide_"+uid).click( function(){deleteSurvivalGuide(uid);} );
   
   $("#genGuideBtn_"+uid).click(function() { 
     $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
     setTimeout( function() {
-      createSurvivalGuide(uid); // Defined in `dynamichtml.js`
+      createSurvivalGuide(uid, 2*big); 
       $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
     }); // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
   });
   $("#guidelink_"+uid+" a").click();
 }
 
+/**
+ * Create the survival guide for an image, displaying the block counts used and placement.
+ * @param {string} uid - The image for which to generate the guide.
+ * @param {Number} numzones - The number of zones in the image, 1 pane will be created for each
+ *  (see function `getSurvivalGuideTableData`).
+ */
+function createSurvivalGuide(uid, numzones) {
+  $("#survGuidePlaceholderText").html(EJStemplates.survivalGuideInfo);
+  
+  // Add the html string to DOM
+  $("#guideTab_"+uid).html(
+    ejs.render(EJStemplates.survivalGuide, getSurvivalGuideTableData(uid)));
 
+  $(`#guidePageBar_${uid} li.page-item`).click(function() {
+    switchActiveGuidePage(this);
+  });
+
+  /* Keeping 16,000+ popovers at once = horrible performance. 
+  Hence create and destroy active one each time while focused */
+  $(`.guide-tableareas td`).focus(function() {
+    $(this).data('toggle', 'popover');
+    $(this).popover('show');
+  });
+  $(`.guide-tableareas td`).blur(function() {
+    $(this).popover('dispose');
+    $(this).removeData('toggle');
+  });
+  // Bind count control checkboxes
+  for (let i=0; i<numzones; i++) {
+    $(`#guideTotalBlockCount_${i}_${uid}`).click( function() {
+      toggleCountListView(uid, 
+        numzones, 
+        $(this).prop('checked'), 
+        $(`#guideStackViewCount_${i}_${uid}`).prop('checked'))
+    });
+    $(`#guideStackViewCount_${i}_${uid}`).click( function() {
+      toggleCountListView(uid, 
+        numzones, 
+        $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked'), 
+        $(this).prop('checked'))
+    });
+  }
+  // Make page 1 visible & active
+  $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
+  $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+/**
+ * Show/hide the appropriate columns in each of the tables that list block counts
+ * within a survival guide.
+ * @param {string} uid - The guide to be modified.
+ * @param {Number} l - Number of panes containing count list tables in this guide
+ * @param {Boolean} showTotal - Whether to display the total count column
+ * @param {Boolean} showStacks - Whether to display the count in stacks column
+ */
+function toggleCountListView(uid, l, showTotal, showStacks) {
+  // Show the correct column in countlist table
+  for (let i=0; i<l; i++) {
+    $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked', showTotal)
+    $(`#guideStackViewCount_${i}_${uid}`).prop('checked', showStacks)
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(2)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(3)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(4)`).addClass('d-none');
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(5)`).addClass('d-none');
+    var n = (showTotal) ? ((showStacks) ? 5 : 4) : ((showStacks) ? 3 : 2);
+    $(`#countlistTable_${i}_${uid} tr > *:nth-child(${n})`).removeClass('d-none');
+  }
+}
+
+/**
+ * Highlight the current page number in the navbar listing the survival guide's zones/pages.
+ * @param {HTMLElement} pagelink - Button for the page number that was clicked in the navbar.
+ */
+function switchActiveGuidePage(pagelink) {
+  // Pagination active status does not change automatically
+  let off = $(pagelink).hasClass("active");
+  $(pagelink).closest("ul").find("li.active").removeClass('active');
+  if (!off) {
+    $(pagelink).addClass('active');
+  }
+}
+
+/**
+ * Remove a survival guide, permanently or clear it to be re-generated.
+ * @param {string} uid - The guide to be removed.
+ * @param {Boolean} readd - Whether to call `addSurvGuideGenerator` after deletion.
+ */
 function deleteSurvivalGuide(uid, readd=false) {
-  /* Remove the survival guide - either because the image for which it was generated has been edited 
-  (must be re-added with new settings), or deleted */
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   setTimeout( function() {
     $("#guideTab_"+uid).remove();

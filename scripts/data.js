@@ -1,20 +1,19 @@
-// This data was determined experimentally - not guaranteed to be *exactly* the same as Minecraft
-// JSON-like data, but already parsed so it can be directly loaded and used without AJAX
 
-/* 
-Each value of `Colours` has the following format -
-{
-    name: String, 
-    description: String,                     // HTML rendered
-    id: String,                              // Minecraft identifier of the form /^\w+ \[( *"\w+" *: *(true|false|"\w+"|\d+)(,(?! *\])|(?= *\])) *)*\]$/
-    is_dye: Boolean, 
-    is_biomevar: Boolean, 
-    is_greyscale: Boolean,
-    rgb:   Array[UInt8, UInt8, UInt8, 255],   // RGB value of regular variant of the colour, with alpha=255. IMPORTANT : All 3 channels <= 220. See lightPixel & darkPixel functions.
-    structure: String                        // base64 encoded contents of a .mcstructure file containing the single block in `id`
-}
-*/
-
+/**
+ * Data of all minecraft materials that can be used to create map art.
+ * This data was determined experimentally - **not** guaranteed to be *exactly* the same as Minecraft.
+ * Each value of `Colours` has the following format -
+ * {
+ *     `name`: String,                       // User-visible name for the material
+ *     `description`: String,                // HTML-rendered description of blocks that appear as this colour on maps.
+ *     `id`: String,                         // Minecraft identifier of the form /^\w+ \[( *"\w+" *: *(true|false|"\w+"|\d+)(,(?! *\])|(?= *\])) *)*\]$/ for obtaining a block in `description` via commands
+ *     `is_dye`: Boolean,                    // Does the colour correspond to one of the 16 Dye colours in minecraft?
+ *     `is_biomevar`: Boolean,               // Does this colour appear differently on maps based on the biome?
+ *     `is_greyscale`: Boolean,              // Is this a greyish colour?
+ *     `rgb`: Array<UInt8,UInt8,UInt8,255>,  // RGB value of regular variant of the colour, with alpha=255. IMPORTANT : All RGB channels <= 220 to avoid overflow from the `lightPixel` function.
+ *     `structure`: String                   // base64 encoded contents of a .mcstructure file containing the single block in `id`
+ * }
+ */
 const Colours = new Map([["white", {
     name: "White Dye",
     description: "White Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Snow, Snow layers, Powder snow, Lodestone, Target block",
@@ -472,7 +471,9 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZQ8AbWluZWNyYWZ0OnNjdWxrCgYAc3RhdGVzAAMHAHZlcnNpb24BChIBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAA+////wMAAABEAAAAAA=="
 }]])
 
-
+/**
+ * base64 encoded contents of a .mcstructure file containing a few other miscellaneous blocks besides those used in `Colours`
+ */
 const Structures = {
     azalea_leaves: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OmF6YWxlYV9sZWF2ZXMKBgBzdGF0ZXMBDgBwZXJzaXN0ZW50X2JpdAEBCgB1cGRhdGVfYml0AAADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAE0SAABiAAAAcAAAAAA=",
     glowstone: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAMAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwMAAAAAAAAAAQAAAAEAAAADAwAAAP///////////////wkIAGVudGl0aWVzAAAAAAAKBwBwYWxldHRlCgcAZGVmYXVsdAkNAGJsb2NrX3BhbGV0dGUKAgAAAAgEAG5hbWUTAG1pbmVjcmFmdDpnbG93c3RvbmUKBgBzdGF0ZXMAAwcAdmVyc2lvbgPSEAEACAQAbmFtZQ0AbWluZWNyYWZ0OmFpcgoGAHN0YXRlcwADBwB2ZXJzaW9uA9IQAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEYBAABFAAAAxf7//wA=",
@@ -480,26 +481,28 @@ const Structures = {
 }
 
 
+/** Darker shade of any Colours.rgb value in a 3D map due to lower elevation */
 function darkPixel(rgb) {
     return [Math.floor(rgb[0]*180/220), Math.floor(rgb[1]*180/220), Math.floor(rgb[2]*180/220), 254];
 }
+
+/** Lighter shade of any Colours.rgb value in a 3D map due to higher elevation */
 function lightPixel(rgb) {
     return [Math.ceil(rgb[0]*255/220), Math.ceil(rgb[1]*255/220), Math.ceil(rgb[2]*255/220), 253];
 }
 
-const colourlist = [];
+/** Sequence of all the (normal, dark, light) RGB+code values for each material in the `Colours` map. */
+const ColourList = [];
+/** Sequence of user-visible material names for each material in the `Colours` map. */
+const MaterialNames = [];
+/** Sequence of the material keys for each material in the `Colours` map. */
+const ColourTokens = [];
+
 Colours.forEach(function(value, key) {
-    // Order is important
-    colourlist.push(value.rgb);
-    colourlist.push(darkPixel(value.rgb));
-    colourlist.push(lightPixel(value.rgb));
+    ColourTokens.push(key);
+    MaterialNames.push(value.name)
+    // Order is important 0,1,2 <-> normal, dark, light
+    ColourList.push(value.rgb);
+    ColourList.push(darkPixel(value.rgb));
+    ColourList.push(lightPixel(value.rgb));
 });
-
-
-const PictureData = {
-    "000001": {
-        originalImage: undefined,
-        finalImage: undefined,
-        shadeMap: undefined
-    }
-};
