@@ -192,9 +192,9 @@ function configureColourModal(elem) {
   /* Set the state of the checkboxes in the colour table modal to match the selected values
   in the material/palette. Called initially and whenever the modal is opened. */
   var uid = $(elem).attr('id').slice(-6);
-  var sel = $("#materialOptsDisplay_"+uid).data("selected");
+  var sel = $("#materialOptsDisplay_"+uid).data("selected").split(" ");
   $("input[name='clrSelect']").each(function(index, chekbox) {
-    $(chekbox).prop('checked', (sel.includes($(chekbox).attr('value'))));
+    $(chekbox).prop('checked', sel.indexOf($(chekbox).attr('value')) >= 0);
   });
   $("#saveColoursBtn").off('click');
   $("#saveColoursBtn").click(function() {
