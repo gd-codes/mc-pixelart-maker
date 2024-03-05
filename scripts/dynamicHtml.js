@@ -23,8 +23,8 @@ function makeTabLabelContent(uid, tabTitle = ""){
   if (tabSavedDataSize > 0) {
     let originalWasResized = getSavedFormOriginalWasResized(uid);
     let originalWasResizedTooltip = originalWasResized ? ` (stored resized image because original was too big; re-select the image to change area)` : "";
-    let originalWasResizedMarker = originalWasResized ? "🗛" : "";
-    tabSavedMarker = `<small title="Local storage: ${(tabSavedDataSize / 1024 + 1) | 0} kb${originalWasResizedTooltip}">&nbsp;💾${originalWasResizedMarker}</small>`;
+    let originalWasResizedMarker = originalWasResized ? "&nbsp;&nbsp;"+icons.shrink : "";
+    tabSavedMarker = `<small title="Local storage: ${(tabSavedDataSize / 1024 + 1) | 0} kb${originalWasResizedTooltip}">&nbsp;&nbsp;${icons.save}${originalWasResizedMarker}</small>`;
   }
   return `${tabTitle}${tabDirtyMarker}${tabSavedMarker}`;
 }
@@ -154,13 +154,14 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
         <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_${uid}">Converted</button>
       </div>
     </div>
-    <div class="btn-group">
-      <button class="btn btn-info" id="saveFormDataBtn_${uid}">💾 Save
-      <a data-toggle="tooltip" data-placement="top" data-html="true" title="Save to the browser's local storage.
-        No data is sent to the server. Has limited storage capacity. Delete other images if you cannot save anymore."
-        data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}"
-        class="text-info text-info-inverted">${icons.questionmark}</a></button>
-      <button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button>
+    <div>
+      <button class="btn btn-info" id="saveFormDataBtn_${uid}">${icons.save} Save
+        <a data-toggle="tooltip" data-placement="top" data-html="true" title="Save to the browser's local storage.
+          No data is sent to the server. This form will be restored the next time you visit this site."
+          data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}"
+          class="text-info text-info-inverted">&nbsp;${icons.questionmark}</a>
+      </button>
+      <button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">${icons.edit} Edit</button>
     </div>
   </div>
   </div>

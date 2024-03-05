@@ -4,7 +4,7 @@ https://gd-codes.github.io/mc-pixelart-maker/
 Cached site should require only ~ 3 MB space
 */
 
-const CURRENT_CACHE_VERSION = 'mapart-cache-4.5.0';
+const CURRENT_CACHE_VERSION = 'mapart-cache-4.6.0';
 
 const CACHE_URLS_LOCAL = [
     /* Important : `/` doesn't automatically fetch `/index.html` locally, explicitly cache it 
