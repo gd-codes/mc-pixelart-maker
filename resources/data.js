@@ -152,7 +152,7 @@ const Colours = new Map([["white", {
     name: "Black Terracotta",
     description: "Black Terracotta",
     id: 'stained_hardened_clay ["color":"black"]',
-    is_dye: true, is_biomevar: false, is_greyscale: true,
+    is_dye: false, is_biomevar: false, is_greyscale: true,
     rgb: [31, 18, 13, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZR8AbWluZWNyYWZ0OnN0YWluZWRfaGFyZGVuZWRfY2xheQoGAHN0YXRlcwgFAGNvbG9yBQBibGFjawADBwB2ZXJzaW9uIQAUAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAOj////E////RwAAAAA="
 }], ["redterc", {
