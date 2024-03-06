@@ -11,8 +11,35 @@ Colours.forEach(function(value, key) {
 const colourtokens = Array.from(Colours.keys());
 
 
+function makeTabLabelContent(uid, tabTitle = ""){
+  tabTitle = tabTitle || (PictureData[uid] && PictureData[uid]['fnName']) || "New Image";
+  let tabDirty = PictureData[uid] ? !!PictureData[uid]['configurationDirty'] : false;
+  let tabDirtyMarker = "";
+  if (tabDirty) {
+    tabDirtyMarker = `<small title="Has unsaved changes">&nbsp;*</small>`;
+  }
+  let tabSavedDataSize = getSavedFormDataSize(uid);
+  let tabSavedMarker = "";
+  if (tabSavedDataSize > 0) {
+    let originalWasResized = getSavedFormOriginalWasResized(uid);
+    let originalWasResizedTooltip = originalWasResized ? ` (stored resized image because original was too big; re-select the image to change area)` : "";
+    let originalWasResizedMarker = originalWasResized ? "🗛" : "";
+    tabSavedMarker = `<small title="Local storage: ${(tabSavedDataSize / 1024 + 1) | 0} kb${originalWasResizedTooltip}">&nbsp;💾${originalWasResizedMarker}</small>`;
+  }
+  return `${tabTitle}${tabDirtyMarker}${tabSavedMarker}`;
+}
 
-function newImageUpload(uid) {
+function markDirty(uid, dirty= true) {
+  if (PictureData[uid]) {
+    PictureData[uid]['configurationDirty'] = dirty;
+
+    $("span[id='tabLabel_"+uid+"']").html(
+        makeTabLabelContent(uid)
+    );
+  }
+}
+
+function newImageUpload(uid, {fnName = "", active = true} = {}) {
   /* Generate a new Image Form */
   var charset = "abcdefghijklmnopqrstuvwxyz1234567890";
   if (typeof(uid) !== 'string' || uid.length !== 6) {
@@ -22,12 +49,14 @@ function newImageUpload(uid) {
     }
   }
   // random 6-char uid appended to the HTML DOM id of all elements makes them distinguishable
-  $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
-      href="#tabPane_${uid}">New Image<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
-  
 
+  var tabHeader = makeTabLabelContent(uid, fnName);
+  $("#navbarList").append(`<li class="nav-item" id="link_${uid}"><a class="nav-link" data-toggle="tab" 
+      href="#tabPane_${uid}"><span id="tabLabel_${uid}">${tabHeader}</span><span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span></a></li>`);
+  
+  var activeFormClass = active ? "show active" : "";
   var formHTMLcontent = `
-  <div class="tab-pane fade show active" id="tabPane_${uid}">
+  <div class="tab-pane fade ${activeFormClass}" id="tabPane_${uid}">
   <form id="imageForm_${uid}">
     <div class="form-group">
       <label for="imgInput_${uid}" class="text-primary font-weight-bold">Select an Image</label>
@@ -38,7 +67,7 @@ function newImageUpload(uid) {
     <div class="form-group row">
       <label for="fnNameInput_${uid}" class="col-sm-2 col-form-label text-primary text-center">Function name</label>
       <div class="col-sm-10">
-      <input type="text" id="fnNameInput_${uid}" class="form-control" pattern="[A-Za-z0-9_&#92;.&#92;-()]+"
+      <input type="text" id="fnNameInput_${uid}" class="form-control" pattern="[A-Za-z0-9_.\\-\\(\\)]+"
              placeholder="Enter a short identifier for this image..." required/>
       <small class="form-text text-muted text-sm-left pl-sm-2">The name can only contain alphanumeric characters
         (case <i>in</i>sensitive), periods, underscores, hyphens and parentheses.</small></div>
@@ -107,7 +136,7 @@ function newImageUpload(uid) {
       </div></div>
     </div>
     <div class="form-group d-flex justify-content-center" id="formActionsPreSubmit_${uid}">
-      <input type="reset" class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_${uid}"/>
+      <button class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_${uid}" type="button">Reset</button>
       <button class="btn btn-primary mx-md-2" id="processImageBtn_${uid}" type="submit">Process Image &nbsp; &nbsp;
         <svg width="1em" height="1em" viewbox="0 0 16 16" class="bi bi-arrow-right-square-fill" fill="currentColor" 
              xmlns="http://www.w3.org/2000/svg">
@@ -125,7 +154,14 @@ function newImageUpload(uid) {
         <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_${uid}">Converted</button>
       </div>
     </div>
-    <button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button>
+    <div class="btn-group">
+      <button class="btn btn-info" id="saveFormDataBtn_${uid}">💾 Save
+      <a data-toggle="tooltip" data-placement="top" data-html="true" title="Save to the browser's local storage.
+        No data is sent to the server. Has limited storage capacity. Delete other images if you cannot save anymore."
+        data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}"
+        class="text-info text-info-inverted">${icons.questionmark}</a></button>
+      <button class="btn btn-warning mr-sm-3" id="imgEditBtn_${uid}">Edit</button>
+    </div>
   </div>
   </div>
   `;
@@ -136,14 +172,33 @@ function newImageUpload(uid) {
   
   //Perform all the bindings similar to $document.ready in main.js
   $("#imgInput_"+uid).on('change', function(event) {
+    markDirty(uid);
+    // enable mandatory flag; image was marked optional if the form was restored from local storage
+    $("#imgInput_" + uid).attr("required", true);
     fileInputHandler(this, event.target.files[0]);
     $("body").data("confirm-page-unload", "1");
   }); 
-  $("#resetImageFormBtn_"+uid).closest('form').on('reset', function() {
-    resetImgHandler(this);
-  }); 
+  $("#resetImageFormBtn_"+uid).on('click', function() {
+    resetImgHandler(uid);
+  });
+  $("#fnNameInput_"+uid).on('change', function(event) {
+    PictureData[uid]['fnName'] = event.target.value;
+    markDirty(uid);
+  });
+  $("#mapSizeInput_"+uid).on('change', function(event){
+    if (event.target.type === 'radio' && event.target.name === `mapsizeopt_${uid}`) {
+      markDirty(uid);
+    }
+  });
   $("#3dOption_"+uid).on('click', function() {
-    displayPaletteOptions(this);
+    markDirty(uid);
+    displayPaletteOptions(uid);
+  });
+  $("#heightInput_"+uid).on('change', function() {
+    markDirty(uid);
+  });
+  $("#ditherOption_"+uid).on('click', function() {
+    markDirty(uid);
   });
   $("#materialChooseBtn_"+uid).on('click', function() {
     configureColourModal(this);
@@ -157,16 +212,25 @@ function newImageUpload(uid) {
   $("#imgEditBtn_"+uid).click(function() {
     editImgForm(this);
   });
+  $("#saveFormDataBtn_"+uid).click(function() {
+    saveImgForm(uid);
+  });
   $("#materialOptsDisplay_"+uid).data("selected", default_palette);
-  $('[data-toggle="tooltip"]').tooltip();
-  $("li#link_"+uid+" a").click();
-  $("#resetImageFormBtn_"+uid).click();
-  
+
   PictureData[uid] = {
     originalImage: undefined,
+    originalFileName: undefined,
+    resizedImage: undefined,
     finalImage: undefined,
     shadeMap: undefined
   }
+
+  if (active) {
+    $('[data-toggle="tooltip"]').tooltip();
+    $("li#link_"+uid+" a").click();
+    $("#resetImageFormBtn_"+uid).click();
+  }
+
   refreshColourDisplay(uid);
 }
 

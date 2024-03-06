@@ -499,6 +499,11 @@ Colours.forEach(function(value, key) {
 const PictureData = {
     "000001": {
         originalImage: undefined,
+        originalFileName: undefined,
+        resizedImage: undefined,
+        originalWasResized: undefined,
+        fnName: undefined,
+        configurationDirty: true,
         finalImage: undefined,
         shadeMap: undefined
     }

@@ -36,9 +36,13 @@ function setup() {
   //Bind buttons and links to their actions
   // ---------------------------------------------
   console.log("Minecraft Pixel Art Maker - Document Ready !");
-  
-  // Create the first form that is visible when page is opened
-  newImageUpload("000001");
+
+  let uids = getStoredFormDataUids();
+  let restoredAtLeastOne = restoreImageUploads(uids);
+  if (!restoredAtLeastOne) {
+    // Create the first form that is visible when page is opened
+    newImageUpload("000001");
+  }
   /* NOTE
   Dynamically generated image forms (green plus button to add extra images) have a random 6 character suffix
   in HTML ids of all DOM elements within the form that have an `id` attribute. 
@@ -151,6 +155,7 @@ function fileInputHandler(elem, file) {
   var reader = new FileReader();
   reader.onload = function(loadevent){
     PictureData[uid]['originalImage'] = loadevent.target.result;
+    PictureData[uid]['originalFileName'] = file.name;
   }
   reader.onerror = function(e){
     alert("Error\n\nThere was a problem loading this image.");
@@ -159,11 +164,20 @@ function fileInputHandler(elem, file) {
 }
 
 
-function resetImgHandler(elem) {
+function resetImgHandler(uid) {
+
+  let data = getSavedFormData(uid);
+  if (data) {
+    // we have previously stored data, revert back to it
+    restoreFormData(uid, data);
+    return;
+  }
+
   /* Reset an image upload form to its default blank state, 
   and also pre-select default options in checkboxes/radiobuttons */
-  var uid = $(elem).attr('id').slice(-6);
   setTimeout(function() {
+    $("#fnNameInput_" + uid).val("");
+    PictureData[uid]['fnName'] = "";
     $("#ditherSwitch_"+uid).prop("checked", true);
     $("#mapSize11_"+uid).prop("checked", true);
     $("#materialOptsDisplay_"+uid).data("selected", default_palette);
@@ -171,13 +185,13 @@ function resetImgHandler(elem) {
     $("#3dSwitch_"+uid).prop('checked', false);
     $("#extraHeightOption_"+uid).collapse('hide');
     $("input#heightInput_"+uid).attr("required", false);
+    markDirty(uid, false);
   });
 }
 
 
-function displayPaletteOptions(elem) {
+function displayPaletteOptions(uid) {
   /* Display the correct extra fields in the image upload form */
-  var uid = $(elem).attr('id').slice(-6);
   if ($("#3dSwitch_"+uid).prop('checked')) {
     $("#extraHeightOption_"+uid).collapse('show');
     $("input#heightInput_"+uid).attr("required", true);
@@ -206,6 +220,7 @@ function configureColourModal(elem) {
     });
     $("#materialOptsDisplay_"+uid).data("selected", clrset.join(" "));
     refreshColourDisplay(uid);
+    markDirty(uid);
   });
   $("#colourTableModal").modal('show');
 }
@@ -267,13 +282,13 @@ function submitImgFormHandler(elem, event) {
       $("#formActionsPreSubmit_"+uid).removeClass("d-flex");
       $("#formActionsPostSubmit_"+uid).addClass("d-flex");
       $("#formActionsPostSubmit_"+uid).removeClass("d-none");
-      $("#navbarList li[id='link_"+uid+"'] a").html(
-        name + `<span id="deleteBtn_${uid}" class="delete-X"> &nbsp; &times;</span>`
+      $("span[id='tabLabel_"+uid+"']").html(
+          makeTabLabelContent(uid)
       );
       $("#deleteBtn_"+uid).click( function(event){deleteImgForm(this);} );
-      
+
       deleteSurvivalGuide(uid, true);
-      
+
     } else {
       alert("Error\n\nAn unknown error occurred while processing");
       console.error("Error processing image "+uid);
@@ -287,6 +302,127 @@ function submitImgFormHandler(elem, event) {
   image.src = PictureData[uid]['originalImage'];
 }
 
+/**
+ * Save the image form configuration to local storage.
+ * @param {string} uid - The uid of the form to save.
+ */
+function saveImgForm(uid) {
+  var area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
+  area = [Number(area[0]), Number(area[2])];
+  var name = $("#fnNameInput_" + uid).val();
+  var palette = $("#materialOptsDisplay_"+uid).data("selected");
+  var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
+  var maxHeight = $("#heightInput_" + uid).val() | 0;
+  var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
+
+  var success = saveFormData(uid, {
+    PictureDataForUid: PictureData[uid], fnName: name, configuration: {
+      area, palette, d3, maxHeight, dither
+    }
+  });
+  if (success) {
+    markDirty(uid, false);
+  } else {
+    alert("Saving failed. Delete some other saved images and try again.");
+  }
+}
+
+/**
+ * Restores the content of an image form from local storage.
+ * The image form must be created before calling this function.
+ * @param {string} uid - The uid of the form to restore.
+ * @param {string} originalImage - The base64 encoded data URL of image.
+ * @param {string} originalFileName - The image file name.
+ * @param {boolean} originalWasResized - Whether the resized image was stored rather than the original.
+ * @param {string} fnName - The map function name.
+ * @param {Array<number>} area - The map area.
+ * @param {string} palette - The block palette.
+ * @param {boolean} d3 - Whether height is enabled.
+ * @param {number} maxHeight - The max height above the map's base layer to use.
+ * @param {boolean} dither - Whether dithering is enabled.
+ */
+function restoreFormData(uid, {
+  PictureDataForUid: {
+    originalImage,
+    originalFileName,
+    originalWasResized
+  },
+  fnName = "",
+  configuration: {
+    area = [1, 1],
+    palette = "",
+    d3 = false,
+    maxHeight = undefined,
+    dither = true
+  }
+} = {}) {
+
+  $("#fnNameInput_" + uid).val(fnName);
+
+  PictureData[uid]['originalImage'] = originalImage;
+  PictureData[uid]['originalFileName'] = originalFileName;
+  PictureData[uid]['originalWasResized'] = originalWasResized;
+  PictureData[uid]['fnName'] = fnName;
+  // Mark image as optional, because we don't currently have an image file.
+  // However, we do have all the data we need to process the image.
+  // Once a file was selected, it becomes mandatory again.
+  $("#imgInput_" + uid).attr("required", false);
+  if (originalFileName) {
+    $("#imgInput_" + uid).next('.custom-file-label').html(originalFileName);
+  }
+
+  var areaStr = "" + area[0] + "x" + area[1];
+  $("input[name='mapsizeopt_" + uid + "'][value='" + areaStr + "']").prop('checked', true);
+
+  $("#materialOptsDisplay_" + uid).data("selected", palette);
+
+  $("#3dSwitch_" + uid).prop('checked', d3);
+  if (maxHeight) {
+    $("#heightInput_" + uid).val(maxHeight);
+  }
+  $("#ditherSwitch_" + uid).prop('checked', dither);
+
+  refreshColourDisplay(uid);
+  displayPaletteOptions(uid);
+
+  markDirty(uid, false);
+}
+
+/**
+ * Restores all listed forms from local storage.
+ * @param {Array<string>} uids - The uids of the forms to restore.
+ * @returns {boolean} - Whether at least one forms was restored.
+ */
+function restoreImageUploads(uids) {
+  let countRestored = 0;
+  for(let i = 0; i < uids.length; i++){
+    countRestored = restoreImageUpload(uids[i], countRestored);
+  }
+  return countRestored > 0;
+}
+
+/**
+ * Restores the given form from local storage.
+ * @param {string} uid - The uid of the form to restore.
+ * @param {number} countRestored - The number of forms restored before calling this function. Used to determine which form tab to activate.
+ * @returns {number} - The number of forms restored after this function, i.e., either the given countRestored or one more.
+ */
+function restoreImageUpload(uid, countRestored) {
+  let data = getSavedFormData(uid);
+  if (data) {
+    if (countRestored === 0) {
+      newImageUpload(uid, { fnName: data.fnName });
+    } else {
+      newImageUpload(uid, { fnName: data.fnName, active: false });
+    }
+    setTimeout(function() {
+      // must render the tab before we can mutate its state
+      restoreFormData(uid, data);
+    }, 0);
+    return countRestored + 1;
+  }
+  return countRestored;
+}
 
 function deleteImgForm(elem) {
   /* Delete an image upload form and all its associated data */
@@ -300,6 +436,7 @@ function deleteImgForm(elem) {
     delete PictureData[uid];
     console.info("Removed image form ", uid);
     deleteSurvivalGuide(uid);
+    deleteSavedFormData(uid);
     $("#navbarList a.nav-link").first().click();
   }
 }

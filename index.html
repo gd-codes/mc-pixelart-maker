@@ -50,6 +50,7 @@
 <script src="scripts/theme_pwa.js"></script>
 <script src="resources/data.js"></script>
 <script src="scripts/main.js" defer></script>
+<script src="scripts/localStorage.js" defer></script>
 <script src="scripts/imageProcessor.js" defer></script>
 <script src="scripts/functionWriter.js" defer></script>
 <script src="scripts/dynamicHtml.js" defer></script>
@@ -141,7 +142,7 @@
           </div>
           <div class="form-check">
             <input type="checkbox" id="buildWithStructures" class="form-check-input" name="useStructuresOption" value="structs"/>
-            <label for="useStructuresOption" class="form-check-label"> Use only structures instead of the setblock command </label>
+            <label for="buildWithStructures" class="form-check-label"> Use only structures instead of the setblock command </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup" data-html="true" 
             title="Use this to include all used blocks as structures and load them with the <code>/structure load</code> command instead
             of placing regular blocks with <code>/setblock</code>. This can avoid gaps in the map due to blocks not being placed outside 
