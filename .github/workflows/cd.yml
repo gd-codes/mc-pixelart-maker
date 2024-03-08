@@ -1,0 +1,49 @@
+name: Build and Deploy Static site to Pages
+
+on:
+  push:
+    branches: [$default-branch]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build index.html
+        uses: jaywcjlove/action-ejs@main
+        with:
+          template-file: templates/index.ejs
+          output: index.html
+      - name: Build manual.html
+        uses: jaywcjlove/action-ejs@main
+        with:
+          template-file: templates/manual.ejs
+          output: manual.html
+      - name: Build about.html
+        uses: jaywcjlove/action-ejs@main
+        with:
+          template-file: templates/about.ejs
+          output: about.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
