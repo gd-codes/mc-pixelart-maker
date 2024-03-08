@@ -47,6 +47,7 @@ function analyseImage(uid, image, area, palette, d3, dither) {
   var converted_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
   // $("#imageForm_"+uid).data('finalimage', finalImgData);
+  PictureData[uid]['resizedImage'] = resized_image;
   PictureData[uid]['finalImage'] = finalImgData;
   
   // Processing done, configure the preview buttons

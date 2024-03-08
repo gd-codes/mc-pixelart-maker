@@ -161,3 +161,8 @@ table caption {
 #light-dark-toggle-label::after {
   top: calc(0.35em + 2px);
 }
+
+.text-info.text-info-inverted {
+  /* bootstrap marked it as important already */
+  color: white !important;
+}
