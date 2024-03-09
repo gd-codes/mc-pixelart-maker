@@ -2,3 +2,6 @@
 *.mp4
 _git-untracked/**
 localtestingserver.*
+/manual.html
+/index.html
+/about.html
