@@ -827,6 +827,7 @@ function tableMovement(elem, event, verticalTab=false) {
   let vnext = lowerRow.length ? down : ( (i<63) ? tr.siblings().first().children()[i+1] : elem);
   let hprev = (i > 0) ? left : (upperRow.length? upperRow.children().last() : elem);
   let hnext = (i < 63) ? right : (lowerRow.length? lowerRow.children().first() : elem);
+  let handled = true;
   switch (event.code) {
     case 'Tab': 
       if (verticalTab.prop('checked')) {
@@ -835,12 +836,13 @@ function tableMovement(elem, event, verticalTab=false) {
         $(event.shiftKey? hprev : hnext).focus();
       }
       break;
-    case 'ArrowUp': $(up).focus(); break;
-    case 'ArrowDown': $(down).focus(); break;
-    case 'ArrowLeft': $(left).focus(); break;
-    case 'ArrowRight': $(right).focus(); break;
+    case 'ArrowUp': case 'KeyW': $(up).focus(); break;
+    case 'ArrowDown': case 'KeyS': $(down).focus(); break;
+    case 'ArrowLeft': case 'KeyA': $(left).focus(); break;
+    case 'ArrowRight': case 'KeyD': $(right).focus(); break;
+    default: handled = false; break;
   }
-  if (event.code === 'Tab' || event.code.slice(0,5) === 'Arrow') {
+  if (handled) {
     event.preventDefault();
   }
 }
