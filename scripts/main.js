@@ -196,18 +196,20 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   });
 
   $("#materialOptsDisplay_"+uid).data("selected", default_palette);
-  if (active) {
-    $('[data-toggle="tooltip"]').tooltip();
-    $("li#link_"+uid+" a").click();
-    $("#resetImageFormBtn_"+uid).click();
-  }
 
+  // must be created before clicking the reset button
   PictureData[uid] = {
     originalImage: undefined,
     originalFileName: undefined,
     resizedImage: undefined,
     finalImage: undefined,
     shadeMap: undefined
+  }
+
+  $('[data-toggle="tooltip"]').tooltip();
+  $("#resetImageFormBtn_"+uid).click();
+  if (active) {
+    $("li#link_"+uid+" a").click();
   }
 
   refreshColourDisplay(uid);
@@ -520,15 +522,13 @@ function restoreImageUploads(uids) {
 function restoreImageUpload(uid, countRestored) {
   let data = getSavedFormData(uid);
   if (data) {
+    // The call to newImageUpload will trigger a form reset (resetImgHandler),
+    // which in turn restores the rest of the content from local storage.
     if (countRestored === 0) {
       newImageUpload(uid, { fnName: data.fnName });
     } else {
       newImageUpload(uid, { fnName: data.fnName, active: false });
     }
-    setTimeout(function() {
-      // must render the tab before we can mutate its state
-      restoreFormData(uid, data);
-    }, 0);
     return countRestored + 1;
   }
   return countRestored;
