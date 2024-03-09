@@ -774,13 +774,17 @@ function createSurvivalGuide(uid, numzones) {
 
   /* Keeping 16,000+ popovers at once = horrible performance. 
   Hence create and destroy active one each time while focused */
+  let lastFocus;
   $(`.guide-tableareas td`).focus(function() {
+    if (lastFocus) {
+      $(lastFocus).popover('dispose');
+      $(lastFocus).removeData('toggle');
+      $(lastFocus).removeClass('focused');
+    }
+    $(this).addClass('focused');
     $(this).data('toggle', 'popover');
     $(this).popover('show');
-  });
-  $(`.guide-tableareas td`).blur(function() {
-    $(this).popover('dispose');
-    $(this).removeData('toggle');
+    lastFocus = this;
   });
 
   // Bind tab Direction modifier
