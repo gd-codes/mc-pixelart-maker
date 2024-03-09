@@ -34,8 +34,6 @@ function saveFormData(uid, {
   let originalTooLarge = 1000000 < originalImage.length &&
       resizedImage.length < originalImage.length;
 
-  // console.log("Saving form data; original image size: " + originalImage.length + "; resized image size: " + resizedImage.length)
-
   let formDataString = JSON.stringify({
     fnName: fnName,
     originalFileName: originalFileName,

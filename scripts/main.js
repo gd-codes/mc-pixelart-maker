@@ -147,8 +147,6 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   $("#tempErrDialog").remove();
   $("#tabContainer").append(ejs.render(EJStemplates.imageForm, {uid, active}));
   
-  console.info("New image form with id suffix", uid);
-  
   // Perform all callback bindings of UI elements
   $("#imgInput_"+uid).on('change', function(event) {
     markDirty(uid);
@@ -206,8 +204,11 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     shadeMap: undefined
   }
 
-  $('[data-toggle="tooltip"]').tooltip();
+  // Initialize bootstrap tooltips
+  $(`#tabPane_${uid} [data-toggle="tooltip"]`).tooltip();
+  // Reset to clean state for subsequent restoration
   $("#resetImageFormBtn_"+uid).click();
+  // Select the new tab
   if (active) {
     $("li#link_"+uid+" a").click();
   }
@@ -546,7 +547,6 @@ function deleteImgForm(uid) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
     delete PictureData[uid];
-    console.info("Removed image form ", uid);
     deleteSurvivalGuide(uid);
     deleteSavedFormData(uid);
     $("#navbarList a.nav-link").first().click();
@@ -724,21 +724,23 @@ function clearBehaviourPack() {
 
 /**
  * Add the UI pane in which the survival guide for an image can be generated, 
- * after the image form data has been processed.
+ * after the image form data has been processed, and make it the active tab.
  * @param {string} uid - The image for which to generate the guide.
  */
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
   let area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
   area = Number(area[0]) * Number(area[2]);
+
   $("#guideTabsContainer").append(ejs.render(EJStemplates.guideTab, 
       {uid, fname, area}));
-  
+
   $("#guideTabList").append(ejs.render(EJStemplates.guideNavTab,
-      {uid:uid, fname:fname}));
+      {uid, fname}));
   
   $("#deleteGuide_"+uid).click( function(){deleteSurvivalGuide(uid);} );
   
+  // Callback binding to generate the guide within the added tab pane
   $("#genGuideBtn_"+uid).click(function() { 
     $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
     // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
@@ -747,7 +749,10 @@ function addSurvGuideGenerator(uid) {
       $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
     }, 1);
   });
-  $("#guidelink_"+uid+" a").click();
+
+  $("#guideTabList a.nav-link").removeClass('active');
+  $("#guideTabsContainer").children().removeClass('show active');
+  $(`#guidelink_${uid} a`).tab('show');
 }
 
 /**
@@ -757,7 +762,7 @@ function addSurvGuideGenerator(uid) {
  *  (see function `getSurvivalGuideTableData`).
  */
 function createSurvivalGuide(uid, numzones) {
-  $("#survGuidePlaceholderText").html(EJStemplates.survivalGuideInfo);
+  $("#survGuidePlaceholderText").addClass('d-none');
   
   // Add the html string to DOM
   $("#guideTab_"+uid).html(
@@ -777,24 +782,67 @@ function createSurvivalGuide(uid, numzones) {
     $(this).popover('dispose');
     $(this).removeData('toggle');
   });
+
+  // Bind tab Direction modifier
+  let tabDirectionCheck = $(`#tabDirection_${uid}`);
+  $(`.guide-tableareas td`).on('keydown', function(event) {
+    tableMovement(this, event, tabDirectionCheck);
+  });
+
   // Bind count control checkboxes
-  for (let i=0; i<numzones; i++) {
-    $(`#guideTotalBlockCount_${i}_${uid}`).click( function() {
-      toggleCountListView(uid, 
-        numzones, 
-        $(this).prop('checked'), 
-        $(`#guideStackViewCount_${i}_${uid}`).prop('checked'))
-    });
-    $(`#guideStackViewCount_${i}_${uid}`).click( function() {
-      toggleCountListView(uid, 
-        numzones, 
-        $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked'), 
-        $(this).prop('checked'))
-    });
-  }
+  $(`#guideTotalBlockCount_${uid}`).click( function() {
+    toggleCountListView(uid, 
+      numzones, 
+      $(this).prop('checked'), 
+      $(`#guideStackViewCount_${uid}`).prop('checked'))
+  });
+  $(`#guideStackViewCount_${uid}`).click( function() {
+    toggleCountListView(uid, 
+      numzones, 
+      $(`#guideTotalBlockCount_${uid}`).prop('checked'), 
+      $(this).prop('checked'))
+  });
   // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+/**
+ * On pressing [Shift+]Tab or Arrrow Keys on tabbable table cells, move focus row/column wise.
+ * @param {HTMLTableCellElement} elem - Cell from which to shift focus
+ * @param {KeyboardEvent} event - Event raised from a keystroke
+ * @param {HTMLInputElement} verticalTab - Checkbox representing Whether Tab keypresses
+ *  should cause vertical movement.
+ */
+function tableMovement(elem, event, verticalTab=false) {
+  let i = $(elem).index();
+  let tr = $(elem).parent();
+  let lowerRow = tr.next();
+  let upperRow = tr.prev();
+  let up = upperRow.length ? upperRow.children()[i] : elem;
+  let down = lowerRow.length ? lowerRow.children()[i] : elem;
+  let left = (i > 0) ? $(elem).prev() : elem;
+  let right = (i < 63) ? $(elem).next() : elem;
+  let vprev = upperRow.length ? up : ( (i>0) ? tr.siblings().last().children()[i-1] : elem);
+  let vnext = lowerRow.length ? down : ( (i<63) ? tr.siblings().first().children()[i+1] : elem);
+  let hprev = (i > 0) ? left : (upperRow.length? upperRow.children().last() : elem);
+  let hnext = (i < 63) ? right : (lowerRow.length? lowerRow.children().first() : elem);
+  switch (event.code) {
+    case 'Tab': 
+      if (verticalTab.prop('checked')) {
+        $(event.shiftKey? vprev : vnext).focus();
+      } else {
+        $(event.shiftKey? hprev : hnext).focus();
+      }
+      break;
+    case 'ArrowUp': $(up).focus(); break;
+    case 'ArrowDown': $(down).focus(); break;
+    case 'ArrowLeft': $(left).focus(); break;
+    case 'ArrowRight': $(right).focus(); break;
+  }
+  if (event.code === 'Tab' || event.code.slice(0,5) === 'Arrow') {
+    event.preventDefault();
+  }
 }
 
 /**
@@ -808,12 +856,9 @@ function createSurvivalGuide(uid, numzones) {
 function toggleCountListView(uid, l, showTotal, showStacks) {
   // Show the correct column in countlist table
   for (let i=0; i<l; i++) {
-    $(`#guideTotalBlockCount_${i}_${uid}`).prop('checked', showTotal)
-    $(`#guideStackViewCount_${i}_${uid}`).prop('checked', showStacks)
-    $(`#countlistTable_${i}_${uid} tr > *:nth-child(2)`).addClass('d-none');
-    $(`#countlistTable_${i}_${uid} tr > *:nth-child(3)`).addClass('d-none');
-    $(`#countlistTable_${i}_${uid} tr > *:nth-child(4)`).addClass('d-none');
-    $(`#countlistTable_${i}_${uid} tr > *:nth-child(5)`).addClass('d-none');
+    for (let coln=2; coln<=5; coln++) {
+      $(`#countlistTable_${i}_${uid} tr > *:nth-child(${coln})`).addClass('d-none');
+    }
     var n = (showTotal) ? ((showStacks) ? 5 : 4) : ((showStacks) ? 3 : 2);
     $(`#countlistTable_${i}_${uid} tr > *:nth-child(${n})`).removeClass('d-none');
   }
@@ -843,10 +888,15 @@ function deleteSurvivalGuide(uid, readd=false) {
   setTimeout( function() {
     $("#guideTab_"+uid).remove();
     $("#guidelink_"+uid).remove();
-    $("#guideTabList a.nav-link").first().click();
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
     if (readd) {
       addSurvGuideGenerator(uid);
+    } else {
+      // Only if the form won't be re-added, need to make a different one active.
+      $("#guideTabList a.nav-link").first().click();
+    }
+    if ($("#guideTabsContainer").children().length === 0) {
+      $("#survGuidePlaceholderText").removeClass('d-none');
     }
   }, 1);
 }

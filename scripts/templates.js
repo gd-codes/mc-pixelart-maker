@@ -71,7 +71,7 @@ const EJStemplates = {
    */
   guideNavTab: `
 <li class="nav-item" id="guidelink_<%=uid%>">
-  <a class="nav-link" data-toggle="tab" href="#guideTab_<%=uid%>">
+  <a class="nav-link active" data-toggle="tab" href="#guideTab_<%=uid%>">
     <%=fname%> <span id="deleteGuide_<%=uid%>" class="delete-X"> &nbsp; &times;</span>
   </a>
 </li>`,
@@ -82,7 +82,7 @@ const EJStemplates = {
    * @param {Number} area
    */
   guideTab: `
-<div class="tab-pane fade show" id="guideTab_<%=uid%>">
+<div class="tab-pane fade show active" id="guideTab_<%=uid%>">
   <div class="row mb-2">
     <div class="col-md-4"></div>
     <div class="col-md-4 btn btn-outline-info btn-block" id="genGuideBtn_<%=uid%>">
@@ -227,7 +227,7 @@ const EJStemplates = {
 <nav aria-label="Pagination" id="guidePageBar_<%=uid%>">
   <ul class="pagination justify-content-center">
     <li class="page-item disabled">
-      <a class="page-link text-dark bg-light border-0"><%-SVGicons.menubar%></a>
+      <a class="page-link text-dark bg-light border-0"><%-SVGicons.menubar%>&nbsp; Zone </a>
     </li>
     <% for( let zone = 0; zone < numzones; zone++ ) { %>
       <li class="page-item">
@@ -236,28 +236,39 @@ const EJStemplates = {
     <% } %>
   </ul>
 </nav>
+<div class="row">
+  <div class="col-sm-4 px-3 py-2">
+    <p class="text-primary"> &nbsp; Preferences</p>
+    <input type="checkbox" class="mx-2" id="tabDirection_<%=uid%>" />
+    <label for="tabDirection_<%=uid%>">Enable Vertical <code>Tab</code> movement</label>
+    <br/>
+    <input type="checkbox" class="mx-2" id="guideTotalBlockCount_<%=uid%>" />
+    <label for="guideTotalBlockCoun>_<%=uid%>">View total count for all zones</label>
+    <br/>
+    <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=uid%>" />
+    <label for="guideStackViewCount_<%=uid%>">Display values in stacks of 64</label>
+  </div>
+  <div class="col-sm-8 alert alert-info">
+    <p class="alert-heading"><%-SVGicons.infosquare%></p>
+    <p>For convenience, each artwork is divided into a number of zones 
+      (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank"> the commands</a> are), 
+      2 halves per map.<br/>Coordinates in each zone are specified relative to its top-left (NW) corner.
+    </p>
+    <p>Click on any of the squares in the table to view a popup with its block type and coordinates.
+      <br/>You can also use the <code>Tab</code> key to navigate row-by-row or column-by-column,
+      or <code>&larr;&uarr;&darr;&rarr;</code> arrow keys.
+    </p>
+    <% if (is3D) { %>
+      <p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to
+      distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>
+    <% } %>
+  </div>
+</div>
 <div class="accordion border-top border-light pt-2" id="survGuide_<%=uid%>">
   <% for( let zone = 0; zone < numzones; zone++ ) { %>
     <div class="collapse" id="guidePage_<%=zone+1%>_map_<%=uid%>" data-parent="#survGuide_<%=uid%>">
       <div class="row">
         <div class="col-md-4" id="survGuideBlockCount_<%=zone+1%>_<%=uid%>">
-          <div class="alert alert-info">
-            <p class="alert-heading"><%-SVGicons.infosquare%></p>
-            <p>Click on any of the squares in the table to view a popup with its block type and coordinates.
-              <br/>You can also use the <code>Tab</code> key to navigate row-by-row.
-            </p>
-            <% if (is3D) { %>
-              <p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to
-              distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>
-            <% } %>
-          </div>
-          <div class="px-2 py-2">
-            <input type="checkbox" class="mx-2" id="guideTotalBlockCount_<%=zone%>_<%=uid%>" />
-            <label for="guideTotalBlockCount_<%=zone%>_<%=uid%>">View total count for all zones</label>
-            <br/>
-            <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=zone%>_<%=uid%>" />
-            <label for="guideStackViewCount_<%=zone%>_<%=uid%>">Display values in stacks of 64</label>
-          </div>
           <table class="table table-hover table-sm" id="countlistTable_<%=zone%>_<%=uid%>">
             <caption class="text-dark">Palette Usage - Zone <%=zone+1%></caption>
             <thead class="thead-light">
@@ -305,13 +316,6 @@ const EJStemplates = {
 </div>`,
 
   colourPaletteFallback: `<i class=\"text-muted\">By default, all colours will be used</i>`,
-
-  survivalGuideInfo: `
-<p class="d-block">
-  <strong class="text-muted">Note </strong>: For convenience, each artwork is divided into a number of zones 
-  (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank"> the commands</a> are), 
-  2 halves per map. <br/>Coordinates in each zone are specified relative to its top-left (NW) corner.
-</p>`
 
 };
 

@@ -166,3 +166,24 @@ table caption {
   /* bootstrap marked it as important already */
   color: white !important;
 }
+
+.bs-popover-top > .arrow::before, .bs-popover-top > .arrow::after {
+  border-width: 1.45rem 0.5rem 0;
+}
+.bs-popover-bottom > .arrow::before, .bs-popover-bottom > .arrow::after {
+  border-width: 0 0.5rem 1.45rem;
+}
+
+.bs-popover-top > .arrow {
+  bottom: calc(-1.45rem - 0px);
+}
+.bs-popover-bottom > .arrow {
+  top: calc(-1.45rem - 0px);
+}
+
+.bs-popover-top {
+  margin-bottom: 1.45rem;
+}
+.bs-popover-bottom {
+  margin-top: 1.45rem;
+}
