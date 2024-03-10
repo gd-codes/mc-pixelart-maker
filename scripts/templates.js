@@ -105,7 +105,12 @@ const EJStemplates = {
    * @param {Boolean} active
    */
   imageForm: `
-  <div class="tab-pane fade <% if (active) { %>show active<% } %>" id="tabPane_<%=uid%>">
+  <div id="dddisp_<%=uid%>" class="dragDropDisplay h-100 w-100 position-absolute justify-content-center d-none">
+    <div  class="dragDropButton d-flex justify-content-center align-self-center w-50">
+      Drop the Image HERE
+    </div>
+  </div>
+  <div class="tab-pane fade <% if (active) { %>show active<% } %> py-3 px-4" id="tabPane_<%=uid%>">
   <form id="imageForm_<%=uid%>">
   <div class="form-group">
     <label for="imgInput_<%=uid%>" class="text-primary font-weight-bold">Select an Image</label>
