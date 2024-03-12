@@ -10,10 +10,10 @@ Minecraft Pixel Art Maker
  * @param {Array<Array<Number>>} shademap - Pixel-wise light/dark variation data; each value in this
  *  is 255 if the pixel is the base colour of the material, 254 if darker variant, 253 if brighter variant
  * @returns 2D Array of pixel-wise height coordinates required to achieve the given light/dark variation
- * with minecraft blocks.
+ * with minecraft blocks (result); and the total number of discontinuities caused by maxY limit (cuts).
  */
 function findYMap(imgdata, maxY, shademap) {
-  var Ymap = [], x, z, column, type, lastY, min;
+  var Ymap = [], x, z, column, type, lastY, min, cuts=0;
   for (x=0; x<imgdata.width; x++) {
     column = [0]; min=0;
     for (z=1; z<imgdata.height; z++) {
@@ -37,10 +37,47 @@ function findYMap(imgdata, maxY, shademap) {
       }
     }
     //Bring everything within 0 and height limit
-    column = column.map(a => (a - min) % maxY);
-    Ymap.push(column);
+    let clamp = clampSequence(column, maxY);
+    cuts += clamp.cuts;
+    Ymap.push(clamp.result);
   }
-  return Ymap;
+  return {result:Ymap, cuts:cuts};
+}
+
+/**
+ * Given an unrestricted sequence of integers, restrict it to the range 0..lim by "cutting"
+ * at the fewest number of places possible and shifting the sections (i.e. preserve deltas
+ * modified[i+1]-modified[i] == original[i+1]-original[i] as far as possible).
+ * @param {Array<Number>} arr - Input integer sequence
+ * @param {Number} lim - Max permissible value
+ * @returns Bounded sequence same size as arr (result); Number of cuts made (cuts)
+ */
+function clampSequence(arr, lim) {
+  let mn = Number.MAX_SAFE_INTEGER;
+  let mx = Number.MIN_SAFE_INTEGER;
+  const res = [];
+  const buffer = [];
+  let cuts = 0;
+  for (let i = 0; i < arr.length; i++) {
+      const lmn = mn; // Local (buffer) min
+      const lmx = mx; // Local (buffer) max
+      mn = Math.min(arr[i], mn);
+      mx = Math.max(arr[i], mx);
+      if (mx - mn > lim) {
+          for (let j = 0; j < buffer.length; j++) {
+              res.push(buffer[j] - lmn);
+          }
+          buffer.length = 0;
+          cuts += 1;
+          mn = arr[i];
+          mx = arr[i];
+      }
+      buffer.push(arr[i]);
+  }
+  for (let j = 0; j < buffer.length; j++) {
+      res.push(buffer[j] - mn);
+  }
+  return {result:res, cuts:cuts};
 }
 
 /**
@@ -68,7 +105,7 @@ function getSurvivalGuideTableData(uid) {
   }
   var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
   if (ymax > 1) {
-    yMap = findYMap(image, ymax, PictureData[uid]['shadeMap']); // Defined in `functionwriter.js`
+    yMap = findYMap(image, ymax, PictureData[uid]['shadeMap']).result;
   }
 
   // Begin creating the data for each zone
@@ -133,7 +170,7 @@ function writeCommands(name, imobj, palettesize, height, keep, linkpos, strucs, 
   } 
   if (height > 1) {
     ymax = height;             
-    yMap = findYMap(imobj, ymax, shademap); 
+    yMap = findYMap(imobj, ymax, shademap).result; 
   }
   for (i=0; i<zone_origins.length; i++) {
     var fun="", x, y, z, xloop, zloop, pix, code, replMode;

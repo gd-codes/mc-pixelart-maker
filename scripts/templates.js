@@ -60,7 +60,7 @@ const EJStemplates = {
 <%=tabTitle%>
 <% if (tabDirty) { %><small title="Has unsaved changes">&nbsp;*</small><% } %>
 <% if (tabSavedDataSize > 0) { %>
-  <small title="Local storage: <%=((tabSavedDataSize / 1024 + 1) | 0)%> kb<% if (originalWasResized) { %> (stored resized image because original was too big; re-select the image to change area)<% } %>">
+  <small title="Local storage: <%=((tabSavedDataSize / 1024 + 1) | 0)%> kb<% if (originalWasResized) { %> (stored resized image because original was too big)<% } %>">
     &nbsp;&nbsp;<%-SVGicons.save%><% if (originalWasResized) { %>&nbsp;&nbsp;<%-SVGicons.shrink%><% } %>
   </small>
 <% } %>`,

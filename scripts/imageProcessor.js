@@ -34,13 +34,16 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
   var p = [];
   for (var cn of palette.split(" ")) {
     if (Colours.get(cn) !== undefined) {
-      var clr = Colours.get(cn); p.push(clr.rgb);
+      var clr = Colours.get(cn); 
+      // This order is important!! See correctShadeHeightEffect()
+      p.push(clr.rgb);
       if (is3D) {
-        p.push(darkPixel(clr.rgb)); p.push(lightPixel(clr.rgb));
+        p.push(darkPixel(clr.rgb)); 
+        p.push(lightPixel(clr.rgb));
       }
     }
   }
-  // Resize the image to fit number of pixels in minceraft maps
+  // Resize the image to fit number of pixels in minceraft maps, using browser canvas
   ctx.drawImage(image, 0, 0, image.width, image.height);
   ctx.clearRect(0,0,canv.width,canv.height);
   canv.height = h; canv.width = w;
@@ -53,7 +56,16 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
   for (let i=0; i<w; i++)
     PictureData[uid]['shadeMap'][i] = new Array(h); 
   
+  // Perform quantization/dithering pass, obtaining the unrestricted/natural heights
   var finalImgData = convertPalette(p, imgData, dither, PictureData[uid]['shadeMap']);
+  // Edit the image to reflect errors that will be obtained due to height limit
+  var heightTooLow = 0;
+  if (is3D) {
+    let ymax = $("#heightInput_"+uid).val();
+    let ymap = findYMap(finalImgData, ymax, PictureData[uid]['shadeMap']);
+    heightTooLow = ymap.cuts;
+    correctShadeHeightEffect(finalImgData, p, ymap.result);
+  }
   ctx.putImageData(finalImgData, 0, 0);
   var converted_image = canv.toDataURL("image/png");
   ctx.clearRect(0, 0, w, h);
@@ -67,6 +79,12 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
       .width(image.width);
     $('#downloadImageButton').attr('href', image.src);
     $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-original.png'));
+    if (PictureData[uid].originalWasResized === true) {
+      $('#imgModalResizeWarning').removeClass('d-none');
+    } else {
+      $('#imgModalResizeWarning').addClass('d-none');
+    }
+    $('#imgModalHeightWarning').addClass('d-none');
     $("#imageDisplayModal").modal('show');
   });
   $("#viewResizedImgBtn_"+uid).click(function() {
@@ -75,6 +93,8 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
       .width(w*dispScale);
     $('#downloadImageButton').attr('href', resized_image);
     $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-resized.png'));
+    $('#imgModalResizeWarning').addClass('d-none');
+    $('#imgModalHeightWarning').addClass('d-none');
     $("#imageDisplayModal").modal('show');
   });
   $("#viewFinalImgBtn_"+uid).click(function() {
@@ -83,6 +103,13 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
       .width(w*dispScale);
     $('#downloadImageButton').attr('href', converted_image);
     $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-converted.png'));
+    if (heightTooLow > 4*h) {
+      // Arbitrary threshold, average 4  cuts per column
+      $('#imgModalHeightWarning').removeClass('d-none');
+    } else {
+      $('#imgModalHeightWarning').addClass('d-none');
+    }
+    $('#imgModalResizeWarning').addClass('d-none');
     $("#imageDisplayModal").modal('show');
   })
 }
@@ -168,6 +195,31 @@ function convertPalette(palette, pixels, dither, shademap) {
 }
 
 /**
+ * Edit pixel shades in the image to reflect in-game appearance according to the given height map.
+ * @param {ImageData} pixels - to be modified
+ * @param {Array<Array<Number>>} palette - sequence of colours present in the image - 
+ *  ordered normal, dark, light, normal, dark, light... for each material
+ * @param {Array<Array<Number>>} ymap - Actual clamped height values
+ */
+function correctShadeHeightEffect(pixels, palette, ymap) {
+  for (let x=0; x < pixels.width; x++) {
+    for (let z=0; z < pixels.height; z++) {
+      let p = getPixelAt(x, z, pixels);
+      let i = indexOfArray(p.slice(0,3), palette);
+      let tc = Math.floor(i / 3) * 3;
+      // For the top row, assume the block is higher (lighter) than the one N of it
+      // even though that is outside the map.
+      if (z === 0 || ymap[x][z] > ymap[x][z-1]) {
+        tc += 2;
+      } else if (ymap[x][z] < ymap[x][z-1]) {
+        tc += 1;
+      }
+      setPixelAt(x, z, pixels, [...(palette[tc]), 255]);
+    }
+  }
+}
+
+/**
  * Create a PNG image to be used as a logo for the generated add-on in Minecraft,
  * including the website's logo and a preview of contained artwork.
  * @param {Array<HTMLImageElement>} images - Processed map art preview images to include.
@@ -202,8 +254,20 @@ function makeLogo(images) {
  * @returns RGBA value at the given coordinate
  */
 function getPixelAt(x, z, dataobj) {
-  let i = 4*(dataobj.width*(z) + x);
-  return [dataobj.data[i], dataobj.data[i+1], dataobj.data[i+2], dataobj.data[i+3]];
+  let loc = 4*(dataobj.width*(z) + x);
+  return [dataobj.data[loc], dataobj.data[loc+1], dataobj.data[loc+2], dataobj.data[loc+3]];
+}
+
+/**
+ * Set the value of pixel (x,z) in a continuous 1D ravelled RGBARGBA... byte seq
+ * @param {Number} x - Pixel width coordinate
+ * @param {Number} z - Pixel height coordinate
+ * @param {ImageData} dataobj - Source Image Data array
+ * @param {Array<Number>} rgba - Colour to write
+ */
+function setPixelAt(x, z, dataobj, rgba) {
+  let loc = 4*(dataobj.width*(z) + x);
+  for (i=0; i<4; i++) dataobj.data[loc+i] = rgba[i];
 }
 
 /**

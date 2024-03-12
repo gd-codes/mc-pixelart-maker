@@ -191,6 +191,14 @@
       <div class="modal-body overflow-auto" id="imgModalContent">
         <canvas id="imgModalCanvas" class="d-block mx-auto my-auto" width="0" height="0"></canvas>
         <img id="displayImage" class="d-block mx-auto my-auto" alt="Image Preview">
+        <div class="mt-2 d-none alert alert-danger" id="imgModalResizeWarning">
+            The image was restored from local storage as the low-resolution resized version, since the original file size was too large.<br/>
+            Expanding the area / number of maps may result in low quality art. Re-upload the full size original in case you would like so.
+        </div>
+        <div class="mt-2 d-none alert alert-danger" id="imgModalHeightWarning">
+            A restrictive 3D height limit may cause more noise and/or stripy artifacts in the map art. Increasing the
+            height may improve the image quality.
+        </div>
       </div>
       <div class="modal-footer d-flex justify-content-between">
         <a id="downloadImageButton" class="btn btn-outline-secondary">Download Image</a>
