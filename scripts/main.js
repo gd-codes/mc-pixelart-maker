@@ -266,7 +266,7 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
 function imgDropHandler(event, uid) {
   event.preventDefault();
   [...event.dataTransfer.items].forEach((item, i) => {
-    if (item.kind === "file") {
+    if (item.kind === "file" && item.getAsFile().type.startsWith("image/")) {
       const file = item.getAsFile();
       const fileInput = document.querySelector(`#imgInput_${uid}`);
       fileInputHandler(fileInput, file);

@@ -26,7 +26,8 @@
 	margin-top: 0px;
 }
 .dragDropDisplay {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url('/images/grass_block.png') top center repeat-x;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url('/images/dragDropImage2.jpg') no-repeat;
+  background-size: 100% 100%;
   z-index: 1000;
   font-family: Minecraft, Verdana, sans-serif;
 }
@@ -34,6 +35,7 @@
   background-color: rgba(112, 112, 112, 1);
   border: solid black 1px;
   padding: 10px;
+  pointer-events: none;
   box-shadow: 
   -2px -4px rgb(89, 89, 89) inset,
   2px 2px rgb(159, 159, 159) inset;     /* Right and Bottom shadow */
