@@ -141,3 +141,7 @@
   color: white !important;
 }
 
+.dark-theme .dragDropDisplay {
+  background: linear-gradient(0deg, rgba(30,30,30,0.6), rgba(30,30,30,0.6)), 
+              url('/images/dragover_bg.png') repeat;
+}

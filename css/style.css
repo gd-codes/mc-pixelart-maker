@@ -26,19 +26,26 @@
 	margin-top: 0px;
 }
 .dragDropDisplay {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url('/images/dragDropImage2.jpg') no-repeat;
-  background-size: 100% 100%;
+  background: linear-gradient(0deg, rgba(255, 225, 200, 0.4), rgba(255, 225, 200, 0.4)), 
+              url('/images/dragover_bg.png') repeat;
+  /* background-color: rgba(230,230,230,0.85); */
   z-index: 1000;
   font-family: Minecraft, Verdana, sans-serif;
 }
+.dragDropIcon svg {
+  color: white;
+  transform: scale(5);
+  margin: 4rem auto;
+  display: block;
+}
 .dragDropButton {
-  background-color: rgba(112, 112, 112, 1);
+  color: black;
+  font-size: large;
+  background-color: rgb(170, 170, 170);
   border: solid black 1px;
-  padding: 10px;
   pointer-events: none;
-  box-shadow: 
-  -2px -4px rgb(89, 89, 89) inset,
-  2px 2px rgb(159, 159, 159) inset;     /* Right and Bottom shadow */
+  box-shadow: -3px -3px rgb(120, 120, 120) inset,
+              3px 3px rgb(210, 210, 210) inset;     /* Right and Bottom shadow */
 }
 
 #displayImage {
