@@ -302,7 +302,7 @@ const EJStemplates = {
               <% let y = tabledatas[zone][z][x][1]; %>
               <% let pixnorm = ColourList[3*code]; %>
               <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
-                data-trigger="focus" data-placement="top" title="<%=MaterialNames[code]%>" data-html="true"
+                data-placement="top" title="<%=MaterialNames[code]%>" data-html="true"
                 data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;">
               </td>
             <% } %>

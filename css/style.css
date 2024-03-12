@@ -104,13 +104,17 @@ table caption {
   max-height: 1500;
 }
 
-.guide-tableareas td:focus {
+.guide-tableareas td.focused {
   -ms-transform: scale(1.5); 
   -moz-transform: scale(1.5); 
   -webkit-transform: scale(1.5); 
   -o-transform: scale(1.5);
   transform: scale(1.5);
-  border: medium solid black !important;
+}
+
+/* based on Chrome's "user agent stylesheet" for ":focus-visible" */
+.guide-tableareas td.focused {
+  outline: black auto 1px;
 }
 
 @media (max-width: 768px) {
