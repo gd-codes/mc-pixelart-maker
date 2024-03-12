@@ -214,8 +214,75 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   }
 
   refreshColourDisplay(uid);
+  handleDragDropEvents(uid);
 }
 
+/**
+ * Respond to file drag/drop attempts over an image form.
+ * @param {String} uid - Identifies the image form
+ */
+function handleDragDropEvents(uid) {
+  // Counter helps manage repeatedly fired drag enter+leave events
+  var counter = 0;
+  // get fired when someone drops image in drop zone
+  $(`#dddisp_${uid}`).on('drop', (event) => {
+    imgDropHandler(event.originalEvent, uid);
+    counter--;
+    $(`#dddisp_${uid}`).removeClass('d-flex');
+    $(`#dddisp_${uid}`).addClass('d-none');
+  });
+  $(`#dddisp_${uid}`).on('dragover', (event) => {
+    event.preventDefault();
+  });
+
+  // get fired when someone tries to drop image in drop zone
+  $(`#tabPane_${uid}`).on('dragenter', (event) => {
+    if( $(`#imgInput_${uid}`).attr('disabled') === undefined){
+      counter++;
+      $(`#dddisp_${uid}`).removeClass('d-none');
+      $(`#dddisp_${uid}`).addClass('d-flex');
+    }
+  });
+
+  // get fired when someone takes the image out of drop zone
+  $(`#dddisp_${uid}`).on('dragleave', (event) => {
+    if($(`#imgInput_${uid}`).attr('disabled') === undefined){
+      counter--;
+      if (counter <= 0) { 
+        $(`#dddisp_${uid}`).removeClass('d-flex');
+        $(`#dddisp_${uid}`).addClass('d-none');
+      }
+    }
+  });
+
+  // get fired when the tab pane is disabled but someone tries to drop the image
+  $(`#tabPane_${uid}`).on('dragover', (event) => {
+    event.preventDefault();
+  });  
+  $(`#tabPane_${uid}`).on('drop', (event) => {
+    event.preventDefault();
+  });
+}
+
+/** 
+ * Grab content of dropped images and passes the files to file input handler.
+ * @param {Event} event
+ * @param {UID} uid - Uid for the imp input field
+ */
+function imgDropHandler(event, uid) {
+  event.preventDefault();
+  [...event.dataTransfer.items].forEach((item, i) => {
+    if (item.kind === "file" && item.getAsFile().type.startsWith("image/")) {
+      const file = item.getAsFile();
+      const fileInput = document.querySelector(`#imgInput_${uid}`);
+      fileInputHandler(fileInput, file);
+
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      fileInput.files = dataTransfer.files;
+    }
+  });
+}
 
 /** 
  * Grab content of uploaded images and save it as a data-URI in `PictureData`.
