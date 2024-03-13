@@ -250,7 +250,7 @@ const EJStemplates = {
     <label for="tabDirection_<%=uid%>">Enable Vertical <code>Tab</code> movement</label>
     <br/>
     <input type="checkbox" class="mx-2" id="guideTotalBlockCount_<%=uid%>" />
-    <label for="guideTotalBlockCoun>_<%=uid%>">View total count for all zones</label>
+    <label for="guideTotalBlockCount_<%=uid%>">View total count for all zones</label>
     <br/>
     <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=uid%>" />
     <label for="guideStackViewCount_<%=uid%>">Display values in stacks of 64</label>
