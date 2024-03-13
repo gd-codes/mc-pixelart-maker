@@ -36,7 +36,7 @@ const EJStemplates = {
  * Note: Template must contain no newline or whitespaces!
  * @param {{rgb:[Number,Number,Number]}} colourdata
  */
-  colourPaletteIcon: `<span style="color:rgb(<%=colourdata.rgb[0]%>,<%=colourdata.rgb[1]%>,<%=colourdata.rgb[2]%>); padding: 2px;"><%-SVGicons.square_noborder%></span>`,
+  colourPaletteIcon: `<span title="<%=colourdata.name%>" style="color:rgb(<%=colourdata.rgb[0]%>,<%=colourdata.rgb[1]%>,<%=colourdata.rgb[2]%>); padding: 2px;"><%-SVGicons.square_noborder%></span>`,
   
   /** 
    * @param {String} uid
