@@ -228,6 +228,8 @@ const EJStemplates = {
    * @param {Array<Array<Array<[Number,Number]>>>} tabledatas
    * @param {Array<Array<Number>>} blockcounts
    * @param {Array<Number>} cindexns
+   * @param {Array<Number> | null} referenceCoords optional
+   * @param {Array<Array<Number>>} zoneOrigins
    * @see getSurvivalGuideTableData()
    */
   survivalGuide: `
@@ -305,12 +307,15 @@ const EJStemplates = {
           <% for( let z = 0; z < 128; z++ ) { %>
             <tr>
             <% for( let x = 0; x < 64; x++ ) { %>
+              <% let zo = zoneOrigins[zone]; %>
               <% let code = tabledatas[zone][z][x][0]; %>
               <% let y = tabledatas[zone][z][x][1]; %>
               <% let pixnorm = ColourList[3*code]; %>
+              <% let absCoords = referenceCoords ? (referenceCoords.x+zo[0]+x) + " " + (referenceCoords.y+y) + " " + (referenceCoords.z+zo[1]+z) : ""; %>
               <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
                 data-placement="top" title="<%=MaterialNames[code]%>" data-html="true"
-                data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;">
+                data-content="Position: &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;<% if (referenceCoords){ %>
+                &lt;br&gt;Coords: &lt;b&gt;<%=absCoords%>&lt;/b&gt;<% } %>">
               </td>
             <% } %>
             </tr>

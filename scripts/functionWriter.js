@@ -138,12 +138,18 @@ function getSurvivalGuideTableData(uid) {
     cindexns.push(ColourTokens.indexOf(ct));
   }
 
+  // TODO make configurable and save with image configuration
+  // reference coordinates, i.e., absolute coordinates of the north-west corner of the overall map area
+  let referenceCoords = null; // {x:448, y:63, z:5312};
+
   return { uid: uid, 
     is3D: (ymax > 1), 
     numzones: zone_origins.length, 
     tabledatas:tabledatas, 
     blockcounts:blockcounts, 
-    cindexns:cindexns
+    cindexns:cindexns,
+    referenceCoords: referenceCoords,
+    zoneOrigins: zone_origins
   };
 }
 
