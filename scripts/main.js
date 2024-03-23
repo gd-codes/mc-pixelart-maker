@@ -847,6 +847,10 @@ function createSurvivalGuide(uid, numzones) {
       $(lastFocus).popover('dispose');
       $(lastFocus).removeData('toggle');
       $(lastFocus).removeClass('focused');
+      if ($(lastFocus).attr('data-original-title').length > 0) {
+        // Due to bootstrap, original title is not restored, affects browser native tooltips.
+        $(lastFocus).attr('title', $(lastFocus).attr('data-original-title'));
+      }
     }
     $(this).addClass('focused');
     $(this).data('toggle', 'popover');

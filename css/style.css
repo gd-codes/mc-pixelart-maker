@@ -27,7 +27,7 @@
 }
 .dragDropDisplay {
   background: linear-gradient(0deg, rgba(255, 225, 200, 0.4), rgba(255, 225, 200, 0.4)), 
-              url('/images/dragover_bg.png') repeat;
+              url('../images/dragover_bg.png') repeat;
   /* background-color: rgba(230,230,230,0.85); */
   z-index: 1000;
   font-family: Minecraft, Verdana, sans-serif;
@@ -70,6 +70,13 @@
 .sizezero {
   height: 0px;
   width: 0px;
+}
+
+.profile-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: 1rem 0.6rem;
 }
 
 kbd {
