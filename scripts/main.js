@@ -19,7 +19,8 @@ const PictureData = {
       fnName: undefined,
       configurationDirty: true,
       finalImage: undefined,
-      shadeMap: undefined
+      shadeMap: undefined,
+      lastFocusedPopover: undefined,
   }
 };
 
@@ -71,12 +72,17 @@ function setup() {
   });
   $("#clrSelBtn_Dye").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_dye);
+      if (Colours.get($(elem).attr('value')).is_dye) $(elem).prop('checked', true);
+    });
+  });
+  $("#clrSelBtn_Terc").click(function() {
+    $("input[name='clrSelect']").each(function(index, elem) {
+      if (Colours.get($(elem).attr('value')).is_terc) $(elem).prop('checked', true);
     });
   });
   $("#clrSelBtn_greys").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_greyscale);
+      if (Colours.get($(elem).attr('value')).is_greyscale) $(elem).prop('checked', true);
     });
   });
   $("#clrSelBtn_NB").click(function() { 
@@ -87,6 +93,10 @@ function setup() {
 
   // Populate the colour palette selection table
   $("#colourPaletteTable tbody").html(ejs.render(EJStemplates.colourSelectionTable, {}));
+
+  $(".editable-clr-name").on('input', function() {
+    Colours.get($(this).data('code')).name = this.innerText;
+  });
 
   // add-questionmark indicators for tooltip helptext
   $(".add-questionmark").each(function (index, elem) {
@@ -201,7 +211,8 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     originalFileName: undefined,
     resizedImage: undefined,
     finalImage: undefined,
-    shadeMap: undefined
+    shadeMap: undefined,
+    lastFocusedPopover: undefined,
   }
 
   // Initialize bootstrap tooltips
@@ -841,8 +852,8 @@ function createSurvivalGuide(uid, numzones) {
 
   /* Keeping 16,000+ popovers at once = horrible performance. 
   Hence create and destroy active one each time while focused */
-  let lastFocus;
   $(`.guide-tableareas td`).focus(function() {
+    let lastFocus = PictureData[uid].lastFocusedPopover;
     if (lastFocus) {
       $(lastFocus).popover('dispose');
       $(lastFocus).removeData('toggle');
@@ -855,7 +866,7 @@ function createSurvivalGuide(uid, numzones) {
     $(this).addClass('focused');
     $(this).data('toggle', 'popover');
     $(this).popover('show');
-    lastFocus = this;
+    PictureData[uid].lastFocusedPopover = this;
   });
 
   // Bind tab Direction modifier
@@ -963,6 +974,7 @@ function deleteSurvivalGuide(uid, readd=false) {
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
   setTimeout( function() {
+    $(PictureData[uid].lastFocusedPopover).popover('dispose');
     $("#guideTab_"+uid).remove();
     $("#guidelink_"+uid).remove();
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');

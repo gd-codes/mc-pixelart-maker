@@ -27,7 +27,10 @@ const EJStemplates = {
     <td class="colour-insert display-4" data-colour="rgb(<%=colourdata.rgb[0]%>,<%=colourdata.rgb[1]%>,<%=colourdata.rgb[2]%>)">
       <span style="color: rgb(<%=colourdata.rgb[0]%>,<%=colourdata.rgb[1]%>,<%=colourdata.rgb[2]%>);"><%-SVGicons.square%></span>
     </td>
-    <td> <%=colourdata.name%> </td>
+    <td>
+      <span contenteditable="true" class="editable-clr-name" data-code="<%=colourcode%>"><%=colourdata.name%></span>
+      <span class="text-secondary" data-toggle="tooltip" title="Customise the Colour Name"><%-SVGicons.edit%></span>
+    </td>
     <td> <%-colourdata.description%> </td>
   </tr>
 <% }) %>`,
@@ -272,6 +275,7 @@ const EJStemplates = {
   </div>
 </div>
 <div class="accordion border-top border-light pt-2" id="survGuide_<%=uid%>">
+  <% let MaterialCodes = Array.from(Colours.keys()); %>
   <% for( let zone = 0; zone < numzones; zone++ ) { %>
     <div class="collapse" id="guidePage_<%=zone+1%>_map_<%=uid%>" data-parent="#survGuide_<%=uid%>">
       <div class="row">
@@ -290,7 +294,7 @@ const EJStemplates = {
             <tbody>
             <% cindexns.forEach(i => { %>
               <tr>
-                <td class="pl-4"><%=MaterialNames[i]%></td>
+                <td class="pl-4"><%=Colours.get(MaterialCodes[i]).name%></td>
                 <td class="text-right pr-3"><%=blockcounts[zone+1][i]%></td>
                 <td class="d-none text-right pr-3"><%=Math.floor(blockcounts[zone+1][i] / 64)%>s + <%=blockcounts[zone+1][i] % 64%></td>
                 <td class="d-none text-right pr-3"><%=blockcounts[0][i]%></td>
@@ -309,7 +313,7 @@ const EJStemplates = {
               <% let y = tabledatas[zone][z][x][1]; %>
               <% let pixnorm = ColourList[3*code]; %>
               <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
-                data-placement="top" title="<%=MaterialNames[code]%>" data-html="true"
+                data-placement="top" title="<%=Colours.get(MaterialCodes[code]).name%>" data-html="true"
                 data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;">
               </td>
             <% } %>
