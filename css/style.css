@@ -221,3 +221,27 @@ table caption {
 .bs-popover-bottom {
   margin-top: 1.45rem;
 }
+
+.visbox-vis:hover, .visbox-invis:hover {
+  cursor: pointer;
+}
+[type="checkbox"].visbox {
+  display: none;
+}
+[type="checkbox"].visbox:checked ~ .visbox-invis {
+  display: none;
+}
+[type="checkbox"].visbox:checked ~ .visbox-vis {
+  opacity: 10%;
+}
+[type="checkbox"].visbox:checked:hover ~ .visbox-vis {
+  opacity: 80%;
+}
+[type="checkbox"].visbox:not(:checked) ~ .visbox-vis {
+  display: none;
+}
+
+.guide-tableareas td.minimized {
+  opacity: 50%;
+  transform: scale(0.2);
+}

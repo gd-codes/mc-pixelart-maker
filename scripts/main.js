@@ -888,9 +888,40 @@ function createSurvivalGuide(uid, numzones) {
       $(`#guideTotalBlockCount_${uid}`).prop('checked'), 
       $(this).prop('checked'))
   });
+
+  $(`[type="checkbox"].visbox`).click(function() {
+    showHideTableCells($(this));
+  });
+  $(`#hideGuideCells_${uid}`).click(function() {
+    let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
+    // Click event toggles :checked again and triggers the callback to update the table
+    toggles.each(i => $(toggles[i]).prop('checked', true).trigger('click'));
+  });
+  $(`#showGuideCells_${uid}`).click(function() {
+    let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
+    toggles.each(i => $(toggles[i]).prop('checked', false).trigger('click'));
+  });
+
   // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+/**
+ * Show or Hide the table cells corresponding to a certain block in the survival guide.
+ * @param {jQuery(HTMLInputElement)} triggerCheckbox - Visibility checkbox for the material to toggle 
+ */
+function showHideTableCells(triggerCheckbox) {
+  let code = triggerCheckbox.data('code');
+  let targets = triggerCheckbox
+    .closest(`div[id^="survGuideBlockCount_"]`)
+    .next(`div[id^="survGuideTableArea_"]`)
+    .find(`td[data-code="${code}"]`);
+  if (triggerCheckbox.prop('checked')) {
+    targets.removeClass('minimized');
+  } else {
+    targets.addClass('minimized');
+  }
 }
 
 /**
@@ -944,10 +975,10 @@ function tableMovement(elem, event, verticalTab=false) {
 function toggleCountListView(uid, l, showTotal, showStacks) {
   // Show the correct column in countlist table
   for (let i=0; i<l; i++) {
-    for (let coln=2; coln<=5; coln++) {
+    for (let coln=3; coln<=6; coln++) {
       $(`#countlistTable_${i}_${uid} tr > *:nth-child(${coln})`).addClass('d-none');
     }
-    var n = (showTotal) ? ((showStacks) ? 5 : 4) : ((showStacks) ? 3 : 2);
+    var n = (showTotal) ? ((showStacks) ? 6 : 5) : ((showStacks) ? 4 : 3);
     $(`#countlistTable_${i}_${uid} tr > *:nth-child(${n})`).removeClass('d-none');
   }
 }

@@ -14,6 +14,8 @@ const SVGicons = {
   goarrow : `<svg width="1em" height="1em" viewbox="0 0 16 16" class="bi bi-arrow-right-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 8.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/></svg>`,
   menubar : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16"><path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/><path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z"/></svg>`,
   upload_file : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16"><path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/></svg>`,
+  visible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>`,
+  invisible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/></svg>`,
 };
 
 
@@ -257,6 +259,11 @@ const EJStemplates = {
     <br/>
     <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=uid%>" />
     <label for="guideStackViewCount_<%=uid%>">Display values in stacks of 64</label>
+    <br/>
+    <div class="btn-group mt-3">
+      <button class="btn btn-sm btn-outline-info" id="hideGuideCells_<%=uid%>">Hide All</button>
+      <button class="btn btn-sm btn-outline-info" id="showGuideCells_<%=uid%>">Show All</button>
+    </div>
   </div>
   <div class="col-sm-8 alert alert-info">
     <p class="alert-heading"><%-SVGicons.infosquare%></p>
@@ -284,7 +291,8 @@ const EJStemplates = {
             <caption class="text-dark">Palette Usage - Zone <%=zone+1%></caption>
             <thead class="thead-light">
               <tr class="py-3">
-              <th scope="col" class="pl-3">Material</th>
+              <th scope="col" class="pl-3"></th>
+              <th scope="col" class="pl-2">Material</th>
               <th scope="col">Count</th>
               <th scope="col" class="d-none">Count</th>
               <th scope="col" class="d-none">Count (Total)</th>
@@ -294,7 +302,14 @@ const EJStemplates = {
             <tbody>
             <% cindexns.forEach(i => { %>
               <tr>
-                <td class="pl-4"><%=Colours.get(MaterialCodes[i]).name%></td>
+                <td>
+                  <label>
+                    <input type="checkbox" class="visbox" data-code="<%=MaterialCodes[i]%>" checked/>
+                    <span class="visbox-vis"><%-SVGicons.visible%></span>
+                    <span class="visbox-invis text-danger"><%-SVGicons.invisible%></span>
+                  </label>
+                </td>
+                <td class="pl-2"><%=Colours.get(MaterialCodes[i]).name%></td>
                 <td class="text-right pr-3"><%=blockcounts[zone+1][i]%></td>
                 <td class="d-none text-right pr-3"><%=Math.floor(blockcounts[zone+1][i] / 64)%>s + <%=blockcounts[zone+1][i] % 64%></td>
                 <td class="d-none text-right pr-3"><%=blockcounts[0][i]%></td>
@@ -314,7 +329,7 @@ const EJStemplates = {
               <% let pixnorm = ColourList[3*code]; %>
               <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
                 data-placement="top" title="<%=Colours.get(MaterialCodes[code]).name%>" data-html="true"
-                data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;">
+                data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;" data-code="<%=MaterialCodes[code]%>">
               </td>
             <% } %>
             </tr>
