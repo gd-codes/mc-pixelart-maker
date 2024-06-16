@@ -624,9 +624,12 @@ function deleteImgForm(uid) {
   if (verify) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
-    delete PictureData[uid];
     deleteSurvivalGuide(uid);
     deleteSavedFormData(uid);
+    setTimeout(function() {
+      // Remove PictureData only after the other guides and UI!
+      delete PictureData[uid]; 
+    }, 2);
     $("#navbarList a.nav-link").first().click();
   }
 }
@@ -706,7 +709,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,20,0]
+      min_engine_version: [1,21,0]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + 

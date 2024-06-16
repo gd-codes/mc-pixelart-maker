@@ -20,13 +20,14 @@ Alternatively, you can download a copy of the source code from here on Github, a
 
 ### Previous Versions
 
-The app is updated occasionally, to keep in sync with changes made to the latest version of the Minecraft Bedrock game. To use the app at an older version, you can clone the source code at these specific releases:
+The app is updated occasionally, to keep in sync with changes made to the latest version of the Minecraft Bedrock game. It is best to use the latest version on the live website. In case you want to use the app at an older version, you can clone the source code at these specific releases:
 
  Minecraft Version | App Code on Github |
 | - | - |
-| 1.17.0 "Caves & Cliffs Part 1" | [v3.1](https://github.com/gd-codes/mc-pixelart-maker/tree/v3.1) |
-| 1.18.0 "Caves & Cliffs Part 2" | [v4.1](https://github.com/gd-codes/mc-pixelart-maker/tree/v4.1) |
-| 1.19.0 "Wild Update" | [v4.3](https://github.com/gd-codes/mc-pixelart-maker/tree/v4.3) |
+| 1.17.0 "Caves & Cliffs Part 1" | [v3.1](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v3.1) |
+| 1.18.0 "Caves & Cliffs Part 2" | [v4.1](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.1) |
+| 1.19.0 "Wild Update" | [v4.3](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.3) |
+| 1.20.0 "Trails & Tales" | [v4.5](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.5) |
 
 ### Contributing
 

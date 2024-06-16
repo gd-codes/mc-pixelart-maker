@@ -230,7 +230,7 @@ function makeLogo(images) {
   var canv = $("#testCanvas")[0], ctx = canv.getContext('2d', alpha=false, willReadFrequently=true);
   var logodata = $("#logoImg")[0];
   canv.width = 128; canv.height = 128;
-  if (images == []) {
+  if (images.length === 0) {
     ctx.drawImage(logodata, 0, 0, 128, 128);
   } else {
     for (var i=0; i<images.length; i++) {

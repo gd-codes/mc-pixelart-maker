@@ -8,7 +8,7 @@
 	background-image: url("../images/headercover.png");
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: top;
 	padding: 120px 20px 120px;
 	background-size: cover;
   max-height: 50%;
