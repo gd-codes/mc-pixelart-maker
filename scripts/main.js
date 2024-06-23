@@ -19,7 +19,8 @@ const PictureData = {
       fnName: undefined,
       configurationDirty: true,
       finalImage: undefined,
-      shadeMap: undefined
+      shadeMap: undefined,
+      lastFocusedPopover: undefined,
   }
 };
 
@@ -71,12 +72,17 @@ function setup() {
   });
   $("#clrSelBtn_Dye").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_dye);
+      if (Colours.get($(elem).attr('value')).is_dye) $(elem).prop('checked', true);
+    });
+  });
+  $("#clrSelBtn_Terc").click(function() {
+    $("input[name='clrSelect']").each(function(index, elem) {
+      if (Colours.get($(elem).attr('value')).is_terc) $(elem).prop('checked', true);
     });
   });
   $("#clrSelBtn_greys").click(function() {
     $("input[name='clrSelect']").each(function(index, elem) {
-      $(elem).prop('checked', Colours.get($(elem).attr('value')).is_greyscale);
+      if (Colours.get($(elem).attr('value')).is_greyscale) $(elem).prop('checked', true);
     });
   });
   $("#clrSelBtn_NB").click(function() { 
@@ -87,6 +93,10 @@ function setup() {
 
   // Populate the colour palette selection table
   $("#colourPaletteTable tbody").html(ejs.render(EJStemplates.colourSelectionTable, {}));
+
+  $(".editable-clr-name").on('input', function() {
+    Colours.get($(this).data('code')).name = this.innerText;
+  });
 
   // add-questionmark indicators for tooltip helptext
   $(".add-questionmark").each(function (index, elem) {
@@ -201,7 +211,8 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     originalFileName: undefined,
     resizedImage: undefined,
     finalImage: undefined,
-    shadeMap: undefined
+    shadeMap: undefined,
+    lastFocusedPopover: undefined,
   }
 
   // Initialize bootstrap tooltips
@@ -613,9 +624,12 @@ function deleteImgForm(uid) {
   if (verify) {
     $("#link_"+uid).remove();
     $("#tabPane_"+uid).remove();
-    delete PictureData[uid];
     deleteSurvivalGuide(uid);
     deleteSavedFormData(uid);
+    setTimeout(function() {
+      // Remove PictureData only after the other guides and UI!
+      delete PictureData[uid]; 
+    }, 2);
     $("#navbarList a.nav-link").first().click();
   }
 }
@@ -695,7 +709,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,20,0]
+      min_engine_version: [1,21,0]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + 
@@ -841,17 +855,21 @@ function createSurvivalGuide(uid, numzones) {
 
   /* Keeping 16,000+ popovers at once = horrible performance. 
   Hence create and destroy active one each time while focused */
-  let lastFocus;
   $(`.guide-tableareas td`).focus(function() {
+    let lastFocus = PictureData[uid].lastFocusedPopover;
     if (lastFocus) {
       $(lastFocus).popover('dispose');
       $(lastFocus).removeData('toggle');
       $(lastFocus).removeClass('focused');
+      if ($(lastFocus).attr('data-original-title').length > 0) {
+        // Due to bootstrap, original title is not restored, affects browser native tooltips.
+        $(lastFocus).attr('title', $(lastFocus).attr('data-original-title'));
+      }
     }
     $(this).addClass('focused');
     $(this).data('toggle', 'popover');
     $(this).popover('show');
-    lastFocus = this;
+    PictureData[uid].lastFocusedPopover = this;
   });
 
   // Bind tab Direction modifier
@@ -873,9 +891,40 @@ function createSurvivalGuide(uid, numzones) {
       $(`#guideTotalBlockCount_${uid}`).prop('checked'), 
       $(this).prop('checked'))
   });
+
+  $(`[type="checkbox"].visbox`).click(function() {
+    showHideTableCells($(this));
+  });
+  $(`#hideGuideCells_${uid}`).click(function() {
+    let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
+    // Click event toggles :checked again and triggers the callback to update the table
+    toggles.each(i => $(toggles[i]).prop('checked', true).trigger('click'));
+  });
+  $(`#showGuideCells_${uid}`).click(function() {
+    let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
+    toggles.each(i => $(toggles[i]).prop('checked', false).trigger('click'));
+  });
+
   // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
+}
+
+/**
+ * Show or Hide the table cells corresponding to a certain block in the survival guide.
+ * @param {jQuery(HTMLInputElement)} triggerCheckbox - Visibility checkbox for the material to toggle 
+ */
+function showHideTableCells(triggerCheckbox) {
+  let code = triggerCheckbox.data('code');
+  let targets = triggerCheckbox
+    .closest(`div[id^="survGuideBlockCount_"]`)
+    .next(`div[id^="survGuideTableArea_"]`)
+    .find(`td[data-code="${code}"]`);
+  if (triggerCheckbox.prop('checked')) {
+    targets.removeClass('minimized');
+  } else {
+    targets.addClass('minimized');
+  }
 }
 
 /**
@@ -929,10 +978,10 @@ function tableMovement(elem, event, verticalTab=false) {
 function toggleCountListView(uid, l, showTotal, showStacks) {
   // Show the correct column in countlist table
   for (let i=0; i<l; i++) {
-    for (let coln=2; coln<=5; coln++) {
+    for (let coln=3; coln<=6; coln++) {
       $(`#countlistTable_${i}_${uid} tr > *:nth-child(${coln})`).addClass('d-none');
     }
-    var n = (showTotal) ? ((showStacks) ? 5 : 4) : ((showStacks) ? 3 : 2);
+    var n = (showTotal) ? ((showStacks) ? 6 : 5) : ((showStacks) ? 4 : 3);
     $(`#countlistTable_${i}_${uid} tr > *:nth-child(${n})`).removeClass('d-none');
   }
 }
@@ -959,6 +1008,7 @@ function deleteSurvivalGuide(uid, readd=false) {
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
   // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
   setTimeout( function() {
+    $(PictureData[uid].lastFocusedPopover).popover('dispose');
     $("#guideTab_"+uid).remove();
     $("#guidelink_"+uid).remove();
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');

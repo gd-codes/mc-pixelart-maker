@@ -113,11 +113,11 @@ function getSurvivalGuideTableData(uid) {
   // `blockcounts` has aggregate colour/material usage data from the image
   // Repeat these for each of the zones & append to html as seperate pages
   var blockcounts = new Array(zone_origins.length + 1);
-  blockcounts[0] = new Array(MaterialNames.length).fill(0);
+  blockcounts[0] = new Array(Colours.size).fill(0);
   var tabledatas = new Array(zone_origins.length);
   // blockcounts[0] has total count across all zones, 1..N contain zone-wise blockcounts
   for (let zone=0; zone<zone_origins.length; zone++) { 
-    blockcounts[zone+1] = new Array(MaterialNames.length).fill(0);
+    blockcounts[zone+1] = new Array(Colours.size).fill(0);
     let pix, pixnorm, code, y;
     x0 = zone_origins[zone][0]; z0 = zone_origins[zone][1];
     tabledatas[zone] = new Array(128);

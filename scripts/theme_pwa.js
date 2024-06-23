@@ -8,7 +8,21 @@ window.addEventListener('load', function() {
     ldswitch0.onclick = toggleTheme;
     toggleThemeAutomatic(systemTheme);
     installPWAbtn.onclick = installPWA;
+    resizebg();
 });
+
+window.addEventListener('resize', resizebg); 
+window.addEventListener('orientationchange', resizebg); 
+    
+function resizebg(event) {
+    const bgiratio = 1500 / 560;
+    const headercover = document.getElementsByClassName('headercover')[0];
+    if (headercover.offsetWidth / headercover.offsetHeight >= bgiratio) {
+        headercover.style.backgroundSize = `${headercover.offsetWidth}px auto`;
+    } else {
+        headercover.style.backgroundSize = `auto ${headercover.offsetHeight}px`;
+    }
+}
 
 function toggleTheme(click_event) {
     const csmt = document.getElementById('colorSchemeMetaTag');

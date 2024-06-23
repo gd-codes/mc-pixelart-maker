@@ -8,7 +8,7 @@
 	background-image: url("../images/headercover.png");
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: top;
 	padding: 120px 20px 120px;
 	background-size: cover;
   max-height: 50%;
@@ -27,7 +27,7 @@
 }
 .dragDropDisplay {
   background: linear-gradient(0deg, rgba(255, 225, 200, 0.4), rgba(255, 225, 200, 0.4)), 
-              url('/images/dragover_bg.png') repeat;
+              url('../images/dragover_bg.png') repeat;
   /* background-color: rgba(230,230,230,0.85); */
   z-index: 1000;
   font-family: Minecraft, Verdana, sans-serif;
@@ -70,6 +70,13 @@
 .sizezero {
   height: 0px;
   width: 0px;
+}
+
+.profile-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: 1rem 0.6rem;
 }
 
 kbd {
@@ -213,4 +220,28 @@ table caption {
 }
 .bs-popover-bottom {
   margin-top: 1.45rem;
+}
+
+.visbox-vis:hover, .visbox-invis:hover {
+  cursor: pointer;
+}
+[type="checkbox"].visbox {
+  display: none;
+}
+[type="checkbox"].visbox:checked ~ .visbox-invis {
+  display: none;
+}
+[type="checkbox"].visbox:checked ~ .visbox-vis {
+  opacity: 10%;
+}
+[type="checkbox"].visbox:checked:hover ~ .visbox-vis {
+  opacity: 80%;
+}
+[type="checkbox"].visbox:not(:checked) ~ .visbox-vis {
+  display: none;
+}
+
+.guide-tableareas td.minimized {
+  opacity: 50%;
+  transform: scale(0.2);
 }
