@@ -24,7 +24,7 @@
   </div>
   <h4 class="container-lg text-center text-capitalize" id="compatibility">Browser Compatibility<br><br></h4>
   <p> It is recommended to use this app on a desktop/laptop instead of on mobile. </p> 
-  <p> The app has been tested on recent versions of Google Chrome, Safari and Microsoft Edge. 
+  <p> The app has been tested on recent versions of Google Chrome and and Microsoft Edge. 
     Internet Explorer is <em>not</em> fully compatible. Since this is a client-side app (It is run entirely by your browser,
     no data is sent back the server for processing!), some essential functions may not
     work if your browser hasn't been updated for a long while, or your device places many
@@ -68,53 +68,75 @@
   </ul>
   <h4 class="container-lg text-center text-capitalize" id="in-mc"><br><br>In Minecraft<br><br></h4>
   <ol class="spaced-list">
-    <li> Import and apply the behaviour pack to your world(s). <br> <strong class="text-muted">Note : </strong >Cheats &amp;
+    <li> 
+      Import and apply the behaviour pack to your world(s).<br> 
+      <strong class="text-black">Note : </strong >Cheats &amp;
       Operator permissions must be enabled to use functions. If you want to earn achievements in that world or keep cheats 
-      off, you'll have to place the blocks manually (You can look at the Survival Guide for some help).</li>
-    <li> Go to the location where the image is to be built, and open a Level 0 (smallest size) map there. Check that the
-      starting block you choose is aligned with the top-left (NW) corner of the map!<br>
+      off, you'll have to place the blocks manually (You can look at the Survival Guide for some help).
+    </li><li>
+      Go to the location where the image is to be built, and open a Level 0 (smallest size) map there.
+      <ul>
+        <li class="py-2">If you entered an Origin in Absolute Coordinates for this image, go to the same location.</li>
+        <li>Otherwise you can build the map art anywhere you like. Check that the starting block you choose is aligned
+           with the top-left (NW) corner of the map!</li>
+      </ul>
       This block will be the top left (North-West) corner of the entire image (see the green marker in the figure below), 
       which will extend South and East from here. <br> Height-wise, it will be built at the block in which you are standing (2D),
       or for the 3D palette, extending from this height till [<i>specified height range</i>] blocks upwards
       (Also check that this doesn't cross the world build height!).</li>
-    <li> <div class="row"><div class="col-md-8">If your image covers an area of <b><i>a</i></b>x<b><i>b</i></b>
-      maps, there will be <code>2 * <b><i>a</i></b> * <b><i>b</i></b></code> commands to be executed in order,
-      numbered <i>image_name</i>/<b>1</b>, <i>image_name</i>/<b>2</b>, ... so on.
-      Each of these builds a part of the image, covering a vertical half of one map, arranged in order as illustrated
-      in the figure alongside.<br>
-      <ul><li class="py-2"> By default, running each function will teleport you (the nearest player) to the corner of 
-        the next zone (marked by small black squares in the figure) after it executes, so that you "move along" as you're 
-        running the functions one-by-one. A glowstone block may also be placed there to identify the corner - you must be standing 
-        <em>exactly on top</em> of it before continuing with the next one.</li>
-        <li>If '<i class="text-monospace">Use same starting coordinates</i>' was enabled during pack creation, 
-          you will not be teleported and must run all the commands while staying at this same corner only (top-left of the whole image).</li>
-      </ul></div>
+    <li>
+      <div class="row">
+        <div class="col-md-8">
+          If your image covers an area of <b><i>a</i></b>x<b><i>b</i></b> maps, there will be 
+          <code>2 * <b><i>a</i></b> * <b><i>b</i></b></code> commands to be executed in order,
+          numbered <i>image_name</i>/<b>1</b>, <i>image_name</i>/<b>2</b>, ... so on.
+          Each of these builds a part of the image, covering a vertical half of one map (64x128), arranged in order as illustrated
+          in the figure alongside.<br>
+          <ul>
+            <li class="py-2"> If the '<i class="text-monospace">Teleport nearest player</i>' option was enabled (by default), 
+              running each function will teleport you (the nearest player) to the corner of the next zone 
+              (marked by small black squares in the figure) after it executes, so that you "move along" as you're 
+              running the functions one-by-one. A glowstone block may also be placed under you to identify the corner
+               - you must be standing <em>exactly on top</em> of it.
+            </li><li>If you entered an Origin in Absolute Coordinates for this image, it is okay to move around in between
+              and the block you are standing in while running each command doesn't matter. However if you didn't pre-specify coordinates,
+              the zone will be built relative to where you are standing, so it is crucial that you run the next commands while staying at
+              the correct/teleported location.
+            </li>
+          </ul>
+        </div>
       <div class="col-md-4"><figure class="figure">
         <img src="images/layout_big.png" class="img-fluid figure-img" alt="Example layout diagram">
         <figcaption class="figure-caption">Example arrangement for an art covering 2x2 maps.</figcaption></figure></div>
-      </div></li>
-    <li>The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
-    For example, if your image's name was <i>wallpaper</i>, and its size was 2x1 maps, you would need to run
+      </div>
+    </li><li>
+      The syntax of the function command is <kbd>/function&nbsp;<i>image_name</i>/<i>number</i></kbd>.<br>
+      For example, if your image's name was <i>wallpaper</i>, and its size was 2x1 maps, you would need to run
       the commands <pre class="pl-4 mb-0"><code>/function wallpaper/1
 /function wallpaper/2
 /function wallpaper/3
 /function wallpaper/4</code></pre><br>
-    <strong class="text-black">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
-      in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;</li>
-    <li><span class="lead" id="in-mc-done">You're Done!</span><p> Once you've constructed the image, map the entire area covered by it
-      and build a map wall for your pixel art!<br> It's also a good idea to <a rel="nofollow noreferrer"
-      href="https://minecraft.wiki/w/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
-      from updating if some other structures are built above them, or if the colour palette changes in future updates.</p>
-      <br/><p>
+      <strong class="text-black">Note :</strong> You may need to <em>restart Minecraft</em> and then run the <kbd>/reload</kbd> command first,
+      in case they don't appear in the commands screen or minecraft hasn't recognised the functions <br> &nbsp;
+    </li><li>
+      <span class="lead" id="in-mc-done">You're Done!</span>
+      <p> Once you've constructed the image, map the entire area covered by it and build a map wall for your pixel art!
+        <br> It's also a good idea to <a rel="nofollow noreferrer" href="https://minecraft.wiki/w/Cartography_Table#Usage" >lock the maps</a> with glass panes to prevent them
+          from updating if some other structures are built above them, or if the colour palette changes in future updates.
+        <br/>If you included more than 1 image in the same pack, repeat steps 2-4 for each.
+        <br/>
+      </p><p>
         <strong class="text-black">Note :</strong> If you see that many blocks are missing, especially in a zig-zag like pattern
         along chunk borders near the bottom half of each zone (see <a href="https://github.com/gd-codes/mc-pixelart-maker/issues/5" target="_blank">
           Issue#5</a> on GitHub), it is probably due to your simulation distance being too low. You can try the following fixes :
         <ul>
-          <li>Ensure that the '<i class="text-monospace">Use same starting coordinates</i>' option is disabled. Re-generate the add on if you had used it.</li>
-          <li>Increase your simulation distance further (at least equal to or more than 10 chunks). Although the upper limit allowed by Minecraft is device-depenedent.</li>
+          <li>Enable the '<i class="text-monospace">Use only structures instead of setblock</i>' command option in the addon generator options if it wasn't checked. 
+            For structures to finish loading, you may need to move around the map after running the commands to bring all chunks briefly into simulation distance, 
+            though you don't need to run any function again.</li>
+          <li>Increase your simulation distance further (at least ≥ 10 chunks). Although the upper limit allowed by Minecraft is device-depenedent.</li>
           <li>Ask a friend or other player to join your world and stand near that opposite corner to keep those chunks loaded while you run the commands</li>
-          <li>If the '<i class="text-monospace">Use only structures</i>' command option in the addon generator options wasn't checked, enable it and try again. You may
-            need to move around the map to bring all chunks briefly into simulation distance for the structure to complete loading.</li>
+          <li>Only if you had pre-specified an Origin in Absolute Coordinates for the image, you can yourself move to the unloaded corner and run the same
+            function again to fill it in.</li>
         </ul>
       </p>
     </li>

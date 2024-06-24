@@ -68,18 +68,18 @@
             <input type="checkbox" id="keepBlocks" class="form-check-input" name="keepBlocksOption" value="keep"/>
             <label for="keepBlocks" class="form-check-label"> Replace only air blocks </label> 
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" aria-label="Explanation popup"
-            title="Will not overwrite existing structures in the area that the commands are being executed, if there are any.
-            This may result in &quot;gaps&quot in the image." data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
+            title="If enabled, will not overwrite existing structures in the area that the commands are being executed -
+            this may result in &quot;gaps&quot; in the image. Otherwise, the entire build area is filled with air first."
+            data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}">
            </a>
           </div>
           <div class="form-check">
-            <input type="checkbox" id="useLinkedPos" class="form-check-input" name="linkedPosOption" value="link"/>
-            <label for="useLinkedPos" class="form-check-label"> Use the same starting coordinate for all functions </label>
+            <input type="checkbox" id="doTeleport" class="form-check-input" name="teleportOption" value="tp"/>
+            <label for="doTeleport" class="form-check-label"> Teleport nearest player to consecutive zones </label>
             <a data-toggle="tooltip" data-placement="top" class="text-info add-questionmark" data-html="true" 
-            title="The map will contain atleast 2 commands to be run in sequence to build it.
-            If this option is enabled, you can run all of them from the same location, without moving to the next region
-            each time (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual</a>). But placing 
-            blocks far away outside loaded chunks <i>may</i> fail, which is why this is unchecked by default." 
+            title="The map will contain atleast 2 functions to be run in sequence to build it, at different locations/zones
+            (Explained in the <a href=&quot;manual.html&quot; target=&quot;_blank&quot;>manual page</a>).
+            If this option is enabled, after running each command you will automatically be teleported to the position for the next." 
             data-delay="{&quot;show&quot;:200, &quot;hide&quot;:1500}" aria-label="Explanation popup"></a>
           </div>
           <div class="form-check">

@@ -108,6 +108,7 @@ function setup() {
 
   // Setup default behaviour pack generation settings
   $('#buildWithStructures').prop('checked', true);
+  $('#doTeleport').prop('checked', true);
 
   // Prevent links in PWA window opening in browser
   const isPWA = window.matchMedia('(display-mode: standalone)');
@@ -797,12 +798,11 @@ function writeBhvPack(images, uuids) {
   pack.file('pack_icon.png', icon.split(',')[1], {base64:true});
   // Get values of pack settings
   var keep = Boolean($("#keepBlocks:checked").length > 0);
-  var link = Boolean($("#useLinkedPos:checked").length > 0);
+  var teleport = Boolean($("#doTeleport:checked").length > 0);
   var strucs = Boolean($("#buildWithStructures:checked").length > 0);
   // Write the functions for each image - see `functionWriter.js`
   var fnfolder = pack.folder('functions');
   for (let o of images) {
-    let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
     let hlim = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
     let shm = PictureData[o.uid]['shadeMap'];
     var absCoords = $("#absCoordsSwitch_"+o.uid+":checked").length > 0;
@@ -810,8 +810,8 @@ function writeBhvPack(images, uuids) {
     var originY = absCoords ? Number($("#originInputY_"+o.uid).val()) : 0;
     var originZ = absCoords ? Number($("#originInputZ_"+o.uid).val()) : 0;
     let fnlist = writeCommands(
-      name=o.name, imobj=o.pic, palettesize=palette.length, height=Number(hlim), 
-      keep=keep, linkpos=link, strucs=strucs, shademap=shm, 
+      name=o.name, imobj=o.pic, height=Number(hlim), 
+      keep=keep, teleport=teleport, strucs=strucs, shademap=shm, 
       absCoords=absCoords, origin={X:originX, Y:originY, Z:originZ});
     for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
@@ -872,6 +872,8 @@ function clearBehaviourPack() {
   $("#downloadPackBtn").off("click");
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
+  $('#buildWithStructures').prop('checked', true);
+  $('#doTeleport').prop('checked', true);
 }
 
 
