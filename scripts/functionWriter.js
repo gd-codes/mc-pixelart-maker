@@ -140,7 +140,12 @@ function getSurvivalGuideTableData(uid) {
   } 
   var cindexns = [];
   for (let ct of pal) {
-    cindexns.push(ColourTokens.indexOf(ct));
+    let index = ColourTokens.indexOf(ct);
+    if (index === -1) {
+      alert("Unexpected Error\n\nSome colours in the palette are invalid (Is this image data restored from an older session?). Please re-upload the image and try in a new form.");
+      throw new Error(`Missing colour ${ct}`);
+    }
+    cindexns.push(index);
   }
 
   return { uid, 

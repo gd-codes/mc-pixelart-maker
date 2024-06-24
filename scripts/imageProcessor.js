@@ -41,6 +41,9 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
         p.push(darkPixel(clr.rgb)); 
         p.push(lightPixel(clr.rgb));
       }
+    } else {
+      alert("Unexpected Error\n\nSome colours in the palette are invalid (Is this image data restored from an older session?). Please re-upload the image and try in a new form.");
+      throw new Error(`Missing colour ${cn}`);
     }
   }
   // Resize the image to fit number of pixels in minceraft maps, using browser canvas

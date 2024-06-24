@@ -520,8 +520,8 @@ function submitImgFormHandler(uid, event) {
   // Read the uploaded image data from stored base64 URI, and disable the form and begin analysis
   var image = new Image();
   image.onload = function() {
-    var analysis = analyseImage(uid, image, area, palette, d3, dither);
-    if (!analysis) {
+    try {
+      analyseImage(uid, image, area, palette, d3, dither);
       $("form#imageForm_"+uid+" :input").prop('disabled', true);
       $("form#imageForm_"+uid+" :radio").prop('disabled', true);
       $("form#imageForm_"+uid+" :checkbox").prop('disabled', true);
@@ -534,10 +534,8 @@ function submitImgFormHandler(uid, event) {
           makeTabLabelContent(uid)
       );
       deleteSurvivalGuide(uid, true);
-
-    } else {
-      alert("Error\n\nAn unknown error occurred while processing");
-      console.error("Error processing image "+uid);
+    } catch (error) {
+      console.error(error);
     }
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
@@ -960,8 +958,13 @@ function createSurvivalGuide(uid, area) {
   $("#survGuidePlaceholderText").addClass('d-none');
   
   // Add the html string to DOM
-  $("#guideTab_"+uid).html(
-    ejs.render(EJStemplates.survivalGuide, getSurvivalGuideTableData(uid)));
+  try {
+    $("#guideTab_"+uid).html(
+      ejs.render(EJStemplates.survivalGuide, getSurvivalGuideTableData(uid)));
+  } catch (err) {
+    console.error(err);
+    return;
+  }
 
   $(`#guidePageBar_${uid} li.page-item`).click(function() {
     switchActiveGuidePage(this);
