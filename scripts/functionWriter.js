@@ -96,11 +96,16 @@ function getSurvivalGuideTableData(uid) {
     return;
   }
 
+  var absCoords = $("#absCoordsSwitch_"+uid+":checked").length > 0;
+  var originX = absCoords ? Number($("#originInputX_"+uid).val()) : 0;
+  var originY = absCoords ? Number($("#originInputY_"+uid).val()) : 0;
+  var originZ = absCoords ? Number($("#originInputZ_"+uid).val()) : 0;
+
   var zone_origins=[], x0, z0, yMap; 
     //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (let z0=0; z0<image.height; z0+=128) {
     for (let x0=0; x0<image.width; x0+=64) {
-      zone_origins.push([x0,z0]);
+      zone_origins.push([originX+x0, originZ+z0]);
     }
   }
   var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
@@ -124,9 +129,9 @@ function getSurvivalGuideTableData(uid) {
     for (let z=0; z<128; z++) {
       tabledatas[zone][z] = new Array(64);
       for (let x=0; x<64; x++) {
-        pix = getPixelAt(x+x0,z+z0,image);
+        pix = getPixelAt(x+x0-originX, z+z0-originZ, image);
         code = Math.floor(indexOfArray(pix, ColourList) / 3);
-        y = (ymax <= 1) ? 0 : yMap[x+x0][z+z0];
+        y = (ymax <= 1) ? originY : yMap[x+x0-originX][z+z0-originZ]+originY;
         tabledatas[zone][z][x] = [code, y];
         blockcounts[zone+1][code] += 1;
         blockcounts[0][code] += 1;
@@ -138,12 +143,14 @@ function getSurvivalGuideTableData(uid) {
     cindexns.push(ColourTokens.indexOf(ct));
   }
 
-  return { uid: uid, 
+  return { uid, 
     is3D: (ymax > 1), 
     numzones: zone_origins.length, 
-    tabledatas:tabledatas, 
-    blockcounts:blockcounts, 
-    cindexns:cindexns
+    tabledatas, 
+    blockcounts, 
+    cindexns,
+    absCoords,
+    zone_origins,
   };
 }
 
@@ -152,15 +159,16 @@ function getSurvivalGuideTableData(uid) {
  * as a series of function files each corresponding to a zone of 64x128 pixels from the image.
  * @param {string} name - Image name
  * @param {ImageData} imobj - Processed image data containing its dimensions.
- * @param {Number} palettesize - Number of colours used
  * @param {Number} height - Height limit (> 1) for a 3D map, otherwise 0 for a non-3D map
  * @param {Boolean} keep - Whether to keep existing blocks or replace all
- * @param {Boolean} linkpos - Whether to link command coordinates across functions
+ * @param {Boolean} teleport - Whether to tp player across functions
  * @param {Boolean} strucs - Whether to place blocks using the structure command, else setblock
  * @param {Array<Array<Number>>} shademap - Pixel light/dark variation data to pass to ``
- * @returns Array<string> of the minecraft commands to be saved in function files.
+ * @param {Boolean} absCoords - Whether absolute coordinates are used for this image
+ * @param {{X:Number, Y:Number, Z:Number}} origin - Map Origin Coordinates, all set to 0 if `absCoords` is false
+ * @returns {Array<string>} of the minecraft commands to be saved in function files.
  */
-function writeCommands(name, imobj, palettesize, height, keep, linkpos, strucs, shademap) {
+function writeCommands(name, imobj, height, keep, teleport, strucs, shademap, absCoords, origin) {
   var zone_origins=[], x0, z0, i, fnlist=[], yMap, ymax=1;
   //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (z0=0; z0<imobj.height; z0+=128) {
@@ -173,44 +181,57 @@ function writeCommands(name, imobj, palettesize, height, keep, linkpos, strucs, 
     yMap = findYMap(imobj, ymax, shademap).result; 
   }
   for (i=0; i<zone_origins.length; i++) {
-    var fun="", x, y, z, xloop, zloop, pix, code, replMode;
+    var fun="", pix, code, replMode;
     x0 = zone_origins[i][0]; z0 = zone_origins[i][1];
     fun += "say Running commands ".concat((i+1), "/", zone_origins.length, 
-            " of function group ", name, " (x=", x0, "-", x0+63, ", z=",
-            z0, "-", z0+127, ")\nsay Common coords : ", linkpos,
-            " | Do not destroy : ", keep, " | Structures : ", strucs,
-            " | Colours : ", palettesize, " | Height : ", ymax, "\n");
+            " of function group ", name, absCoords?" at ":" at ~",
+            "(x=", origin.X + x0, ":",  origin.X + x0 + 63 , 
+            ", y=", origin.Y, ":", origin.Y+ymax, 
+            ", z=", origin.Z + z0, ":", origin.Z + z0 + 127, 
+            ")", keep?"":" (Overwriting)", strucs?" (Using structures)":"", "\n");
     /* If positions are linked, coordinates for each zone have same origin (image's top left)
     Else iterate from (0,0) each time - user will have to shift by x=64/z=128 for each zone*/
-    xloop = (linkpos)? x0 : 0;
-    zloop = (linkpos)? z0 : 0;
+    let xloop = (absCoords)? x0 : 0;
+    let zloop = (absCoords)? z0 : 0;
     replMode = (keep)? " keep\n" : "\n";
     if (!keep) { //Replace any existing blocks with air
       for (var j=0; j<=ymax; j++) {
-        fun+="fill ~".concat(xloop, " ~", j, " ~", zloop, " ~", xloop+63, 
-                             " ~", j, " ~", zloop+127, " air [] replace\n");
-      }
-    }
-    for (x=xloop; x < xloop+64; x++) {
-      for (z=zloop; z < zloop+128; z++) {
-        pix = (linkpos)? getPixelAt(x,z,imobj) : getPixelAt(x+x0,z+z0,imobj);
-        code = ColourTokens[Math.floor(indexOfArray(pix, ColourList) / 3)];
-        y = (height <= 1)? 0 : ((linkpos)? yMap[x][z] : yMap[x+x0][z+z0]);
-        if (strucs) {
-          // Load block as structure
-          fun += ((keep)?`execute if block ~${x} ~${y} ~${z} air run `:"") + 
-              `structure load mapart:${code} ~${x} ~${y} ~${z}\n`;
+        if (absCoords) {
+          fun += "fill ".concat(origin.X+xloop, " ", origin.Y+j, " ", origin.Z+zloop,
+            " ", origin.X+xloop+63, " ", origin.Y+j, " ", origin.Z+zloop+127, " air [] replace\n");
         } else {
-          // Regular placement
-          fun += `setblock ~${x} ~${y} ~${z} ${Colours.get(code).id}${replMode}`;
+          fun += "fill ~".concat(xloop, " ~", j, " ~", zloop, " ~", xloop+63, 
+                               " ~", j, " ~", zloop+127, " air [] replace\n");
         }
       }
     }
-    if (!linkpos && i<zone_origins.length-1) { //If not linked and there are more zones,
+    for (let x=xloop; x < xloop+64; x++) {
+      for (let z=zloop; z < zloop+128; z++) {
+        pix = (absCoords)? getPixelAt(x,z,imobj) : getPixelAt(x+x0,z+z0,imobj);
+        code = ColourTokens[Math.floor(indexOfArray(pix, ColourList) / 3)];
+        let y = (height <= 1)? 0 : ((absCoords)? yMap[x][z] : yMap[x+x0][z+z0]);
+        let pos = (absCoords)? `${origin.X+x} ${origin.Y+y} ${origin.Z+z}` : `~${x} ~${y} ~${z}`;
+        if (strucs) {
+          // Load block as structure
+          fun += ((keep)?`execute if block ${pos} air run `:"") + 
+              `structure load mapart:${code} ${pos}\n`;
+        } else {
+          // Regular placement
+          fun += `setblock ${pos} ${Colours.get(code).id}${replMode}`;
+        }
+      }
+    }
+    if (teleport && i<zone_origins.length-1) { //If not linked and there are more zones,
       var nextzone = zone_origins[i+1];        //Shift the user to the origin for next zone
-      //Marker block
-      fun += "structure load mapart:glowstone ~".concat(nextzone[0]-x0, " ~-1 ~", nextzone[1]-z0, "\n");
-      fun += "teleport @p ~".concat(nextzone[0]-x0, " ~ ~", nextzone[1]-z0, "\n")
+      //Marker block - always as structure
+      if (absCoords) {
+        fun += "structure load mapart:glowstone ".concat(
+          nextzone[0]+origin.X, " ", origin.Y-1, " ", nextzone[1]+origin.Z, "\n");
+        fun += "teleport @p ".concat(nextzone[0]+origin.X, " ", origin.Y, " ", nextzone[1]+origin.Z, "\n")
+      } else {
+        fun += "structure load mapart:glowstone ~".concat(nextzone[0]-x0, " ~-1 ~", nextzone[1]-z0, "\n");
+        fun += "teleport @p ~".concat(nextzone[0]-x0, " ~ ~", nextzone[1]-z0, "\n")
+      }
     }
     fun = fun.replace(/~0/gm, "~");
     fnlist.push(fun); //New function for each zone

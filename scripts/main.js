@@ -49,7 +49,6 @@ function setup() {
   Dynamically generated image forms (green plus button to add extra images) have a random 6 character suffix
   in HTML ids of all DOM elements within the form that have an `id` attribute. 
   This is refered to as `uid` in most functions that use it here in JS.
-  The uid of the one form already on the page when the website is opened (index.html) is "000001"
    */
 
   $("#addNewImgBtn").click(newImageUpload);
@@ -109,6 +108,7 @@ function setup() {
 
   // Setup default behaviour pack generation settings
   $('#buildWithStructures').prop('checked', true);
+  $('#doTeleport').prop('checked', true);
 
   // Prevent links in PWA window opening in browser
   const isPWA = window.matchMedia('(display-mode: standalone)');
@@ -158,7 +158,7 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   $("#tabContainer").append(ejs.render(EJStemplates.imageForm, {uid, active}));
   
   // Perform all callback bindings of UI elements
-  $("#imgInput_"+uid).on('change', function(event) {
+  $("#imgInput_"+uid).on('change input', function(event) {
     markDirty(uid);
     // enable mandatory flag; image was marked optional if the form was restored from local storage
     $("#imgInput_" + uid).attr("required", true);
@@ -181,7 +181,12 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     markDirty(uid);
     displayPaletteOptions(uid);
   });
-  $("#heightInput_"+uid).on('change', function() {
+  $("#absCoordsOption_"+uid).on('click', function() {
+    markDirty(uid);
+    displayCoordinateOptions(uid);
+  });
+  $(`#heightInput_${uid}, #originInputX_${uid}, #originInputY_${uid}, #originInputZ_${uid}`
+    ).on('change', function() {
     markDirty(uid);
   });
   $("#ditherOption_"+uid).on('click', function() {
@@ -201,6 +206,14 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   });
   $("#saveFormDataBtn_"+uid).click(function() {
     saveImgForm(uid);
+  });
+
+  // Clear custom messages set by `postValidateImgForm()`
+  $(`#fnNameInput_${uid}, #heightInput_${uid}`).on('change keyup textInput paste input', function() {
+    this.setCustomValidity(''); 
+  });
+  $("#originInputY_"+uid).on('change keyup textInput paste input', function() {
+    $(`#heightInput_${uid}`)[0].setCustomValidity(''); 
   });
 
   $("#materialOptsDisplay_"+uid).data("selected", default_palette);
@@ -356,6 +369,20 @@ function displayPaletteOptions(uid) {
 }
 
 /**
+ * Show or hide the extra fields in the image upload form for Absolute Coordinate Origin input.
+ * @param {String} uid - Identifies the target form.
+ */
+function displayCoordinateOptions(uid) {
+  if ($("#absCoordsSwitch_"+uid).prop('checked')) {
+    $("#extraOriginOption_"+uid).collapse('show');
+    $(`#originInputX_${uid}, #originInputY_${uid}, #originInputZ_${uid}`).attr("required", true);
+  } else {
+    $("#extraOriginOption_"+uid).collapse('hide');
+    $(`#originInputX_${uid}, #originInputY_${uid}, #originInputZ_${uid}`).attr("required", false);
+  }
+}
+
+/**
  * On opening the globally shared colour palette selection modal from a specific image form,
  * set the selection state of the checkboxes to match the stored palette values for the image.
  * Re-bind the callback to save the new palette to the same image form's data.
@@ -402,26 +429,53 @@ function refreshColourDisplay(uid) {
 }
 
 /**
- * Perform client-side validation of a completed image upload form,
- * disable input fields, process the image data in it and also reset
- * the linked survival guide, if any.
+ * Perform complex client-side validation checks in a completed image upload form
+ * in addition to browser automatic validation.
+ * @param {String} uid - Identifies the target form.
+ * @returns {Array<HTMLInputElement>} Elements that failed extra validation checks 
+ */
+function postValidateImgForm(uid) {
+  // Validate no duplicate/conflicting names in multiple images
+  const nameinp = $("#fnNameInput_"+uid)[0];
+  const name = nameinp.value;
+  for (var x of $("input[id^=fnName]")) {
+    var otherid = $(x).attr('id').slice(-6);
+    if ((otherid!=uid) && 
+        ($(x).val().toUpperCase() == name.toUpperCase()) && 
+        ($(x)[0].hasAttribute("disabled"))) {
+      nameinp.setCustomValidity(`The function name "${name}" is currently in use for another image`);
+      nameinp.reportValidity();
+      return [nameinp];
+    }
+  }
+  nameinp.setCustomValidity('');
+  // Validate height with abs coordinates
+  if ($("#absCoordsSwitch_"+uid).prop('checked') && $("#3dSwitch_"+uid).prop('checked')) {
+    const hinp = $("#heightInput_"+uid)[0];
+    const hlim = Number(hinp.value);
+    const y = Number($("#originInputY_"+uid).val());
+    if (y + hlim > 320) {
+      hinp.setCustomValidity(`Height crosses the overworld build limit based on your specified origin Y-coordinate (${y} + ${hlim} > 320)`);
+      hinp.reportValidity();
+      return [hinp];
+    }
+    hinp.setCustomValidity('');
+  }
+  return [];
+}
+
+/**
+ * Disable input fields on submission, process the image data in the form and
+ * reset the linked survival guide, if any.
  * Also prevents the form submission event reloading the page.
  * @param {String} uid - Identifies the target form.
  * @param {Event} event - Form submit event
  */
 function submitImgFormHandler(uid, event) {
   event.preventDefault();
-  var name = $("#fnNameInput_"+uid).val();
-  // Validate no duplicate/conflicting names in multiple images
-  for (var x of $("input[id^=fnName]")) {
-    var otherid = $(x).attr('id').slice(-6);
-    if ((otherid!=uid) && 
-        ($(x).val().toUpperCase() == name.toUpperCase()) && 
-        ($(x)[0].hasAttribute("disabled"))) {
-      alert("Error \n\nYou have already used the function name \""+name+
-           "\" for another image.\nPlease enter a new unique name !");
-      return;
-    }
+  let invalids = postValidateImgForm(uid);
+  if (invalids.length > 0) {
+    return;
   }
   // Collect all data from form fields
   $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
@@ -505,10 +559,14 @@ function saveImgForm(uid) {
   var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
   var maxHeight = $("#heightInput_" + uid).val() | 0;
   var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
+  var originX = Number($("#originInputX_"+uid).val());
+  var originY = Number($("#originInputY_"+uid).val());
+  var originZ = Number($("#originInputZ_"+uid).val());
+  var useAbsCoords = Boolean($("#absCoordsSwitch_"+uid+":checked").length > 0);
 
   var success = saveFormData(uid, {
     PictureDataForUid: PictureData[uid], fnName: name, configuration: {
-      area, palette, d3, maxHeight, dither
+      area, palette, d3, maxHeight, dither, useAbsCoords, origin: {X:originX, Y:originY, Z:originZ}
     }
   });
   if (success) {
@@ -544,7 +602,9 @@ function restoreFormData(uid, {
     palette = "",
     d3 = false,
     maxHeight = undefined,
-    dither = true
+    dither = true,
+    useAbsCoords = false,
+    origin = {}
   }
 } = {}) {
 
@@ -573,8 +633,14 @@ function restoreFormData(uid, {
   }
   $("#ditherSwitch_" + uid).prop('checked', dither);
 
+  $("#absCoordsSwitch_" + uid).prop('checked', useAbsCoords);
+  if (origin.X) $("#originInputX_" + uid).val(origin.X);
+  if (origin.Y) $("#originInputY_" + uid).val(origin.Y);
+  if (origin.Z) $("#originInputZ_" + uid).val(origin.Z);
+
   refreshColourDisplay(uid);
   displayPaletteOptions(uid);
+  displayCoordinateOptions(uid);
 
   markDirty(uid, false);
 }
@@ -732,15 +798,21 @@ function writeBhvPack(images, uuids) {
   pack.file('pack_icon.png', icon.split(',')[1], {base64:true});
   // Get values of pack settings
   var keep = Boolean($("#keepBlocks:checked").length > 0);
-  var link = Boolean($("#useLinkedPos:checked").length > 0);
+  var teleport = Boolean($("#doTeleport:checked").length > 0);
   var strucs = Boolean($("#buildWithStructures:checked").length > 0);
   // Write the functions for each image - see `functionWriter.js`
   var fnfolder = pack.folder('functions');
   for (let o of images) {
-    let palette = $("#materialOptsDisplay_"+o.uid).data("selected").split(" ");
-    let extrainfo = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
+    let hlim = ($("#3dSwitch_"+o.uid+":checked").length > 0)? $("#heightInput_"+o.uid).val() : 0;
     let shm = PictureData[o.uid]['shadeMap'];
-    let fnlist = writeCommands(o.name, o.pic, palette.length, extrainfo, keep, link, strucs, shm);
+    var absCoords = $("#absCoordsSwitch_"+o.uid+":checked").length > 0;
+    var originX = absCoords ? Number($("#originInputX_"+o.uid).val()) : 0;
+    var originY = absCoords ? Number($("#originInputY_"+o.uid).val()) : 0;
+    var originZ = absCoords ? Number($("#originInputZ_"+o.uid).val()) : 0;
+    let fnlist = writeCommands(
+      name=o.name, imobj=o.pic, height=Number(hlim), 
+      keep=keep, teleport=teleport, strucs=strucs, shademap=shm, 
+      absCoords=absCoords, origin={X:originX, Y:originY, Z:originZ});
     for (let f=0; f<fnlist.length; f++) {
       fnfolder.file(o.name+"/"+(f+1)+".mcfunction", fnlist[f]);
     }
@@ -800,6 +872,8 @@ function clearBehaviourPack() {
   $("#downloadPackBtn").off("click");
   $("#altDownloadPack").off("click");
   $("#packForm")[0].reset();
+  $('#buildWithStructures').prop('checked', true);
+  $('#doTeleport').prop('checked', true);
 }
 
 

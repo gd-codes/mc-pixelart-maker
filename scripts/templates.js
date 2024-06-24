@@ -181,8 +181,8 @@ const EJStemplates = {
   <div class="form-group row collapse" id="extraHeightOption_<%=uid%>">
     <label for="heightInput_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Height</label>
     <div class="col-sm-10">
-    <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 5 and 380 blocks:</small>
-    <input type="number" class="form-control" id="heightInput_<%=uid%>" min="5" max="380" 
+    <small class="form-text text-muted pb-sm-1">Height range of the 3D structure, between 3 and 380 blocks:</small>
+    <input type="number" class="form-control" id="heightInput_<%=uid%>" min="3" max="380" value="128"
         placeholder="Enter a height range (recommended - at least 50 blocks)">
     </div>
   </div>
@@ -199,6 +199,34 @@ const EJStemplates = {
     class="text-info"><%-SVGicons.questionmark%></a>
     </div></div>
   </div>
+  <div class="form-group row">
+    <label for="absCoordsOption_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Coordinates</label>
+    <div class="col-sm-10 pt-sm-2" id="absCoordsOption_<%=uid%>"><div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="absCoordsSwitch_<%=uid%>"/>
+    <label for="absCoordsSwitch_<%=uid%>" class="custom-control-label">Build this map art at a pre-determined location in your world
+    </label> &nbsp;
+    <a data-toggle="tooltip" data-placement="top" data-html="true" title="If enabled, fix the absolute positions of all blocks
+      in the Add-on commands and Survival guide. If disabled, relative (~) positioning will be used so that you can later
+      build wherever you like." data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" class="text-info">
+      <%-SVGicons.questionmark%>
+    </a>
+    </div></div>
+  </div>
+  <div class="form-group row collapse" id="extraOriginOption_<%=uid%>">
+    <label for="originInput_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Origin</label>
+    <div class="col-sm-10">
+      <small class="form-text text-muted pb-sm-1">Absolute coordinates for the top-left[-base] (lower NW) corner of the map art:</small>
+      <div class="input-group" id="originInput_<%=uid%>">
+        <div class="input-group-prepend">
+          <div class="input-group-text">XYZ</div>
+        </div>
+        <input type="number" class="form-control" id="originInputX_<%=uid%>" value="-64" step="128" placeholder="X (left edge)">
+        <input type="number" class="form-control" id="originInputY_<%=uid%>" value="63" step="1" min="-64" max="319" placeholder="Y (lower base)">
+        <input type="number" class="form-control" id="originInputZ_<%=uid%>" value="-64" step="128" placeholder="Z (top edge)">
+      </div>
+      <small class="form-text text-muted pb-sm-1"><u>Important</u> : X and Z values of map boundaries are always 64 less than an integer multiple of 128</small>
+    </div>
+  </div>
   <div class="form-group d-flex justify-content-center" id="formActionsPreSubmit_<%=uid%>">
     <button class="btn btn-outline-danger mx-md-2" id="resetImageFormBtn_<%=uid%>" type="button">Reset</button>
     <button class="btn btn-primary mx-md-2" id="processImageBtn_<%=uid%>" type="submit">Process Image &nbsp; &nbsp; <%-SVGicons.goarrow%></button>
@@ -206,15 +234,15 @@ const EJStemplates = {
   </form>
   <div class="row d-none justify-content-between" id="formActionsPostSubmit_<%=uid%>">
     <div></div>
-    <div class="d-inline">
-      <span class="text-right mr-md-1"> View Images </span>
-      <div class="btn-group">
+    <div class="mx-auto mx-md-0">
+      <span class="d-block d-sm-inline text-center text-md-right mx-auto mx-md-1 mb-2"> View Images </span>
+      <div class="btn-group mb-2">
       <button class="btn btn-outline-info" id="viewOrigImgBtn_<%=uid%>">Original</button>
       <button class="btn btn-outline-info" id="viewResizedImgBtn_<%=uid%>">Resized</button>
       <button class="btn btn-info font-weight-bold" id="viewFinalImgBtn_<%=uid%>">Converted</button>
       </div>
     </div>
-    <div>
+    <div class="mx-auto mx-md-0">
       <button class="btn btn-info" id="saveFormDataBtn_<%=uid%>"><%-SVGicons.save%> Save
         <a data-toggle="tooltip" data-placement="top" data-html="true" title="Save to the browser's local storage.
           No data is sent to the server. This form will be restored the next time you visit this site."
@@ -233,6 +261,8 @@ const EJStemplates = {
    * @param {Array<Array<Array<[Number,Number]>>>} tabledatas
    * @param {Array<Array<Number>>} blockcounts
    * @param {Array<Number>} cindexns
+   * @param {Boolean} absCoords
+   * @param {Array<Array<Number>>} zone_origins
    * @see getSurvivalGuideTableData()
    */
   survivalGuide: `
@@ -269,11 +299,13 @@ const EJStemplates = {
     <p class="alert-heading"><%-SVGicons.infosquare%></p>
     <p>For convenience, each artwork is divided into a number of zones 
       (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank"> the commands</a> are), 
-      2 halves per map.<br/>Coordinates in each zone are specified relative to its top-left (NW) corner.
+      2 halves per map.<br/>
+      Coordinates in each zone are 
+      <% if (absCoords) { %>absolute<% } else { %>specified relative to its top-left (NW) corner<% } %>.
     </p>
     <p>Click on any of the squares in the table to view a popup with its block type and coordinates.
       <br/>You can also use the <code>Tab</code> key to navigate row-by-row or column-by-column,
-      or <code>&larr;&uarr;&darr;&rarr;</code> arrow keys.
+      or <code>WASD</code> or <code>&larr;&uarr;&darr;&rarr;</code> arrow keys.
     </p>
     <% if (is3D) { %>
       <p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to
@@ -324,12 +356,18 @@ const EJStemplates = {
           <% for( let z = 0; z < 128; z++ ) { %>
             <tr>
             <% for( let x = 0; x < 64; x++ ) { %>
+              <% let zo = zone_origins[zone]; %>
               <% let code = tabledatas[zone][z][x][0]; %>
               <% let y = tabledatas[zone][z][x][1]; %>
               <% let pixnorm = ColourList[3*code]; %>
               <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
                 data-placement="top" title="<%=Colours.get(MaterialCodes[code]).name%>" data-html="true"
-                data-content="Position : &lt;b&gt;~<%=x%> ~<%=y%> ~<%=z%>&lt;/b&gt;" data-code="<%=MaterialCodes[code]%>">
+                data-code="<%=MaterialCodes[code]%>" data-content="Position: &lt;b&gt;
+                  <% if (absCoords){ %>
+                    <%=zo[0]+x%>&nbsp;&nbsp;<%=y%>&nbsp;&nbsp;<%=zo[1]+z%>
+                  <% } else { %>
+                    ~<%=x%>&nbsp;~<%=y%>&nbsp;~<%=z%>
+                  <% } %>&lt;/b&gt;">
               </td>
             <% } %>
             </tr>
