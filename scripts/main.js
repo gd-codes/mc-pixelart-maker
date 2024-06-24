@@ -155,7 +155,8 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     {uid: uid, content: makeTabLabelContent(uid, fnName)}));
   
   $("#tempErrDialog").remove();
-  $("#tabContainer").append(ejs.render(EJStemplates.imageForm, {uid, active}));
+  $("#tabContainer").append(ejs.render(EJStemplates.imageForm, 
+    {uid, active, emptyFileInput:EJStemplates.emptyFileInput}));
   
   // Perform all callback bindings of UI elements
   $("#imgInput_"+uid).on('change input', function(event) {
@@ -238,19 +239,20 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
   }
 
   refreshColourDisplay(uid);
-  handleDragDropEvents(uid);
+  handleDragDropPasteEvents(uid);
 }
 
 /**
  * Respond to file drag/drop attempts over an image form.
  * @param {String} uid - Identifies the image form
  */
-function handleDragDropEvents(uid) {
+function handleDragDropPasteEvents(uid) {
   // Counter helps manage repeatedly fired drag enter+leave events
   var counter = 0;
   // get fired when someone drops image in drop zone
   $(`#dddisp_${uid}`).on('drop', (event) => {
-    imgDropHandler(event.originalEvent, uid);
+    event.preventDefault();
+    imgDropHandler(event.originalEvent.dataTransfer, uid);
     counter--;
     $(`#dddisp_${uid}`).removeClass('d-flex');
     $(`#dddisp_${uid}`).addClass('d-none');
@@ -286,17 +288,25 @@ function handleDragDropEvents(uid) {
   $(`#tabPane_${uid}`).on('drop', (event) => {
     event.preventDefault();
   });
+
+  // fired on Clipboard paste
+  $(`#tabPane_${uid}`).on('paste', (event) => {
+    event.preventDefault();
+    if ($(`#imgInput_${uid}`).attr('disabled') === undefined) {
+      const dataTransfer = event.originalEvent.clipboardData || window.clipboardData;
+      imgDropHandler(dataTransfer, uid);
+    }
+  });
 }
 
 /** 
- * Grab content of dropped images and passes the files to file input handler.
- * @param {Event} event
- * @param {UID} uid - Uid for the imp input field
+ * Grab content of dropped or pasted images and passes the files to file input handler.
+ * @param {DataTransfer} dataTransfer - Contains the item list with files from an event
+ * @param {UID} uid - Uid for the input field
  */
-function imgDropHandler(event, uid) {
-  event.preventDefault();
-  [...event.dataTransfer.items].forEach((item, i) => {
-    if (item.kind === "file" && item.getAsFile().type.startsWith("image/")) {
+function imgDropHandler(dataTransfer, uid) {
+  [...dataTransfer.items].forEach((item, i) => {
+    if (item.kind === "file" && item.type.startsWith("image/")) {
       const file = item.getAsFile();
       const fileInput = document.querySelector(`#imgInput_${uid}`);
       fileInputHandler(fileInput, file);
@@ -314,7 +324,14 @@ function imgDropHandler(event, uid) {
  * @param {File} file - Uploaded target file
  */
 function fileInputHandler(elem, file) {
-  $(elem).next('.custom-file-label').html(file.name);
+  if (file === undefined) {
+    $(elem).next('.custom-file-label').html(EJStemplates.emptyFileInput);
+    return;
+  }
+  let description = ejs.render(EJStemplates.uploadedFileInput, 
+    {filename:file.name, filebytes:file.size, originalWasResized:false}
+  );
+  $(elem).next('.custom-file-label').html(description);
   var uid = $(elem).attr('id').slice(-6);
   var reader = new FileReader();
   reader.onload = function(loadevent){
@@ -325,6 +342,22 @@ function fileInputHandler(elem, file) {
     alert("Error\n\nThere was a problem loading this image.");
   }
   reader.readAsDataURL(file);
+}
+
+/**
+ * Describe number of bytes in a file to user
+ * Credit : https://stackoverflow.com/a/18650828
+ * @param {Number} bytes - File size in Bytes (integer)
+ * @param {Number} decimals - Precision
+ * @returns {String} Human Readable Representation
+ */
+function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return '0 B';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['B', 'kB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
 /**
@@ -543,8 +576,10 @@ function makeTabLabelContent(uid, tabTitle = ""){
   let tabDirty = PictureData[uid] ? !!PictureData[uid]['configurationDirty'] : false;
   let tabSavedDataSize = getSavedFormDataSize(uid);
   let originalWasResized = (tabSavedDataSize > 0) ? getSavedFormOriginalWasResized(uid) : false;
+  let isProcessed = ($(`#imgInput_${uid}`).attr('disabled') !== undefined && 
+    PictureData[uid] !== undefined && PictureData[uid].finalImage !== undefined);
   return ejs.render(EJStemplates.imageNavTabContent, 
-    {tabTitle, tabDirty, tabSavedDataSize, originalWasResized});
+    {tabTitle, tabDirty, tabSavedDataSize, originalWasResized, isProcessed});
 }
 
 /**
@@ -619,7 +654,10 @@ function restoreFormData(uid, {
   // Once a file was selected, it becomes mandatory again.
   $("#imgInput_" + uid).attr("required", false);
   if (originalFileName) {
-    $("#imgInput_" + uid).next('.custom-file-label').html(originalFileName);
+    $("#imgInput_" + uid).next('.custom-file-label').html(
+      ejs.render(EJStemplates.uploadedFileInput,
+        {filename:originalFileName, filebytes:originalImage.split(',')[1].length*3/4, originalWasResized}
+    ));
   }
 
   var areaStr = "" + area[0] + "x" + area[1];
@@ -716,6 +754,7 @@ function editImgForm(uid) {
   $("#viewOrigImgBtn_"+uid).off('click');
   $("#viewResizedImgBtn_"+uid).off('click');
   $("#viewFinalImgBtn_"+uid).off('click');
+  $("span[id='tabLabel_"+uid+"']").html(makeTabLabelContent(uid));
 }
 
 /**
@@ -885,10 +924,10 @@ function clearBehaviourPack() {
 function addSurvGuideGenerator(uid) {
   let fname = $("#fnNameInput_"+uid).val();
   let area = $("input[name='mapsizeopt_"+uid+"']:checked").val();
-  area = Number(area[0]) * Number(area[2]);
+  area = [2*Number(area[0]), Number(area[2])];
 
   $("#guideTabsContainer").append(ejs.render(EJStemplates.guideTab, 
-      {uid, fname, area}));
+      {uid, fname, area:area[0]*area[1]}));
 
   $("#guideTabList").append(ejs.render(EJStemplates.guideNavTab,
       {uid, fname}));
@@ -900,7 +939,7 @@ function addSurvGuideGenerator(uid) {
     $("#spinnerModal").addClass('d-block'); $("#spinnerModal").removeClass('d-none');
     // Timeout to let "processing.." modal become visible; page appears to freeze otherwise
     setTimeout( function() {
-      createSurvivalGuide(uid, 2*area); 
+      createSurvivalGuide(uid, area); 
       $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
     }, 1);
   });
@@ -913,10 +952,11 @@ function addSurvGuideGenerator(uid) {
 /**
  * Create the survival guide for an image, displaying the block counts used and placement.
  * @param {string} uid - The image for which to generate the guide.
- * @param {Number} numzones - The number of zones in the image, 1 pane will be created for each
- *  (see function `getSurvivalGuideTableData`).
+ * @param {[Number,Number]} area - The number of zones in the image (width x height),
+ *  1 pane will be created for each (see function `getSurvivalGuideTableData`).
  */
-function createSurvivalGuide(uid, numzones) {
+function createSurvivalGuide(uid, area) {
+  let numzones = area[0] * area[1];
   $("#survGuidePlaceholderText").addClass('d-none');
   
   // Add the html string to DOM
@@ -982,6 +1022,42 @@ function createSurvivalGuide(uid, numzones) {
   // Make page 1 visible & active
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
+
+  // Display a preview of the section of the image covered by each zone
+  let zoneX=0, zoneZ=0;
+  for (let zone=1; zone<=numzones; zone++) {
+    let canv = $(`#guideZoneImgCanv_${zone}_${uid}`)[0];
+    let ctx = canv.getContext('2d');
+    // Paint the zone rectangle on the image in each canvas.
+    // Wrap promise evaluation in IIFE to capture current zone values before they
+    // are updated by the outer loop
+    ((zoneX, zoneZ) => createImageBitmap(PictureData[uid].finalImage).then((imgbmp) => {
+      let imgh, imgw, imgx, imgy;
+      if (imgbmp.width >= imgbmp.height) {
+        imgw = canv.width;
+        imgh = canv.height / (imgbmp.width / imgbmp.height);
+      } else {
+        imgw = canv.width * (imgbmp.width / imgbmp.height);
+        imgh = canv.height;
+      }
+      imgx = Math.ceil((canv.width - imgw) / 2);
+      imgy = Math.ceil((canv.height - imgh) / 2);
+      ctx.drawImage(imgbmp, imgx, imgy, imgw, imgh);
+      let rx = zoneX * imgw / imgbmp.width + imgx;
+      let ry = zoneZ * imgh / imgbmp.height + imgy;
+      ctx.beginPath();
+      ctx.shadowColor = "#000";
+      ctx.shadowBlur = 8;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#fff";
+      ctx.strokeRect(rx, ry, 64*imgw/imgbmp.width, 128*imgh/imgbmp.height);
+    }))(zoneX, zoneZ);
+    if (zone % area[0] === 0) {
+      zoneX = 0; zoneZ += 128;
+    } else {
+      zoneX += 64;
+    }
+  }
 }
 
 /**

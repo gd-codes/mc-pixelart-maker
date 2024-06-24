@@ -245,3 +245,7 @@ table caption {
   opacity: 50%;
   transform: scale(0.2);
 }
+
+canvas[id^="guideZoneImgCanv_"] {
+  width: 100%;
+}

@@ -16,6 +16,8 @@ const SVGicons = {
   upload_file : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16"><path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/></svg>`,
   visible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>`,
   invisible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/></svg>`,
+  image: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/><path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54L1 12.5v-9a.5.5 0 0 1 .5-.5z"/></svg>`,
+  check_circle: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/></svg>`,
 };
 
 
@@ -61,15 +63,19 @@ const EJStemplates = {
    * @param {Boolean} tabDirty
    * @param {Number} tabSavedDataSize
    * @param {Boolean} originalWasResized
+   * @param {Boolean} isProcessed
    */
   imageNavTabContent: `
 <%=tabTitle%>
-<% if (tabDirty) { %><small title="Has unsaved changes">&nbsp;*</small><% } %>
 <% if (tabSavedDataSize > 0) { %>
-  <small title="Local storage: <%=((tabSavedDataSize / 1024 + 1) | 0)%> kb<% if (originalWasResized) { %> (stored resized image because original was too big)<% } %>">
-    &nbsp;&nbsp;<%-SVGicons.save%><% if (originalWasResized) { %>&nbsp;&nbsp;<%-SVGicons.shrink%><% } %>
+  <small title="Local storage: <%=formatBytes(tabSavedDataSize)%>
+    <% if (originalWasResized) { %> (stored resized image because original was too big)<% } %>">&nbsp;&nbsp;<%-SVGicons.save%>
   </small>
-<% } %>`,
+<% } %>
+<% if (isProcessed) { %>
+  <small class="text-success" title="Will be included in the Add-On / Survival guides"><%- SVGicons.check_circle %></small>
+<% } %>
+<% if (tabDirty) { %><small title="Has unsaved changes">&nbsp;*</small><% } %>`,
   
   /** 
    * @param {String} uid
@@ -95,7 +101,7 @@ const EJStemplates = {
       View Map Guide for <%=fname%>
     </div>
     <div class="col-md-4"></div>
-    <p class="mt-2 mx-auto text-center text-info">You will need to place <%=(area * 128 * 128)%> blocks!</p>
+    <p class="mt-2 mx-auto text-center text-info">You will need to place <%=(area * 64 * 128)%> blocks!</p>
   </div>
   <% if (area > 6) { %>
     <div class="alert alert-danger mx-auto p-2 mt-3 mb-0">
@@ -109,6 +115,7 @@ const EJStemplates = {
   /** 
    * @param {String} uid
    * @param {Boolean} active
+   * @param {String} emptyFileInput
    */
   imageForm: `
   <div id="dddisp_<%=uid%>" class="dragDropDisplay h-100 w-100 position-absolute justify-content-center d-none">
@@ -123,7 +130,7 @@ const EJStemplates = {
     <label for="imgInput_<%=uid%>" class="text-primary font-weight-bold">Select an Image</label>
     <div class="custom-file">
     <input type="file" class="custom-file-input" id="imgInput_<%=uid%>" accept="image/*" required/>
-    <label for="imgInput_<%=uid%>" class="custom-file-label">Choose file</label>
+    <label for="imgInput_<%=uid%>" class="custom-file-label"><%- emptyFileInput %></label>
     </div>
   </div>
   <div class="form-group row">
@@ -319,6 +326,7 @@ const EJStemplates = {
     <div class="collapse" id="guidePage_<%=zone+1%>_map_<%=uid%>" data-parent="#survGuide_<%=uid%>">
       <div class="row">
         <div class="col-md-4" id="survGuideBlockCount_<%=zone+1%>_<%=uid%>">
+          <canvas id="guideZoneImgCanv_<%=zone+1%>_<%=uid%>" width="256" height="256"></canvas>
           <table class="table table-hover table-sm" id="countlistTable_<%=zone%>_<%=uid%>">
             <caption class="text-dark">Palette Usage - Zone <%=zone+1%></caption>
             <thead class="thead-light">
@@ -379,7 +387,17 @@ const EJStemplates = {
   <% } %>
 </div>`,
 
-  colourPaletteFallback: `<i class=\"text-muted\">By default, all colours will be used</i>`,
+  colourPaletteFallback: `<i class="text-muted">By default, all colours will be used</i>`,
+
+  emptyFileInput: `<span class="text-muted">Choose file, paste, or drag-and-drop here...</span>`,
+
+  /** 
+  * @param {string} filename
+  * @param {Number} filebytes
+  * @param {Boolean} originalWasResized
+  */
+  uploadedFileInput: `<%- SVGicons.image %>&nbsp; <%=filename%> &#8226; <%=formatBytes(filebytes)%>
+    <% if (originalWasResized){ %>&nbsp;&nbsp;<%- SVGicons.shrink %><% } %>`,
 
 };
 
