@@ -6,13 +6,14 @@ Minecraft Pixel Art Maker
 /**
  * Given raw image data, resize it to fit the specified area and quantize the colour palette
  * according to the map parameters, and save the processed image outputs.
- * Also configure this image form's UI callbacks to allow downloading and viewing the output images.
  * @param {String} uid - Image upload form that the image belongs to.
  * @param {HTMLImageElement} image - Image data that can be painted to a canvas
  * @param {[Number,Number]} area - Number of maps to cover along width & height
  * @param {String} palette - Whitespace separated list of materials that can be used
  * @param {Boolean} is3D - Whether the map art can use height variation
- * @param {Boolean} dither - Whether to apply Dithering
+ * @param {String} dither - Dithering algorithm to apply 
+ * @returns {{converted:String, disph:Number, dispw:Number, h2low:Boolean}} 
+ * Parameters that can be passed to `configureImgPreviewModal`
  */
 function analyseImage(uid, image, area, palette, is3D, dither) {
   var canv = $("#testCanvas")[0];
@@ -74,65 +75,24 @@ function analyseImage(uid, image, area, palette, is3D, dither) {
   ctx.clearRect(0, 0, w, h);
   PictureData[uid]['resizedImage'] = resized_image;
   PictureData[uid]['finalImage'] = finalImgData;
-  
-  // Processing done, configure the preview buttons
-  $("#viewOrigImgBtn_"+uid).click(function() {
-    $("#displayImage").attr('src', image.src)
-      .height(image.height)
-      .width(image.width);
-    $('#downloadImageButton').attr('href', image.src);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-original.png'));
-    if (PictureData[uid].originalWasResized === true) {
-      $('#imgModalResizeWarning').removeClass('d-none');
-    } else {
-      $('#imgModalResizeWarning').addClass('d-none');
-    }
-    $('#imgModalHeightWarning').addClass('d-none');
-    $("#imageDisplayModal").modal('show');
-  });
-  $("#viewResizedImgBtn_"+uid).click(function() {
-    $("#displayImage").attr('src', resized_image)
-      .height(h*dispScale)
-      .width(w*dispScale);
-    $('#downloadImageButton').attr('href', resized_image);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-resized.png'));
-    $('#imgModalResizeWarning').addClass('d-none');
-    $('#imgModalHeightWarning').addClass('d-none');
-    $("#imageDisplayModal").modal('show');
-  });
-  $("#viewFinalImgBtn_"+uid).click(function() {
-    $("#displayImage").attr('src', converted_image)
-      .height(h*dispScale)
-      .width(w*dispScale);
-    $('#downloadImageButton').attr('href', converted_image);
-    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-converted.png'));
-    if (heightTooLow > 4*h) {
-      // Arbitrary threshold, average 4  cuts per column
-      $('#imgModalHeightWarning').removeClass('d-none');
-    } else {
-      $('#imgModalHeightWarning').addClass('d-none');
-    }
-    $('#imgModalResizeWarning').addClass('d-none');
-    $("#imageDisplayModal").modal('show');
-  })
+  // Arbitrary threshold for h2low, average 4 cuts per column
+  return {converted:converted_image, disph: h*dispScale, dispw: w*dispScale, h2low: heightTooLow > 4*h};
 }
 
 /**
  * Determine the most similar colour to a given RGB value from a palette of allowed colours,
  * using a Red-mean based weighted formula for colour distance
- * @param {Number} r 
- * @param {Number} g 
- * @param {Number} b 
- * @param {Array<[Number,Number,Number]>} palette - RGB values to choose from
- * @returns Value from palette that is the closest
+ * @param {Array<Number>} rgb - Initial colour
+ * @param {Array<[Number,Number,Number,Number]>} palette - RGB values to choose from
+ * @returns {[Number,Number,Number,Number]} Shallow copy of value from palette that is the closest
  */
-function closestColour(r, g, b, palette) {
+function closestColour(rgb, palette) {
   var delta = Infinity;
   var clr, c, d;
   // Clamping necessary since some values can go beyond range due to the dithering algorithm
-  r = Math.min(Math.max(r, 0), 255);
-  g = Math.min(Math.max(g, 0), 255);
-  b = Math.min(Math.max(b, 0), 255);
+  r = Math.min(Math.max(rgb[0], 0), 255);
+  g = Math.min(Math.max(rgb[1], 0), 255);
+  b = Math.min(Math.max(rgb[2], 0), 255);
   for (c of palette) {
     if (r+c[0] > 256) { 
       d = 2*(r-c[0])*(r-c[0]) + 4*(g-c[1])*(g-c[1]) + 3*(b-c[2])*(b-c[2]);
@@ -143,7 +103,7 @@ function closestColour(r, g, b, palette) {
       delta = d; clr = c;
     }
   }
-  return clr;
+  return clr.slice(); // Important to copy in case of value modification
 }
 
 /**
@@ -154,44 +114,53 @@ function closestColour(r, g, b, palette) {
  *  the Alpha channel doesn't represent transparency but encodes the light/dark variation of a
  *  colour when multiple colours can be produced from the same source material.
  * @param {ImageData} pixels - Image data containing dimensions and RGBA pixel array
- * @param {Boolean} dither - Whether to apply  Dithering
- * @param {Array<Array<Number>>} shademap - Output into which to write variation data for 3D maps
+ * @param {'none'|'weak-bayer'|'strong-bayer'|'floyd-steinberg'|'atkinson'} dither - Algorithm to apply 
+ * @param {Array<Array<Number>>|undefined} shademap - Output into which to write variation data for 3D maps
  * @returns Modified ImageData pixels with the replaced colours.
  */
 function convertPalette(palette, pixels, dither, shademap) {
+  const bayer4x4 = [
+    [ 0/16-.5,  8/16-.5,  2/16-.5, 10/16-.5],
+    [12/16-.5,  4/16-.5, 14/16-.5,  6/16-.5],
+    [ 3/16-.5, 11/16-.5,  1/16-.5,  9/16-.5],
+    [15/16-.5,  7/16-.5, 13/16-.5,  5/16-.5]
+  ];
   //Quantize the image
-  var c, dr, dg, db, i, j;
-  var data = pixels.data;
-  for(i=0; i < data.length; i+=4) {
-    c = closestColour(data[i], data[i+1], data[i+2], palette);
-    if (dither) {
-      // Propagate colour difference errors to neighbouring pixels
-      dr = data[i] - c[0]; dg = data[i+1] - c[1]; db = data[i+2] - c[2];
-      if ((i/4 + 1)%pixels.width != 0) { //pixel is not on right edge of image
-        j = i + 4; 
-        data[j] += 7/16*dr; data[j+1] += 7/16*dg; data[j+2] += 7/16*db;
+  for (z=0; z<pixels.height; z++) {
+    for (x=0; x<pixels.width; x++) {
+      const irgb = getPixelAt(x,z,pixels); // Input of this pixel
+      let cc; // Final RGB+shademap value (output of this pixel)
+      /* For Ordered dithering, pre-modify input pixel */
+      if (dither === 'weak-bayer' || dither === 'strong-bayer') {
+        let s = 5 * 255/Math.max(10, palette.length) * bayer4x4[z%4][x%4];
+        if (dither === 'strong-bayer') s *= 3;
+        const mrgb = [irgb[0]+s, irgb[1]+s, irgb[2]+s];
+        cc = closestColour(mrgb, palette);
+      } else {
+        cc = closestColour(irgb, palette);
       }
-      if (i/4 < data.length/4 - pixels.width) { //pixel is not on bottom edge of image
-        j = i + 4*pixels.width;
-        data[j] += 5/16*dr; data[j+1] += 5/16*dg; data[j+2] += 5/16*db;
-        if ((i/4 + 1)%pixels.width != 0) { //also not on right edge
-          j = i + 4*pixels.width + 4;
-          data[j] += 1/16*dr; data[j+1] += 1/16*dg; data[j+2] += 1/16*db;
-        }
-        if ((i/4)%pixels.width != 0) { //also not on left edge
-          j = i + 4*pixels.width - 4;
-          data[j] += 3/16*dr; data[j+1] += 3/16*dg; data[j+2] += 3/16*db;
-        }
+      /* Copy map variant into shademap for 3D maps */
+      if (shademap !== undefined) {
+        shademap[x][z] = cc[3];
       }
-      
-    }
-    // Set Alpha to 255 in output - image is fully opaque.
-    // Palette's alpha encoded value copied into shademap
-    data[i] = c[0]; data[i+1] = c[1]; data[i+2] = c[2]; data[i+3] = 255;
-    if (shademap !== undefined) {
-      let x = (i/4) % pixels.width;
-      let y = Math.floor(i/4 / pixels.width);
-      shademap[x][y] = c[3];
+      cc[3] = 255;
+      setPixelAt(x, z, pixels, cc);
+      /* For Error Diffusion Dithering, post-modify neighboring pixels */
+      let dr = irgb[0]-cc[0], dg = irgb[1]-cc[1], db = irgb[2]-cc[2];
+      if (dither === 'floyd-steinberg') {
+        adjustPixelAt(x+1, z,   pixels, [dr*7/16, dg*7/16, db*7/16, 0]);
+        adjustPixelAt(x,   z+1, pixels, [dr*5/16, dg*5/16, db*5/16, 0]);
+        adjustPixelAt(x+1, z+1, pixels, [dr*1/16, dg*1/16, db*1/16, 0]);
+        adjustPixelAt(x-1, z+1, pixels, [dr*3/16, dg*3/16, db*3/16, 0]);
+      } else if (dither === 'atkinson') {
+        dr/=8; dg/=8; db/=8;
+        adjustPixelAt(x+1, z,   pixels, [dr, dg, db, 0]);
+        adjustPixelAt(x+2, z,   pixels, [dr, dg, db, 0]);
+        adjustPixelAt(x,   z+2, pixels, [dr, dg, db, 0]);
+        adjustPixelAt(x,   z+1, pixels, [dr, dg, db, 0]);
+        adjustPixelAt(x+1, z+1, pixels, [dr, dg, db, 0]);
+        adjustPixelAt(x-1, z+1, pixels, [dr, dg, db, 0]);
+      }
     }
   }
   return pixels;
@@ -271,6 +240,20 @@ function getPixelAt(x, z, dataobj) {
 function setPixelAt(x, z, dataobj, rgba) {
   let loc = 4*(dataobj.width*(z) + x);
   for (i=0; i<4; i++) dataobj.data[loc+i] = rgba[i];
+}
+
+/**
+ * Add an amount to the value of pixel (x,z) in a continuous 1D ravelled RGBARGBA... byte seq
+ * if it is within the bounds of 2D image
+ * @param {Number} x - Pixel width coordinate
+ * @param {Number} z - Pixel height coordinate
+ * @param {ImageData} dataobj - Source Image Data array
+ * @param {Array<Number>} drgba - Delta Colour to add
+ */
+function adjustPixelAt(x, z, dataobj, drgba) {
+  if (x<0 || x>=dataobj.width || z<0 || z>=dataobj.height) return;
+  let loc = 4*(dataobj.width*(z) + x);
+  for (i=0; i<4; i++) dataobj.data[loc+i] += drgba[i];
 }
 
 /**

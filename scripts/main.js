@@ -190,8 +190,10 @@ function newImageUpload(uid, {fnName = "", active = true} = {}) {
     ).on('change', function() {
     markDirty(uid);
   });
-  $("#ditherOption_"+uid).on('click', function() {
+  $("#ditherSelect_"+uid).on('change', function() {
     markDirty(uid);
+    const v = $("#ditherSelect_"+uid).find(":selected").val();
+    $("#ditherIcon_"+uid).html(SVGicons['dither-'+v]);
   });
   $("#materialChooseBtn_"+uid).on('click', function() {
     configureColourModal(uid);
@@ -376,7 +378,7 @@ function resetImgHandler(uid) {
   setTimeout(function() {
     $("#fnNameInput_" + uid).val("");
     PictureData[uid]['fnName'] = "";
-    $("#ditherSwitch_"+uid).prop("checked", true);
+    $(`#ditherSelect_${uid} option[value="floyd-steinberg"]`).prop("selected", true);
     $("#mapSize11_"+uid).prop("checked", true);
     $("#materialOptsDisplay_"+uid).data("selected", default_palette);
     refreshColourDisplay(uid);
@@ -516,12 +518,15 @@ function submitImgFormHandler(uid, event) {
   area = [Number(area[0]), Number(area[2])];
   var palette = $("#materialOptsDisplay_"+uid).data("selected");
   var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
-  var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
+  var dither = $("#ditherSelect_"+uid).find(":selected").val();
   // Read the uploaded image data from stored base64 URI, and disable the form and begin analysis
   var image = new Image();
   image.onload = function() {
     try {
-      analyseImage(uid, image, area, palette, d3, dither);
+      configureImgPreviewModal(
+        uid, image,
+        analyseImage(uid, image, area, palette, d3, dither)
+      );
       $("form#imageForm_"+uid+" :input").prop('disabled', true);
       $("form#imageForm_"+uid+" :radio").prop('disabled', true);
       $("form#imageForm_"+uid+" :checkbox").prop('disabled', true);
@@ -544,6 +549,51 @@ function submitImgFormHandler(uid, event) {
     $("#spinnerModal").addClass('d-none'); $("#spinnerModal").removeClass('d-block');
   }
   image.src = PictureData[uid]['originalImage'];
+}
+
+/**
+ * Bind callbacks for the buttons to view original/resized/converted images
+ * of a processed image form.
+ * @param {String} uid - Identifies the target form.
+ * @param {HTMLImageElement} origimg - Original Image that was uploaded by user
+ * @param {String} converted - Base64 src data URI of the final converted image
+ * @param {Number} disph - Preview img height (px) for resized and converted images
+ * @param {Number} dispw - Preview img width (px) for resized and converted images
+ * @param {Boolean} h2low - Whether to display the Height too low warning on converted preview
+ */
+function configureImgPreviewModal(uid, origimg, {converted, disph, dispw, h2low}) {
+  $("#viewOrigImgBtn_"+uid).click(function() {
+    $("#displayImage").attr('src', origimg.src).height(origimg.height).width(origimg.width);
+    $('#downloadImageButton').attr('href', origimg.src);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-original.png'));
+    if (PictureData[uid].originalWasResized === true) {
+      $('#imgModalResizeWarning').removeClass('d-none');
+    } else {
+      $('#imgModalResizeWarning').addClass('d-none');
+    }
+    $('#imgModalHeightWarning').addClass('d-none');
+    $("#imageDisplayModal").modal('show');
+  });
+  $("#viewResizedImgBtn_"+uid).click(function() {
+    $("#displayImage").attr('src', PictureData[uid]['resizedImage']).height(disph).width(dispw);
+    $('#downloadImageButton').attr('href', PictureData[uid]['resizedImage']);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-resized.png'));
+    $('#imgModalResizeWarning').addClass('d-none');
+    $('#imgModalHeightWarning').addClass('d-none');
+    $("#imageDisplayModal").modal('show');
+  });
+  $("#viewFinalImgBtn_"+uid).click(function() {
+    $("#displayImage").attr('src', converted).height(disph).width(dispw);
+    $('#downloadImageButton').attr('href', converted);
+    $('#downloadImageButton').attr('download', ($('#fnNameInput_'+uid).val() + '-converted.png'));
+    if (h2low) {
+      $('#imgModalHeightWarning').removeClass('d-none');
+    } else {
+      $('#imgModalHeightWarning').addClass('d-none');
+    }
+    $('#imgModalResizeWarning').addClass('d-none');
+    $("#imageDisplayModal").modal('show');
+  })
 }
 
 /**
@@ -591,7 +641,7 @@ function saveImgForm(uid) {
   var palette = $("#materialOptsDisplay_"+uid).data("selected");
   var d3 = Boolean($("#3dSwitch_"+uid+":checked").length > 0);
   var maxHeight = $("#heightInput_" + uid).val() | 0;
-  var dither = Boolean($("#ditherSwitch_"+uid+":checked").length > 0);
+  var dither = $("#ditherSelect_"+uid).find(":selected").val();
   var originX = Number($("#originInputX_"+uid).val());
   var originY = Number($("#originInputY_"+uid).val());
   var originZ = Number($("#originInputZ_"+uid).val());
@@ -635,7 +685,7 @@ function restoreFormData(uid, {
     palette = "",
     d3 = false,
     maxHeight = undefined,
-    dither = true,
+    dither = 'floyd-steinberg',
     useAbsCoords = false,
     origin = {}
   }
@@ -667,7 +717,8 @@ function restoreFormData(uid, {
   if (maxHeight) {
     $("#heightInput_" + uid).val(maxHeight);
   }
-  $("#ditherSwitch_" + uid).prop('checked', dither);
+  $(`#ditherSelect_${uid} option[value="${dither}"]`).prop("selected", true);
+  $("#ditherIcon_"+uid).html(SVGicons['dither-'+dither]);
 
   $("#absCoordsSwitch_" + uid).prop('checked', useAbsCoords);
   if (origin.X) $("#originInputX_" + uid).val(origin.X);

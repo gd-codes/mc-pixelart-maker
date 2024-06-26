@@ -151,3 +151,14 @@
   background-color: #444;
   border-color: #888;
 }
+
+.dark-theme .custom-select {
+  color: #ddd;
+  border-color: #444;
+  background: #222 url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%274%27%20height%3D%275%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23f0ffef%27%20d%3D%27M2%200L0%202h4zm0%205L0%203h4z%27%2F%3E%3C%2Fsvg%3E') right .75rem center / 8px 10px no-repeat;
+}
+
+.dark-theme .custom-select:disabled~.custom-select-label,
+.dark-theme .custom-select[disabled]~.custom-select-label {
+  color: #6c757d;
+}

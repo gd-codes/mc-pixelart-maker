@@ -18,6 +18,12 @@ const SVGicons = {
   invisible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/></svg>`,
   image: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/><path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54L1 12.5v-9a.5.5 0 0 1 .5-.5z"/></svg>`,
   check_circle: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/></svg>`,
+  "dither-none": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="white"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="black"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-atkinson": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="black"/><rect width="5" height="5" x="0"  y="10"  fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="black"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="black"/><rect width="5" height="5" x="10"  y="5"  fill="black"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="white"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="white"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="white"/><rect width="5" height="5" x="25" y="10"  fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-floyd-steinberg": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="black"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="black"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="white"/><rect width="5" height="5" x="20" y="10"  fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="white"/></svg>`,
+  "dither-weak-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="white"/><rect width="5" height="5" x="5"  y="5"  fill="black"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="white"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="white"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="black"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="white"/><rect width="5" height="5" x="25" y="0"  fill="white"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-strong-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="black"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="black"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="black"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="black"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="white"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+
 };
 
 
@@ -177,6 +183,30 @@ const EJStemplates = {
     </div>
   </div>
   <div class="form-group row">
+    <label for="ditherOption_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Dither</label>
+    <div class="form-inline col-sm-10 pt-sm-2" id="ditherOption_<%=uid%>">
+      <select class="custom-select" id="ditherSelect_<%=uid%>">
+        <option value="none">None</option>
+        <option value="weak-bayer">Weak Bayer</option>
+        <option value="strong-bayer">Strong Bayer</option>
+        <option value="floyd-steinberg" selected>Floyd-Steinberg</option>
+        <option value="atkinson">Atkinson</option>
+      </select>
+      <label for="ditherSelect_<%=uid%>" class="custom-select-label">
+        &nbsp;&nbsp; <span id="ditherIcon_<%=uid%>" style="position: relative; bottom: 2px;"><%- SVGicons['dither-floyd-steinberg'] %></span>
+        &nbsp;&nbsp; Dithering Algorithm for applying this palette &nbsp;
+      </label>
+      <a data-toggle="tooltip" data-placement="top" data-html="true" title="Dithering Style
+        [<a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;>Wikipedia</a>]
+         affects noise and speckles in the converted image.<br>Experiment with combinations like:<br>
+        <ul class=&quot;tooltip-list&quot;>
+        <li><span>No Dither for cartoons with solid colours (no gradients)</span></li>
+        <li><span>Bayer in case of few palette colours</span></li>
+        <li><span>FS or Atk for detailed photographs</span></li></ul>"  
+      class="text-info" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}"><%-SVGicons.questionmark%></a>
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="3dOption_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">3D</label>
     <div class="col-sm-10 pt-sm-2" id="3dOption_<%=uid%>"><div class="custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="3dSwitch_<%=uid%>"/>
@@ -192,19 +222,6 @@ const EJStemplates = {
     <input type="number" class="form-control" id="heightInput_<%=uid%>" min="3" max="380" value="128"
         placeholder="Enter a height range (recommended - at least 50 blocks)">
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="ditherOption_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Dither</label>
-    <div class="col-sm-10 pt-sm-2" id="ditherOption_<%=uid%>"><div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="ditherSwitch_<%=uid%>"/>
-    <label for="ditherSwitch_<%=uid%>" class="custom-control-label">Dither converted image <small>(Recommended)</small>
-    </label> &nbsp;
-    <a data-toggle="tooltip" data-placement="top" data-html="true" title="Apply Floyd-Steinberg Dithering <br> 
-      <a href=&quot;https://en.wikipedia.org/wiki/Dither&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;> 
-      en.wikipedia.org/wiki/Dither</a><br> This is good for photographs, but may not be necessary for cartoons/etc with
-      solid colours (no gradients)" data-delay="{&quot;show&quot;:100, &quot;hide&quot;:2000}" 
-    class="text-info"><%-SVGicons.questionmark%></a>
-    </div></div>
   </div>
   <div class="form-group row">
     <label for="absCoordsOption_<%=uid%>" class="col-sm-2 col-form-label text-primary text-center">Coordinates</label>

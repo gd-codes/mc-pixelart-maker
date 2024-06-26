@@ -249,3 +249,11 @@ table caption {
 canvas[id^="guideZoneImgCanv_"] {
   width: 100%;
 }
+
+.tooltip-list {
+  padding-inline-start: 20px;
+}
+.tooltip-list li > span:first-child {
+  position: relative;
+  left: -10px;
+}
