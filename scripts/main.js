@@ -863,7 +863,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,21,0]
+      min_engine_version: [1,21,50]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + 
@@ -907,8 +907,6 @@ function writeBhvPack(images, uuids) {
   }
   // Include structures
   var strfolder = pack.folder('structures');
-  strfolder.file("mapart/azalea_leaves.mcstructure", Structures.azalea_leaves, {base64:true});
-  strfolder.file("mapart/glow_lichen.mcstructure", Structures.glow_lichen, {base64:true});
   strfolder.file("mapart/glowstone.mcstructure", Structures.glowstone, {base64:true});
   if (strucs) {
     Colours.forEach(function(value, key){

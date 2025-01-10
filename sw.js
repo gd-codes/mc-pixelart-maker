@@ -3,7 +3,12 @@ Service Worker to enable the webpage to be used even offline, once installed
 Cached site should require only ~ 3 MB space
 */
 
-const CURRENT_CACHE_VERSION = 'mapart-cache-5.3.0';
+/** 
+ * This constant determines whether the cached URLs are stale and need to be re-fetched.
+ * The file is preprocessed by the CD pipeline and all occurrences of `{{COMMIT_VERSION}}`
+ * are replaced with the latest string on each deployment.
+ */
+const CURRENT_CACHE_VERSION = 'mapart-cache@{{COMMIT_VERSION}}';
 
 const CACHE_URLS_LOCAL = [
     /* Important : `/` doesn't automatically fetch `/index.html` locally, explicitly cache it 

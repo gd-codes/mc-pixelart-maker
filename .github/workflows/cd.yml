@@ -4,7 +4,14 @@ on:
   push:
     branches: 
       - main
+    tags:
+      - v*.*
   workflow_dispatch:
+    inputs:
+      nodeploy:
+        description: 'Prevent Deployment (Build only)'
+        required: false
+        type: boolean
 
 permissions:
   contents: read
@@ -15,36 +22,65 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  GAME_VERSION: 1.21.51
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      -
+        name: Checkout
         uses: actions/checkout@v4
-      - name: Build index.html
+        with:
+          fetch-depth: 25
+          fetch-tags: true
+      -
+        name: Latest Git Tag & Commit
+        run: |
+          export GIT_TAG=$(git describe --tags --abbrev=0 | cut -c2-)
+          echo "GIT_TAG=${GIT_TAG:-Unknown}" >> $GITHUB_ENV
+          echo "GIT_SHORT_SHA=$(echo ${{ github.sha }} | cut -c-7)" >> $GITHUB_ENV
+      -
+        name: Set Service Worker Cache Version
+        run: |
+          sed 's/{{COMMIT_VERSION}}/${{ env.GIT_SHORT_SHA }}/g' sw.js > temp.sw.js && mv temp.sw.js sw.js
+      -
+        name: Build index.html
         uses: jaywcjlove/action-ejs@main
         with:
           template-file: templates/index.ejs
           output: index.html
-      - name: Build manual.html
+          vars: |
+            {"GAME_VERSION": "${{ env.GAME_VERSION }}", "APP_VERSION": "${{ env.GIT_TAG }}"}
+      -
+        name: Build manual.html
         uses: jaywcjlove/action-ejs@main
         with:
           template-file: templates/manual.ejs
           output: manual.html
-      - name: Build about.html
+          vars: |
+            {"GAME_VERSION": "${{ env.GAME_VERSION }}", "APP_VERSION": "${{ env.GIT_TAG }}"}
+      -
+        name: Build about.html
         uses: jaywcjlove/action-ejs@main
         with:
           template-file: templates/about.ejs
           output: about.html
-      - name: Setup Pages
+          vars: |
+            {"GAME_VERSION": "${{ env.GAME_VERSION }}", "APP_VERSION": "${{ env.GIT_TAG }}"}
+      -
+        name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Upload artifact
+      -
+        name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: ${{ ! inputs.nodeploy }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

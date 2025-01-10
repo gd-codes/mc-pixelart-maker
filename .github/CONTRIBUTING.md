@@ -8,14 +8,15 @@ Thank you for considering to help develop this app, your efforts will be appreci
 - Feel free to create a PR for the main branch, but it wouldn't be merged as long as the code has bugs or incomplete sections that shouldn't be deployed immediately.
 
 ## HTML
-- The HTML source code is contained in `templates/*.ejs`. Please edit only these source templates and not the `/*.html` files that are automatically generated from these, to be served statically.
-- Additionally, many UI fragments on the main (index) page need to be rendered dynamically based on user input. These are added using client-side EJS, and the source snippets are defined in `scripts/templates.js`.
+- The server-side page content is contained in `templates/*.ejs`. Please edit only these source templates and not the `/*.html` files that are automatically generated from these, to be served statically (e.g. if you compiled them to run the site locally).
+- Additionally, many UI fragments on the main (index) page need to be rendered using client-side EJS, and these source snippets are defined in `scripts/templates.js`.
 - When developing and testing locally, you may install the [ejs CLI](https://www.npmjs.com/package/ejs) and run the following commands: 
 ```bash
 # Build static files
-ejs templates/index.ejs -o index.html
-ejs templates/manual.ejs -o manual.html
-ejs templates/about.ejs -o about.html
+# The version variables are only displayed as content, can set any value
+ejs templates/index.ejs -o index.html -i '{"GAME_VERSION": "1.21.50", "APP_VERSION": "2.0"}'
+ejs templates/manual.ejs -o manual.html -i '{"GAME_VERSION": "1.21.50", "APP_VERSION": "2.0"}'
+ejs templates/about.ejs -o about.html -i '{"GAME_VERSION": "1.21.50", "APP_VERSION": "2.0"}'
 # Replace with any static HTTP server of your choice
 python3 -m http.server .
 ```
@@ -33,9 +34,8 @@ python3 -m http.server .
 
 
 ## Miscellaneous
-- **Important:** In case of any non-trivial changes, please increment the `CURRENT_CACHE_VERSION` in `sw.js` (PWA Service Worker), so that the new code is reloaded for users who have installed the site as an offline web app.
-- The version number is also displayed to users on the html pages in `bodyfooter.ejs`.
-
 - The `resources/sample_pack.mcpack` is an example output of the website that users can download to test the map art, based on the 2 raw images `images/bastion` and `images/cliff`. Its description is present in `manual.html`. In case of a colour palette update (E.g. after a Minecraft update itself that adds new map colours), this can be re-generated from the web app.
 
 - When making CSS changes, do consider both the light and dark theme variations, if there can be any difference.
+
+- If you updated the color palette or block data for a new Minecraft update, please set the corresponding `GAME_VERSION` environment variable in `.github/workflows/cd.yml` and also in the pack manifest in `main.js`.

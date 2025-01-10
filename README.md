@@ -28,6 +28,7 @@ The app is updated occasionally, to keep in sync with changes made to the latest
 | 1.18.0 "Caves & Cliffs Part 2" | [v4.1](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.1) |
 | 1.19.0 "Wild Update" | [v4.3](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.3) |
 | 1.20.0 "Trails & Tales" | [v4.5](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v4.5) |
+| 1.21.0 "Tricky Trials" | [v5.0](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v5.0) |
 
 ### Contributing
 
