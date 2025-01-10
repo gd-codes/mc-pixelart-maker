@@ -104,6 +104,21 @@ kbd {
   max-width: 750px;
 }
 
+#colourTableModalFooter {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: 6em;
+  background: linear-gradient(0deg, #0006, transparent);
+}
+
+#saveColoursBtn {
+  display: block;
+  margin: 0 auto;
+  border-radius: 2em;
+  border: 1px solid #fff8;
+}
+
 .checkbox-scaled input[type=checkbox] {
   -ms-transform: scale(1.5); /* IE */
   -moz-transform: scale(1.5); /* FF */

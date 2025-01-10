@@ -914,9 +914,10 @@ function writeBhvPack(images, uuids) {
     })
   }
   // Prepare the ZIP file for download
+  const safeFileName = $("#bpackNameInput").val().replace(/[\/\\:<>\|\?\*\000-\037]/g, "");
   pack.generateAsync({type:"blob"})
     .then(function(blob) {
-        setSaveAsZip(blob);
+        setSaveAsZip(blob, safeFileName);
         $("#spinnerModal").addClass('d-none');
         $("#spinnerModal").removeClass('d-block');
     }, function (err) {
@@ -930,7 +931,7 @@ function writeBhvPack(images, uuids) {
      uri = "data:application/zip;base64," + uri;
       $("#altDownloadPack").click(function(event) {
         event.preventDefault();
-        saveAs(uri, "mapart.mcpack");
+        saveAs(uri, `${safeFileName || 'mapart'}.mcpack`);
       })
     }, function(err) {
       alert("Uh oh\nSomething went wrong !");
@@ -942,12 +943,13 @@ function writeBhvPack(images, uuids) {
 /**
  * Configure download link for the generated ZIP mcpack
  * @param {Blob} blob - ZIP file data in Blob format
+ * @param {string} filename - Based on pack name entered by the user.
  */
-function setSaveAsZip(blob) {
+function setSaveAsZip(blob, filename) {
   $("#packActionsPreProcess").addClass('d-none');
   $("#packActionsPostProcess").removeClass('d-none');
   $("#downloadPackBtn").click(function() {
-    saveAs(blob, "mapart.mcpack");
+    saveAs(blob, `${filename || 'mapart'}.mcpack`);
   });
 }
 

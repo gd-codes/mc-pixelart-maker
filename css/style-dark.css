@@ -137,6 +137,10 @@
   background-color: #555555;
 }
 
+.dark-theme #colourTableModalFooter {
+  background: linear-gradient(0deg, black, transparent);
+}
+
 .dark-theme #github-icon {
   color: white !important;
 }
