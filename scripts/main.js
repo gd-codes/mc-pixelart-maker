@@ -29,8 +29,6 @@ const PictureData = {
 window.addEventListener('beforeunload', confirmCloseTab);
 // 2. Bind all UI elements to appropriate callbacks when DOM is loaded
 $(document).ready(setup);
-// 3. Lazy-load carousel images after page loads 
-$(window).on('load', lazyload);
 
 
 /**
@@ -110,6 +108,9 @@ function setup() {
   $('#buildWithStructures').prop('checked', true);
   $('#doTeleport').prop('checked', true);
 
+  // Activate bootstrap image carousel
+  $("#demoCarousel").carousel({interval: 2000});
+
   // Prevent links in PWA window opening in browser
   const isPWA = window.matchMedia('(display-mode: standalone)');
   if (isPWA.matches) {
@@ -126,16 +127,6 @@ function confirmCloseTab(event) {
     return '';
   }
 }
-
-/** Add image sources to and intialise the demoCarousel */
-function lazyload() {
-  // Add the carousel images to index.html
-  for (var i=1; i<=5; i++) {
-    $("div#cari"+i+" > img").attr('src', "images/d"+i+".png");
-  }
-  $("#demoCarousel").carousel({interval: 2000});
-}
-
 
 /** 
  * Generate a new Image Upload Form 

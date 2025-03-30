@@ -15,7 +15,7 @@ window.addEventListener('resize', resizebg);
 window.addEventListener('orientationchange', resizebg); 
     
 function resizebg(event) {
-    const bgiratio = 1500 / 560;
+    const bgiratio = 1500 / 600;
     const headercover = document.getElementsByClassName('headercover')[0];
     if (headercover.offsetWidth / headercover.offsetHeight >= bgiratio) {
         headercover.style.backgroundSize = `${headercover.offsetWidth}px auto`;

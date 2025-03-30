@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  GAME_VERSION: 1.21.51
+  GAME_VERSION: 1.21.70
 
 jobs:
   build:

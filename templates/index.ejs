@@ -142,28 +142,17 @@
   <div class="mx-auto my-4 px-3 mt-5" id="carouselContainer">
     <div id="demoCarousel" class="carousel slide carousel-fade mx-auto">
       <ol class="carousel-indicators">
-        <li data-target="#demoCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#demoCarousel" data-slide-to="1"></li>
-        <li data-target="#demoCarousel" data-slide-to="2"></li>
-        <li data-target="#demoCarousel" data-slide-to="3"></li>
-        <li data-target="#demoCarousel" data-slide-to="4"></li>
+        <% for(let i = 0; i < 5; i++ ) { %>
+          <li data-target="#demoCarousel" data-slide-to="<%=i%>" 
+            <% if (i==0) { %>class="active"<% } %>></li>
+        <% } %>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active" id="cari1">
-          <img class="d-block w-100" alt="Showcase image 1">
-        </div>
-        <div class="carousel-item" id="cari2">
-          <img class="d-block w-100" alt="Showcase image 2">
-        </div>
-        <div class="carousel-item" id="cari3">
-          <img class="d-block w-100" alt="Showcase image 3">
-        </div>
-        <div class="carousel-item" id="cari4">
-          <img class="d-block w-100" alt="Showcase image 4">
-        </div>
-        <div class="carousel-item" id="cari5">
-          <img class="d-block w-100" alt="Showcase image 5">
-        </div>
+        <% for(let i = 0; i < 5; i++ ) { %>
+          <div class="carousel-item <% if (i==0) { %>active<% } %>" id="cari<%=i%>">
+            <img class="d-block w-100" loading="lazy" alt="Showcase image <%=i+1%>" src="images/d<%=i+1%>.png" />
+          </div>
+        <% } %>
       </div>
       <a class="carousel-control-prev shadow" href="#demoCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -254,7 +243,7 @@
             </tr></thead>
             <tbody><!--filled by JS--></tbody>
           </table>
-          <p> Not included : Water, Lava, Beds, Vines, The Void, and blocks that are transparent on maps </p>
+          <p> Not included : Water, Lava, Beds, Vines, Dry Grass, The Void, and blocks that are transparent on maps </p>
         </div>
       </div>
       <div id="colourTableModalFooter">

@@ -45,14 +45,14 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OmJsYWNrX2NvbmNyZXRlCgYAc3RhdGVzAAMHAHZlcnNpb24DABUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAArf///8X///9WAAAAAA=="
 }], ["brown", {
     name: "Brown Dye",
-    description: "Brown Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Dark Oak planks, Logs, Stripped Logs, Wood, Stripped Wood, Fences, Fence Gates, Doors, Trapdoors, Pressure plates, Signs &amp; Hanging Signs, Slabs and Stairs; Horizontal Spruce Logs; Soul sand, Soul soil; Impulse Command Block",
+    description: "Brown Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Dark Oak planks, Logs, Stripped Logs, Wood, Stripped Wood, Fences, Fence Gates, Doors, Trapdoors, Pressure plates, Signs &amp; Hanging Signs, Slabs and Stairs; Horizontal Spruce Logs; Soul sand, Soul soil; Leaf Litter; Impulse Command Block",
     id: 'brown_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [88, 65, 44, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OmJyb3duX2NvbmNyZXRlCgYAc3RhdGVzAAMHAHZlcnNpb24DABUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAArf///8X///9XAAAAAA=="
 }], ["red", {
     name: "Red Dye",
-    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Wart Block, Shroomlight; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates",
+    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Warts, Nether Wart Block, Shroomlight; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates",
     id: 'red_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [132, 44, 44, 255],
@@ -122,7 +122,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRoAbWluZWNyYWZ0Om1hZ2VudGFfY29uY3JldGUKBgBzdGF0ZXMAAwcAdmVyc2lvbgMAFQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAACt////xf///2EAAAAA"
 }], ["pink", {
     name: "Pink Dye",
-    description: "Pink Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Brain Coral Block; Pearlescent Froglight; Cherry Leaves and Saplings",
+    description: "Pink Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Brain Coral Block; Pearlescent Froglight; Cherry Leaves and Saplings, Cactus Flower",
     id: 'pink_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [208, 109, 142, 255],
@@ -192,7 +192,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRkAbWluZWNyYWZ0OmxpbWVfdGVycmFjb3R0YQoGAHN0YXRlcwADBwB2ZXJzaW9uAwAVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAK7////F////WwAAAAA="
 }], ["greenterc", {
     name: "Green Terracotta",
-    description: "Green Terracotta <br/> <i>Also</i>: Pale Oak Leaves, Closed Eyeblossoms",
+    description: "Green Terracotta <br/> <i>Also</i>: Closed Eyeblossoms",
     id: 'green_terracotta []',
     is_dye: false, is_terc: true, is_biomevar: false, is_greyscale: false,
     rgb: [65, 70, 36, 255],
@@ -325,7 +325,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZR8AbWluZWNyYWZ0OndheGVkX294aWRpemVkX2NvcHBlcgoGAHN0YXRlcwADBwB2ZXJzaW9uAQoSAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAOL///8DAAAARAAAAAA="
 }], ["foliage", {
     name: "Foliage",
-    description: "Azalea leaves, Flowering Azalea Leaves, All short and double tall flowers, All saplings except Cherry & Pale Oak; Cactus, Bamboo Shoots, Small Dripleaf, Big Dripleaf, Kelp, Hanging Roots, Spore blossom, Lilypad, Sugarcane, Double tall Grass, Double tall Ferns, Azalea, Flowering Azalea, Mangrove Propagules, Pitcher Pods",
+    description: "Azalea leaves, Flowering Azalea Leaves, All short and double tall flowers, All saplings except Cherry & Pale Oak; Cactus, Bamboo Shoots, Small Dripleaf, Big Dripleaf, Kelp, Hanging Roots, Spore blossom, Lilypad, Sugarcane, Double tall Grass, Double tall Ferns, Azalea, Flowering Azalea, Mangrove Propagules, Pitcher Pods, Wildflowers, Bush & Firefly Bush",
     id: 'azalea_leaves ["persistent_bit"=true]',
     is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [0, 106, 0, 255],
@@ -402,7 +402,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OmRpYW1vbmRfYmxvY2sKBgBzdGF0ZXMAAwcAdmVyc2lvbgEKEgEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAADt////AwAAAEQAAAAA"
 }], ["steel", {
     name: "Iron",
-    description: "Iron Blocks, Iron Doors &amp; Trapdoors, Anvils (and damaged stages), Lanterns, Soul Lanterns, Brewing Stands, Grindstones, Heavy Core, Heavy Weighted Pressure Plates <br/> Copper and Exposed / Weathered / Oxidised Copper Trapdoors",
+    description: "Iron Blocks, Iron Doors &amp; Trapdoors, Anvils (and damaged stages), Lanterns, Soul Lanterns, Brewing Stands, Grindstones, Heavy Core, Heavy Weighted Pressure Plates; Copper and Exposed / Weathered / Oxidised Copper Trapdoors <br/> Pale Oak Leaves and Saplings",
     id: 'iron_block []',
     is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: true,
     rgb: [144, 144, 144, 255],
