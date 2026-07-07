@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  GAME_VERSION: 26.30
+  GAME_VERSION: "26.30"
 
 jobs:
   build:
