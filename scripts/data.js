@@ -52,7 +52,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OmJyb3duX2NvbmNyZXRlCgYAc3RhdGVzAAMHAHZlcnNpb24DABUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAArf///8X///9XAAAAAA=="
 }], ["red", {
     name: "Red Dye",
-    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Warts, Nether Wart Block, Shroomlight; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates",
+    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Warts, Nether Wart Block, Shroomlight; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates <br/> Cinnabar, Polished Cinnabar, Cinnabar Bricks &amp; all their slabs, walls, stairs; Chiseled Cinnabar",
     id: 'red_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [132, 44, 44, 255],
@@ -66,7 +66,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRkAbWluZWNyYWZ0Om9yYW5nZV9jb25jcmV0ZQoGAHN0YXRlcwADBwB2ZXJzaW9uAwAVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAK3////F////WQAAAAA="
 }], ["yellow", {
     name: "Yellow Dye",
-    description: "Yellow Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: All Bamboo Planks, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates, Blocks of Bamboo, Block of Stripped Bamboo, Bamboo Mosaic, Mosaic slabs &amp; stairs;<br/> Horn Coral block; Hay bales, Bee Nest, Sponge, Wet Sponge",
+    description: "Yellow Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: All Bamboo Planks, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates, Blocks of Bamboo, Block of Stripped Bamboo, Bamboo Mosaic, Mosaic slabs &amp; stairs;<br/>Sulfur, Polished Sulfur, Sulfur Bricks &amp; all their slabs, walls, stairs; Chiseled Sulfur <br/> Horn Coral block; Hay bales, Bee Nest, Sponge, Wet Sponge",
     id: 'yellow_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [197, 197, 44, 255],
@@ -416,7 +416,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OnJlZHN0b25lX2Jsb2NrCgYAc3RhdGVzAAMHAHZlcnNpb24BChIBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAA7////wMAAABEAAAAAA=="
 }], ["gold", {
     name: "Gold",
-    description: "Gold Blocks, Blocks of Raw Gold, Bells, Light Weighted Pressure Plates",
+    description: "Gold Blocks, Blocks of Raw Gold, Bells, Light Weighted Pressure Plates; Potent Sulfur",
     id: 'gold_block []',
     is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [215, 205, 66, 255],
