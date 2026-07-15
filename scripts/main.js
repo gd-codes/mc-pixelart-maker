@@ -999,7 +999,7 @@ function createSurvivalGuide(uid, area) {
   let numzones = area[0] * area[1];
   $("#survGuidePlaceholderText").addClass('d-none');
   
-  // Add the html string to DOM
+  // Render the guide's DOM.
   try {
     $("#guideTab_"+uid).html(
       ejs.render(EJStemplates.survivalGuide, getSurvivalGuideTableData(uid)));
@@ -1008,13 +1008,14 @@ function createSurvivalGuide(uid, area) {
     return;
   }
 
+  // Bind the pagination buttons for each zone.
   $(`#guidePageBar_${uid} li.page-item`).click(function() {
     switchActiveGuidePage(this);
   });
 
   /* Keeping 16,000+ popovers at once = horrible performance. 
   Hence create and destroy active one each time while focused */
-  $(`.guide-tableareas td`).focus(function() {
+  $(`#survGuide_${uid} .guide-tableareas td`).focus(function() {
     let lastFocus = PictureData[uid].lastFocusedPopover;
     if (lastFocus) {
       $(lastFocus).popover('dispose');
@@ -1033,11 +1034,11 @@ function createSurvivalGuide(uid, area) {
 
   // Bind tab Direction modifier
   let tabDirectionCheck = $(`#tabDirection_${uid}`);
-  $(`.guide-tableareas td`).on('keydown', function(event) {
+  $(`#survGuide_${uid} .guide-tableareas td`).on('keydown', function(event) {
     tableMovement(this, event, tabDirectionCheck);
   });
 
-  // Bind count control checkboxes
+  // Bind count control (stacks v/s total number) checkboxes.
   $(`#guideTotalBlockCount_${uid}`).click( function() {
     toggleCountListView(uid, 
       numzones, 
@@ -1051,25 +1052,56 @@ function createSurvivalGuide(uid, area) {
       $(this).prop('checked'))
   });
 
+  // Bind checkboxes for 3D controls.
+  $(`#guideViewTroughs_${uid}`).click(function() {
+    $(`#survGuide_${uid} .guide-tableareas td.trough > span.icon`).toggleClass('d-none');
+  });
+  $(`#guideViewPeaks_${uid}`).click(function() {
+    $(`#survGuide_${uid} .guide-tableareas td.peak > span.icon`).toggleClass('d-none');
+  });
+  $(`#visualizeHeight_${uid}`).click(function() {
+    let checked = $(this).prop('checked');
+    $(`#survGuide_${uid} .guide-tableareas td`).each((i, td) => {
+      let $td = $(td);
+      $td.css('transform', checked ? `scale(${$td.data('yscale')})` : '');
+    })
+  });
+  $(`#visualizeSlopes_${uid}`).click(function() {
+    $(`#survGuide_${uid} .guide-tableareas td`).toggleClass('slope-active');
+  });
+
+  // Bind the individual material visibility toggles.
   $(`[type="checkbox"].visbox`).click(function() {
     showHideTableCells($(this));
   });
-  $(`#hideGuideCells_${uid}`).click(function() {
+
+  // Bind the show/hide all buttons for the material visibility toggles.
+  $(`#hideAllGuideCells_${uid}`).click(function() {
     let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
     // Click event toggles :checked again and triggers the callback to update the table
     toggles.each(i => $(toggles[i]).prop('checked', true).trigger('click'));
   });
-  $(`#showGuideCells_${uid}`).click(function() {
+  $(`#showAllGuideCells_${uid}`).click(function() {
     let toggles = $(`div[id^="survGuideBlockCount_"][id$="${uid}"] [type="checkbox"].visbox`);
     toggles.each(i => $(toggles[i]).prop('checked', false).trigger('click'));
   });
 
-  // Make page 1 visible & active
+  // Display a preview of the section of the image covered by each zone.
+  renderSurvivalGuidePreview(uid, area);
+
+  // Make page 1 visible & active.
   $(`#guidePageBar_${uid} li.page-item`).eq(1).click();
   $(`#guidePage_1_map_${uid}`).addClass("show");
+}
 
-  // Display a preview of the section of the image covered by each zone
+/**
+ * Render a preview of the section of the image covered by each zone in the survival guide.
+ * @param {string} uid - The image for which to generate the guide.
+ * @param {[Number,Number]} area - The number of zones in the image (width x height).
+ */
+function renderSurvivalGuidePreview(uid, area) {
   let zoneX=0, zoneZ=0;
+  let numzones = area[0] * area[1];
   for (let zone=1; zone<=numzones; zone++) {
     let canv = $(`#guideZoneImgCanv_${zone}_${uid}`)[0];
     let ctx = canv.getContext('2d');
@@ -1077,13 +1109,14 @@ function createSurvivalGuide(uid, area) {
     // Wrap promise evaluation in IIFE to capture current zone values before they
     // are updated by the outer loop
     ((zoneX, zoneZ) => createImageBitmap(PictureData[uid].finalImage).then((imgbmp) => {
+      const pad = 8;
       let imgh, imgw, imgx, imgy;
       if (imgbmp.width >= imgbmp.height) {
-        imgw = canv.width;
+        imgw = canv.width - pad;
         imgh = canv.height / (imgbmp.width / imgbmp.height);
       } else {
         imgw = canv.width * (imgbmp.width / imgbmp.height);
-        imgh = canv.height;
+        imgh = canv.height - pad;
       }
       imgx = Math.ceil((canv.width - imgw) / 2);
       imgy = Math.ceil((canv.height - imgh) / 2);
@@ -1092,7 +1125,7 @@ function createSurvivalGuide(uid, area) {
       let ry = zoneZ * imgh / imgbmp.height + imgy;
       ctx.beginPath();
       ctx.shadowColor = "#000";
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = pad;
       ctx.lineWidth = 2;
       ctx.strokeStyle = "#fff";
       ctx.strokeRect(rx, ry, 64*imgw/imgbmp.width, 128*imgh/imgbmp.height);

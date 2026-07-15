@@ -18,12 +18,13 @@ const SVGicons = {
   invisible: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/></svg>`,
   image: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/><path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54L1 12.5v-9a.5.5 0 0 1 .5-.5z"/></svg>`,
   check_circle: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/></svg>`,
-  "dither-none": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="white"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="black"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
-  "dither-atkinson": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="black"/><rect width="5" height="5" x="0"  y="10"  fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="black"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="black"/><rect width="5" height="5" x="10"  y="5"  fill="black"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="white"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="white"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="white"/><rect width="5" height="5" x="25" y="10"  fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
-  "dither-floyd-steinberg": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="black"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="black"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="white"/><rect width="5" height="5" x="20" y="10"  fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="white"/></svg>`,
-  "dither-weak-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="white"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0"  fill="white"/><rect width="5" height="5" x="5"  y="5"  fill="black"/><rect width="5" height="5" x="5"  y="10"  fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="white"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0"  fill="white"/><rect width="5" height="5" x="15" y="5"  fill="black"/><rect width="5" height="5" x="15" y="10"  fill="white"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="black"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="black"/><rect width="5" height="5" x="20" y="15" fill="white"/><rect width="5" height="5" x="25" y="0"  fill="white"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
-  "dither-strong-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0"  fill="white"/><rect width="5" height="5" x="0"  y="5"  fill="black"/><rect width="5" height="5" x="0"  y="10"  fill="white"/><rect width="5" height="5" x="0"  y="15" fill="black"/><rect width="5" height="5" x="5"  y="0"  fill="black"/><rect width="5" height="5" x="5"  y="5"  fill="white"/><rect width="5" height="5" x="5"  y="10"  fill="black"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0"  fill="white"/><rect width="5" height="5" x="10"  y="5"  fill="black"/><rect width="5" height="5" x="10"  y="10"  fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0"  fill="black"/><rect width="5" height="5" x="15" y="5"  fill="white"/><rect width="5" height="5" x="15" y="10"  fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0"  fill="white"/><rect width="5" height="5" x="20" y="5"  fill="black"/><rect width="5" height="5" x="20" y="10"  fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0"  fill="black"/><rect width="5" height="5" x="25" y="5"  fill="black"/><rect width="5" height="5" x="25" y="10"  fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
-
+  caret_up: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16"><path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>`,
+  caret_down: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>`,
+  "dither-none": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0" fill="white"/><rect width="5" height="5" x="0"  y="5" fill="white"/><rect width="5" height="5" x="0"  y="10" fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0" fill="white"/><rect width="5" height="5" x="5"  y="5" fill="white"/><rect width="5" height="5" x="5"  y="10" fill="white"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0" fill="white"/><rect width="5" height="5" x="10"  y="5" fill="white"/><rect width="5" height="5" x="10"  y="10" fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0" fill="black"/><rect width="5" height="5" x="15" y="5" fill="black"/><rect width="5" height="5" x="15" y="10" fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0" fill="black"/><rect width="5" height="5" x="20" y="5" fill="black"/><rect width="5" height="5" x="20" y="10" fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0" fill="black"/><rect width="5" height="5" x="25" y="5" fill="black"/><rect width="5" height="5" x="25" y="10" fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-atkinson": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0" fill="white"/><rect width="5" height="5" x="0"  y="5" fill="black"/><rect width="5" height="5" x="0"  y="10" fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0" fill="black"/><rect width="5" height="5" x="5"  y="5" fill="white"/><rect width="5" height="5" x="5"  y="10" fill="black"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0" fill="black"/><rect width="5" height="5" x="10"  y="5" fill="black"/><rect width="5" height="5" x="10"  y="10" fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0" fill="black"/><rect width="5" height="5" x="15" y="5" fill="black"/><rect width="5" height="5" x="15" y="10" fill="white"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0" fill="white"/><rect width="5" height="5" x="20" y="5" fill="white"/><rect width="5" height="5" x="20" y="10" fill="black"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0" fill="black"/><rect width="5" height="5" x="25" y="5" fill="white"/><rect width="5" height="5" x="25" y="10" fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-floyd-steinberg": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0" fill="white"/><rect width="5" height="5" x="0"  y="5" fill="white"/><rect width="5" height="5" x="0"  y="10" fill="black"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0" fill="black"/><rect width="5" height="5" x="5"  y="5" fill="black"/><rect width="5" height="5" x="5"  y="10" fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0" fill="white"/><rect width="5" height="5" x="10"  y="5" fill="white"/><rect width="5" height="5" x="10"  y="10" fill="black"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0" fill="black"/><rect width="5" height="5" x="15" y="5" fill="black"/><rect width="5" height="5" x="15" y="10" fill="black"/><rect width="5" height="5" x="15" y="15" fill="white"/><rect width="5" height="5" x="20" y="0" fill="white"/><rect width="5" height="5" x="20" y="5" fill="white"/><rect width="5" height="5" x="20" y="10" fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0" fill="black"/><rect width="5" height="5" x="25" y="5" fill="black"/><rect width="5" height="5" x="25" y="10" fill="black"/><rect width="5" height="5" x="25" y="15" fill="white"/></svg>`,
+  "dither-weak-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0" fill="white"/><rect width="5" height="5" x="0"  y="5" fill="white"/><rect width="5" height="5" x="0"  y="10" fill="white"/><rect width="5" height="5" x="0"  y="15" fill="white"/><rect width="5" height="5" x="5"  y="0" fill="white"/><rect width="5" height="5" x="5"  y="5" fill="black"/><rect width="5" height="5" x="5"  y="10" fill="white"/><rect width="5" height="5" x="5"  y="15" fill="black"/><rect width="5" height="5" x="10"  y="0" fill="white"/><rect width="5" height="5" x="10"  y="5" fill="white"/><rect width="5" height="5" x="10"  y="10" fill="white"/><rect width="5" height="5" x="10"  y="15" fill="white"/><rect width="5" height="5" x="15" y="0" fill="white"/><rect width="5" height="5" x="15" y="5" fill="black"/><rect width="5" height="5" x="15" y="10" fill="white"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0" fill="black"/><rect width="5" height="5" x="20" y="5" fill="black"/><rect width="5" height="5" x="20" y="10" fill="black"/><rect width="5" height="5" x="20" y="15" fill="white"/><rect width="5" height="5" x="25" y="0" fill="white"/><rect width="5" height="5" x="25" y="5" fill="black"/><rect width="5" height="5" x="25" y="10" fill="white"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
+  "dither-strong-bayer": `<svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" style="outline: 1px solid lightgrey;"><rect width="5" height="5" x="0"  y="0" fill="white"/><rect width="5" height="5" x="0"  y="5" fill="black"/><rect width="5" height="5" x="0"  y="10" fill="white"/><rect width="5" height="5" x="0"  y="15" fill="black"/><rect width="5" height="5" x="5"  y="0" fill="black"/><rect width="5" height="5" x="5"  y="5" fill="white"/><rect width="5" height="5" x="5"  y="10" fill="black"/><rect width="5" height="5" x="5"  y="15" fill="white"/><rect width="5" height="5" x="10"  y="0" fill="white"/><rect width="5" height="5" x="10"  y="5" fill="black"/><rect width="5" height="5" x="10"  y="10" fill="white"/><rect width="5" height="5" x="10"  y="15" fill="black"/><rect width="5" height="5" x="15" y="0" fill="black"/><rect width="5" height="5" x="15" y="5" fill="white"/><rect width="5" height="5" x="15" y="10" fill="black"/><rect width="5" height="5" x="15" y="15" fill="black"/><rect width="5" height="5" x="20" y="0" fill="white"/><rect width="5" height="5" x="20" y="5" fill="black"/><rect width="5" height="5" x="20" y="10" fill="white"/><rect width="5" height="5" x="20" y="15" fill="black"/><rect width="5" height="5" x="25" y="0" fill="black"/><rect width="5" height="5" x="25" y="5" fill="black"/><rect width="5" height="5" x="25" y="10" fill="black"/><rect width="5" height="5" x="25" y="15" fill="black"/></svg>`,
 };
 
 
@@ -124,13 +125,16 @@ const EJStemplates = {
    * @param {String} emptyFileInput
    */
   imageForm: `
-  <div id="dddisp_<%=uid%>" class="dragDropDisplay h-100 w-100 position-absolute justify-content-center d-none">
-    <div class="align-self-center">
-      <div class="dragDropIcon"><%- SVGicons.upload_file %></div>
-      <div class="dragDropButton d-flex justify-content-center align-self-center w-100 px-4 py-2">Drop Image to Upload</div>
-    </div>
+<%# Drag and Drop Target Layer %>
+<div id="dddisp_<%=uid%>" class="dragDropDisplay h-100 w-100 position-absolute justify-content-center d-none">
+  <div class="align-self-center">
+    <div class="dragDropIcon"><%- SVGicons.upload_file %></div>
+    <div class="dragDropButton d-flex justify-content-center align-self-center w-100 px-4 py-2">Drop Image to Upload</div>
   </div>
-  <div class="tab-pane fade <% if (active) { %>show active<% } %> py-3 px-4" id="tabPane_<%=uid%>">
+</div>
+
+<%# Image Form %>
+<div class="tab-pane fade <% if (active) { %>show active<% } %> py-3 px-4" id="tabPane_<%=uid%>">
   <form id="imageForm_<%=uid%>">
   <div class="form-group">
     <label for="imgInput_<%=uid%>" class="text-primary font-weight-bold">Select an Image</label>
@@ -290,6 +294,7 @@ const EJStemplates = {
    * @see getSurvivalGuideTableData()
    */
   survivalGuide: `
+<%# Zones Pagination Navbar %>
 <nav aria-label="Pagination" id="guidePageBar_<%=uid%>">
   <ul class="pagination justify-content-center">
     <li class="page-item disabled">
@@ -302,9 +307,11 @@ const EJStemplates = {
     <% } %>
   </ul>
 </nav>
+
+<%# Guide Preferences and Instructions %>
 <div class="row">
   <div class="col-sm-4 px-3 py-2">
-    <p class="text-primary"> &nbsp; Preferences</p>
+    <p> &nbsp; <strong>Preferences</strong></p>
     <input type="checkbox" class="mx-2" id="tabDirection_<%=uid%>" />
     <label for="tabDirection_<%=uid%>">Enable Vertical <code>Tab</code> movement</label>
     <br/>
@@ -312,34 +319,63 @@ const EJStemplates = {
     <label for="guideTotalBlockCount_<%=uid%>">View total count for all zones</label>
     <br/>
     <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=uid%>" />
-    <label for="guideStackViewCount_<%=uid%>">Display values in stacks of 64</label>
+    <label for="guideStackViewCount_<%=uid%>">Display counts in stacks of 64</label>
     <br/>
-    <div class="btn-group mt-3">
-      <button class="btn btn-sm btn-outline-info" id="hideGuideCells_<%=uid%>">Hide All</button>
-      <button class="btn btn-sm btn-outline-info" id="showGuideCells_<%=uid%>">Show All</button>
+    <% if (is3D) { %>
+      <p> &nbsp; <strong>3D tools</strong></p>
+      <input type="checkbox" class="mx-2" id="guideViewTroughs_<%=uid%>"/>
+      <label for="guideViewTroughs_<%=uid%>">Mark approximate troughs (<%-SVGicons.caret_down%>)</label>
+      <br/>
+      <input type="checkbox" class="mx-2" id="guideViewPeaks_<%=uid%>"/>
+      <label for="guideViewPeaks_<%=uid%>">Mark approximate peaks (<%-SVGicons.caret_up%>)</label>
+      <br/>
+      <input type="checkbox" class="mx-2" id="visualizeHeight_<%=uid%>"/>
+      <label for="visualizeHeight_<%=uid%>">Visualize height</label>
+      <br/>
+      <input type="checkbox" class="mx-2" id="visualizeSlopes_<%=uid%>"/>
+      <label for="visualizeSlopes_<%=uid%>">Visualize slope directions</label>
+    <% } %>
+    <p> &nbsp; <strong>Block tools</strong></p>
+    <div class="btn-group">
+      <button class="btn btn-sm btn-outline-info" id="showAllGuideCells_<%=uid%>">Show All</button>
+      <button class="btn btn-sm btn-outline-info" id="hideAllGuideCells_<%=uid%>">Hide All</button>
     </div>
   </div>
-  <div class="col-sm-8 alert alert-info">
-    <p class="alert-heading"><%-SVGicons.infosquare%></p>
-    <p>For convenience, each artwork is divided into a number of zones 
-      (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank"> the commands</a> are), 
-      2 halves per map.<br/>
-      Coordinates in each zone are 
-      <% if (absCoords) { %>absolute<% } else { %>specified relative to its top-left (NW) corner<% } %>.
-    </p>
-    <p>Click on any of the squares in the table to view a popup with its block type and coordinates.
-      <br/>You can also use the <code>Tab</code> key to navigate row-by-row or column-by-column,
-      or <code>WASD</code> or <code>&larr;&uarr;&darr;&rarr;</code> arrow keys.
-    </p>
-    <% if (is3D) { %>
-      <p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to
-      distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>
-    <% } %>
+  <div class="col-sm-8">
+    <div class="alert alert-info">
+      <p class="alert-heading"><%-SVGicons.infosquare%></p>
+      <p>For convenience, each artwork is divided into a number of zones 
+        (the same way that <a rel="nofollow" href="manual.html#in-mc" target="_blank"> the commands</a> are), 
+        2 halves per map.<br/>
+        Coordinates in each zone are 
+        <% if (absCoords) { %>absolute<% } else { %>specified relative to its top-left (NW) corner<% } %>.
+      </p>
+      <p>Click on any of the squares in the table to view a popup with its block type and coordinates.
+        <br/>You can also use the <code>Tab</code> key to navigate row-by-row or column-by-column,
+        or <code>WASD</code> or <code>&larr;&uarr;&darr;&rarr;</code> arrow keys.
+      </p>
+      <% if (is3D) { %>
+        <p>For 3D map art, the shading of lighter/darker blocks is not shown here to make it easier to
+        distinguish between different blocks. Refer to the converted image preview for the actual colours.</p>
+      <% } %>
+    </div>
+    <div class="alert alert-info alert-dismissible fade show">
+      <div>
+        <i>Tip</i>: You can rename the material / block names used here,
+        from the Palette selector, while editing the Image Upload form above.
+      </div>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </div>
 </div>
+
 <div class="accordion border-top border-light pt-2" id="survGuide_<%=uid%>">
   <% let MaterialCodes = Array.from(Colours.keys()); %>
   <% for( let zone = 0; zone < numzones; zone++ ) { %>
+
+    <%# Content of Zone tab: Block Count and Guide Tables %>
     <div class="collapse" id="guidePage_<%=zone+1%>_map_<%=uid%>" data-parent="#survGuide_<%=uid%>">
       <div class="row">
         <div class="col-md-4" id="survGuideBlockCount_<%=zone+1%>_<%=uid%>">
@@ -376,23 +412,49 @@ const EJStemplates = {
             </tbody>
           </table>
         </div>
+
         <div class="col-md-8 guide-tableareas" id="survGuideTableArea_<%=zone+1%>_<%=uid%>">
           <table class="table table-responsive">
           <% for( let z = 0; z < 128; z++ ) { %>
             <tr>
             <% for( let x = 0; x < 64; x++ ) { %>
-              <% let zo = zone_origins[zone]; %>
-              <% let code = tabledatas[zone][z][x][0]; %>
-              <% let y = tabledatas[zone][z][x][1]; %>
-              <% let pixnorm = ColourList[3*code]; %>
-              <td tabindex="0" style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>);"
-                data-placement="top" title="<%=Colours.get(MaterialCodes[code]).name%>" data-html="true"
-                data-code="<%=MaterialCodes[code]%>" data-content="Position: &lt;b&gt;
-                  <% if (absCoords){ %>
-                    <%=zo[0]+x%>&nbsp;&nbsp;<%=y%>&nbsp;&nbsp;<%=zo[1]+z%>
-                  <% } else { %>
-                    ~<%=x%>&nbsp;~<%=y%>&nbsp;~<%=z%>
-                  <% } %>&lt;/b&gt;">
+              <% 
+                let zo = zone_origins[zone];
+                let code = tabledatas[zone][z][x][0];
+                // Normal (2D shade) of the block colour, as RGB tuple.
+                let pixnorm = ColourList[3*code];
+                // Simplistic colour contrast formula for foreground icons.
+                let pixfg = (0.299*pixnorm[0] + 0.587*pixnorm[1] + 0.114*pixnorm[2]) > 128
+                  ? 'black' : 'white';
+                // Extract height and slope information for 3D viz tools.
+                let y = tabledatas[zone][z][x][1];
+                let yprev = (z>0) ? tabledatas[zone][z-1][x][1] : y-1;
+                let peakOrTrough = tabledatas[zone][z][x][2];
+                let yscale = tabledatas[zone][z][x][3];
+              %>
+              <td tabindex="0" 
+                  style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>); color: <%=pixfg%>;"
+                  title="<%=Colours.get(MaterialCodes[code]).name%>"
+                  data-html="true"
+                  data-placement="top" 
+                  data-content="Position: &lt;b&gt;
+                    <% if (absCoords){ %>
+                      <%=zo[0]+x%>&nbsp;&nbsp;<%=y%>&nbsp;&nbsp;<%=zo[1]+z%>
+                    <% } else { %>
+                      ~<%=x%>&nbsp;~<%=y%>&nbsp;~<%=z%>
+                    <% } %>&lt;/b&gt;"
+                  data-code="<%=MaterialCodes[code]%>"
+                  <% if (is3D) { %>
+                    data-yscale="<%= yscale %>"
+                    class="<%= (peakOrTrough !== null) ? (peakOrTrough ? 'peak' : 'trough') : '' %><%=' '%>
+                           <%= (y === yprev) ? 'slope-flat' : (y > yprev ? 'slope-north' : 'slope-south') %>"
+                  <% } %>
+              >
+                <% if (peakOrTrough === true) { %>
+                  <span class="icon d-none"><%-SVGicons.caret_up%></span>
+                <% } else if (peakOrTrough === false) { %>
+                  <span class="icon d-none"><%-SVGicons.caret_down%></span>
+                <% } %>
               </td>
             <% } %>
             </tr>

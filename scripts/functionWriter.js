@@ -100,23 +100,27 @@ function getSurvivalGuideTableData(uid) {
   var originX = absCoords ? Number($("#originInputX_"+uid).val()) : 0;
   var originY = absCoords ? Number($("#originInputY_"+uid).val()) : 0;
   var originZ = absCoords ? Number($("#originInputZ_"+uid).val()) : 0;
+  var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
+  var is3D = ymax > 1;
 
-  var zone_origins=[], x0, z0, yMap; 
+  var zone_origins=[], x0, z0, yMap, yMinGlobal = 0, yMaxGlobal = 0; 
     //Divide image area into 64x128 zones for individual functions (8164 pixels per zone)
   for (let z0=0; z0<image.height; z0+=128) {
     for (let x0=0; x0<image.width; x0+=64) {
       zone_origins.push([originX+x0, originZ+z0]);
     }
   }
-  var ymax = ($("#3dSwitch_"+uid+":checked").length > 0)? $("#heightInput_"+uid).val() : 0;
-  if (ymax > 1) {
+
+  if (is3D) {
     yMap = findYMap(image, ymax, PictureData[uid]['shadeMap']).result;
   }
 
   // Begin creating the data for each zone
-  // `tabledatas` has a matcing colour index and y coordinate for every pixel in the image
-  // `blockcounts` has aggregate colour/material usage data from the image
-  // Repeat these for each of the zones & append to html as seperate pages
+  // `tabledatas` has a matcing colour index and y coordinate for every pixel in the image.
+  // `tabledatas[0..N-1][z][x]` has data for each pixel (x, z) in each of N zones.
+  // `blockcounts` has aggregate colour/material usage data from the image.
+  // `blockcounts[0]` has aggregate counts across all zones, `blockcounts[1..N]` are zone-wise.
+  // Repeat these for each of the zones & append to html as seperate pages.
   var blockcounts = new Array(zone_origins.length + 1);
   blockcounts[0] = new Array(Colours.size).fill(0);
   var tabledatas = new Array(zone_origins.length);
@@ -129,15 +133,50 @@ function getSurvivalGuideTableData(uid) {
     for (let z=0; z<128; z++) {
       tabledatas[zone][z] = new Array(64);
       for (let x=0; x<64; x++) {
+        // Get the displayed pixel colour for the current block.
         pix = getPixelAt(x+x0-originX, z+z0-originZ, image);
+        // Get the colour code, normalizing regular / light / dark variants.
         code = Math.floor(indexOfArray(pix, ColourList) / 3);
+        // Calculate height.
         y = (ymax <= 1) ? originY : yMap[x+x0-originX][z+z0-originZ]+originY;
-        tabledatas[zone][z][x] = [code, y];
+        // Set the data in outputs.
+        // The format for tabledatas is 
+        // {code:String, y:Number, peakOrTrough:Boolean?, yscale:Number?}.
+        tabledatas[zone][z][x] = [code, y, null, null];
         blockcounts[zone+1][code] += 1;
         blockcounts[0][code] += 1;
+        yMinGlobal = Math.min(y, yMinGlobal);
+        yMaxGlobal = Math.max(y, yMaxGlobal);
       }
     }
-  } 
+  }
+  if (is3D) {
+    // Calculate peak/trough and slope information for each pixel for visualization,
+    // after the y coordinates have been populated.
+    for (let zone=0; zone<zone_origins.length; zone++) {
+      for (let z=0; z<128; z++) {
+        for (let x=0; x<64; x++) {
+          let y = tabledatas[zone][z][x][1];
+          let yN1 = (z>0) ? tabledatas[zone][z-1][x][1] : y;
+          let yN2 = (z>1) ? tabledatas[zone][z-2][x][1] : yN1;
+          let yS1 = (z<127) ? tabledatas[zone][z+1][x][1] : y;
+          let yS2 = (z<126) ? tabledatas[zone][z+2][x][1] : yS1;
+          // Attempt to identify peaks and troughs in the column heightmap,
+          // based on a rolling window of 5 pixels.
+          let isPeak = (y > yN1) && (yN1 > yN2 || y - yN1 > 2 || z == 127) && (y >= yS1) && (yS1 >= yS2) ||
+                       (y > yS1) && (yS1 > yS2 || y - yS1 > 2 || z == 0) && (y >= yN1) && (yN1 >= yN2);
+          let isTrough = (y < yN1) && (yN1 < yN2 || yN1 - y > 2 || z == 127) && (y <= yS1) && (yS1 <= yS2) ||
+                          (y < yS1) && (yS1 < yS2 || yS1 - y > 2 || z == 0) && (y <= yN1) && (yN1 <= yN2);
+          tabledatas[zone][z][x][2] = isPeak ? true : (isTrough ? false : null);
+          // Scale the height for visualization in the survival guide, to a range of 0.1 to 1.0.
+          let yscale = (y - yMinGlobal) / (yMaxGlobal - yMinGlobal);
+          yscale = yscale * 0.8 + 0.2;
+          tabledatas[zone][z][x][3] = yscale;
+        }
+      }
+    }
+  }
+  // `cindexns` contains the indices of ColourTokens that are actually used.
   var cindexns = [];
   for (let ct of pal) {
     let index = ColourTokens.indexOf(ct);
@@ -149,7 +188,7 @@ function getSurvivalGuideTableData(uid) {
   }
 
   return { uid, 
-    is3D: (ymax > 1), 
+    is3D, 
     numzones: zone_origins.length, 
     tabledatas, 
     blockcounts, 
