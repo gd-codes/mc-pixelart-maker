@@ -321,6 +321,14 @@ const EJStemplates = {
     <input type="checkbox" class="mx-2" id="guideStackViewCount_<%=uid%>" />
     <label for="guideStackViewCount_<%=uid%>">Display counts in stacks of 64</label>
     <br/>
+    <label for="guideTooltipPlacement_<%=uid%>" class="ml-2">Block Popup Positioning:</label>
+    <select class="custom-select custom-select-sm w-auto" id="guideTooltipPlacement_<%=uid%>">
+      <option value="top" selected>Top</option>
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+      <option value="bottom">Bottom</option>
+    </select>
+    <br/>
     <% if (is3D) { %>
       <p> &nbsp; <strong>3D tools</strong></p>
       <input type="checkbox" class="mx-2" id="guideViewTroughs_<%=uid%>"/>
@@ -435,8 +443,8 @@ const EJStemplates = {
               <td tabindex="0" 
                   style="background-color: rgb(<%=pixnorm[0]%>,<%=pixnorm[1]%>,<%=pixnorm[2]%>); color: <%=pixfg%>;"
                   title="<%=Colours.get(MaterialCodes[code]).name%>"
+                  <%# !-- data-toggle and data-placement are set by controller JS --%>
                   data-html="true"
-                  data-placement="top" 
                   data-content="Position: &lt;b&gt;
                     <% if (absCoords){ %>
                       <%=zo[0]+x%>&nbsp;&nbsp;<%=y%>&nbsp;&nbsp;<%=zo[1]+z%>

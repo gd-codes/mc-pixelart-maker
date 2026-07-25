@@ -1017,6 +1017,7 @@ function createSurvivalGuide(uid, area) {
   Hence create and destroy active one each time while focused */
   $(`#survGuide_${uid} .guide-tableareas td`).focus(function() {
     let lastFocus = PictureData[uid].lastFocusedPopover;
+    let placedir = $(`#guideTooltipPlacement_${uid}`).val();
     if (lastFocus) {
       $(lastFocus).popover('dispose');
       $(lastFocus).removeData('toggle');
@@ -1028,6 +1029,7 @@ function createSurvivalGuide(uid, area) {
     }
     $(this).addClass('focused');
     $(this).data('toggle', 'popover');
+    $(this).data('placement', placedir);
     $(this).popover('show');
     PictureData[uid].lastFocusedPopover = this;
   });
