@@ -31,6 +31,7 @@ The app is updated occasionally, to keep in sync with changes made to the latest
 | 1.21.0 "Tricky Trials" | [v5.0](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v5.0) |
 | 1.21.50 "The Garden Awakens" | [v5.4](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v5.4) |
 | 1.21.70 "Spring to Life" | [v5.5](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v5.5) |
+| 1.26.30 "Chaos Cubed" | [v5.6](https://github.com/gd-codes/mc-pixelart-maker/releases/tag/v5.6) |
 
 ### Contributing
 

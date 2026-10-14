@@ -854,7 +854,7 @@ function writeBhvPack(images, uuids) {
       description: $("#bpackDescInput").val(),
       uuid: uuids[0],
       version: [1,0,0],
-      min_engine_version: [1,21,50]
+      min_engine_version: [1,26,50]
     },
     modules: [{
       description: "Created with https://gd-codes.github.io/mc-pixelart-maker, on " + 

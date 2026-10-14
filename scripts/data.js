@@ -24,14 +24,14 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OndoaXRlX2NvbmNyZXRlCgYAc3RhdGVzAAMHAHZlcnNpb24DABUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAArf///8X///9TAAAAAA=="
 }], ["lightgray", {
     name: "Light Gray Dye",
-    description: "Light Gray Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Structure blocks; Pale Moss & Pale Moss Carpets, Pale Hanging Moss",
+    description: "Light Gray Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Poplar Planks, Logs, Stripped Logs, Stripped Wood, Fences, Fence Gates, Doors, Trapdoors, Pressure plates, Signs &amp; Hanging Signs, Slabs and Stairs; <br/> Structure blocks; Pale Moss & Pale Moss Carpets, Pale Hanging Moss",
     id: 'light_gray_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: true,
     rgb: [132, 132, 132, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZR0AbWluZWNyYWZ0OmxpZ2h0X2dyYXlfY29uY3JldGUKBgBzdGF0ZXMAAwcAdmVyc2lvbgMAFQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAACt////xf///1QAAAAA"
 }], ["gray", {
     name: "Gray Dye",
-    description: "Gray Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Acacia Wood, Stripped Acacia Wood; Tinted Glass; All Dead Coral, Dead Coral Blocks &amp; Dead Coral Fans",
+    description: "Gray Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Acacia Wood, Stripped Acacia Wood; Tinted Glass; Dried Ghast; All Dead Coral, Dead Coral Blocks &amp; Dead Coral Fans",
     id: 'gray_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: true,
     rgb: [65, 65, 65, 255],
@@ -52,21 +52,21 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRgAbWluZWNyYWZ0OmJyb3duX2NvbmNyZXRlCgYAc3RhdGVzAAMHAHZlcnNpb24DABUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAArf///8X///9XAAAAAA=="
 }], ["red", {
     name: "Red Dye",
-    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Warts, Nether Wart Block, Shroomlight; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates <br/> Cinnabar, Polished Cinnabar, Cinnabar Bricks &amp; all their slabs, walls, stairs; Chiseled Cinnabar",
+    description: "Red Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Fire Coral Block; Red Mushroom, Red Mushroom block; Nether Warts, Nether Wart Block, Shroomlight; Red Poplar leaves; Enchanting table; Brick block, slabs and walls; Sniffer Egg;<br/> All Mangrove Wood, Stripped Wood, Planks, Vertical Logs, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates <br/> Cinnabar, Polished Cinnabar, Cinnabar Bricks &amp; all their slabs, walls, stairs; Chiseled Cinnabar",
     id: 'red_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [132, 44, 44, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRYAbWluZWNyYWZ0OnJlZF9jb25jcmV0ZQoGAHN0YXRlcwADBwB2ZXJzaW9uAwAVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAK3////F////WAAAAAA="
 }], ["orange", {
     name: "Orange Dye",
-    description: "Orange Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Acacia Planks, Fences, Fence Gates, Doors, Trapdoors, Pressure plates, Signs &amp; Hanging Signs, Slabs, Stairs, Vertical Logs &amp; Stripped logs (any orientation) <br/> Copper (waxed or unwaxed); Cut Copper blocks, slabs, stairs; Copper Doors, Bulbs, Grates, Chiseled Blocks <br/> Red Sand, Red Sandstone &amp; all its Cut, Smooth, Chiseled variants, their Slabs, Walls, Stairs <br/> Honey block, Honeycomb block; Undyed Terracotta; Lightning rods; Pumpkins, Carved Pumpkins, Jack O' Lanterns; Creaking Heart (active or inactive), Open Eyeblossoms",
+    description: "Orange Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: Acacia Planks, Fences, Fence Gates, Doors, Trapdoors, Pressure plates, Signs &amp; Hanging Signs, Slabs, Stairs, Vertical Logs &amp; Stripped logs (any orientation) <br/> Copper (waxed or unwaxed); Cut Copper blocks, slabs, stairs; Copper Doors, Bulbs, Grates, Chiseled Blocks <br/> Red Sand, Red Sandstone &amp; all its Cut, Smooth, Chiseled variants, their Slabs, Walls, Stairs <br/> Honey block, Honeycomb block; Undyed Terracotta; Lightning rods; Pumpkins, Carved Pumpkins, Jack O' Lanterns; Orange Poplar leaves; Creaking Heart (active or inactive), Open Eyeblossoms",
     id: 'orange_concrete []',
     is_dye: true, is_terc: true, is_biomevar: false, is_greyscale: false,
     rgb: [186, 109, 44, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRkAbWluZWNyYWZ0Om9yYW5nZV9jb25jcmV0ZQoGAHN0YXRlcwADBwB2ZXJzaW9uAwAVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAK3////F////WQAAAAA="
 }], ["yellow", {
     name: "Yellow Dye",
-    description: "Yellow Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: All Bamboo Planks, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates, Blocks of Bamboo, Block of Stripped Bamboo, Bamboo Mosaic, Mosaic slabs &amp; stairs;<br/>Sulfur, Polished Sulfur, Sulfur Bricks &amp; all their slabs, walls, stairs; Chiseled Sulfur <br/> Horn Coral block; Hay bales, Bee Nest, Sponge, Wet Sponge",
+    description: "Yellow Concrete, Concrete Powder, Wool, Carpets, Stained Glass Blocks, Shulker boxes, Glazed Terracotta <br/> <i>Also</i>: All Bamboo Planks, Doors, Trapdoors, Fences, Gates, Signs &amp; Hanging Signs, Slabs, Stairs &amp; Pressure Plates, Blocks of Bamboo, Block of Stripped Bamboo, Bamboo Mosaic, Mosaic slabs &amp; stairs;<br/>Sulfur, Polished Sulfur, Sulfur Bricks &amp; all their slabs, walls, stairs; Chiseled Sulfur <br/> Horn Coral block; Yellow Poplar leaves; Hay bales, Bee Nest, Sponge, Wet Sponge",
     id: 'yellow_concrete []',
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [197, 197, 44, 255],
@@ -127,6 +127,118 @@ const Colours = new Map([["white", {
     is_dye: true, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [208, 109, 142, 255],
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRcAbWluZWNyYWZ0OnBpbmtfY29uY3JldGUKBgBzdGF0ZXMAAwcAdmVyc2lvbgMAFQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAACt////xf///2IAAAAA"
+}], ["whitews", {
+    name: "White Wool Slab",
+    description: "White Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'white_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [204, 204, 204, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGQBtaW5lY3JhZnQ6d2hpdGVfd29vbF9zbGFiCgYAc3RhdGVzCBcAbWluZWNyYWZ0OnZlcnRpY2FsX2hhbGYGAGJvdHRvbQADBwB2ZXJzaW9uITwVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEAAAADE////QAAAAAA="
+}], ["lightgrayws", {
+    name: "Light Gray Wool Slab",
+    description: "Light Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'light_gray_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [140, 140, 134, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lHgBtaW5lY3JhZnQ6bGlnaHRfZ3JheV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["grayws", {
+    name: "Gray Wool Slab",
+    description: "Gray Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'gray_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [66, 76, 76, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGABtaW5lY3JhZnQ6Z3JheV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["blackws", {
+    name: "Black Wool Slab",
+    description: "Black Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'black_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: true,
+    rgb: [28, 28, 32, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGQBtaW5lY3JhZnQ6YmxhY2tfd29vbF9zbGFiCgYAc3RhdGVzCBcAbWluZWNyYWZ0OnZlcnRpY2FsX2hhbGYGAGJvdHRvbQADBwB2ZXJzaW9uITwVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEAAAADE////QAAAAAA="
+}], ["brownws", {
+    name: "Brown Wool Slab",
+    description: "Brown Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'brown_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [120, 78, 48, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGQBtaW5lY3JhZnQ6YnJvd25fd29vbF9zbGFiCgYAc3RhdGVzCBcAbWluZWNyYWZ0OnZlcnRpY2FsX2hhbGYGAGJvdHRvbQADBwB2ZXJzaW9uITwVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEAAAADE////QAAAAAA="
+}], ["redws", {
+    name: "Red Wool Slab",
+    description: "Red Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'red_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [142, 38, 34, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lFwBtaW5lY3JhZnQ6cmVkX3dvb2xfc2xhYgoGAHN0YXRlcwgXAG1pbmVjcmFmdDp2ZXJ0aWNhbF9oYWxmBgBib3R0b20AAwcAdmVyc2lvbiE8FQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABAAAAAxP///0AAAAAA"
+}], ["orangews", {
+    name: "Orange Wool Slab",
+    description: "Orange Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'orange_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [214, 116, 28, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGgBtaW5lY3JhZnQ6b3JhbmdlX3dvb2xfc2xhYgoGAHN0YXRlcwgXAG1pbmVjcmFmdDp2ZXJ0aWNhbF9oYWxmBgBib3R0b20AAwcAdmVyc2lvbiE8FQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABAAAAAxP///0AAAAAA"
+}], ["yellowws", {
+    name: "Yellow Wool Slab",
+    description: "Yellow Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'yellow_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [220, 188, 56, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGgBtaW5lY3JhZnQ6eWVsbG93X3dvb2xfc2xhYgoGAHN0YXRlcwgXAG1pbmVjcmFmdDp2ZXJ0aWNhbF9oYWxmBgBib3R0b20AAwcAdmVyc2lvbiE8FQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABAAAAAxP///0AAAAAA"
+}], ["limews", {
+    name: "Lime Wool Slab",
+    description: "Lime Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'lime_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [116, 174, 30, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGABtaW5lY3JhZnQ6bGltZV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["greenws", {
+    name: "Green Wool Slab",
+    description: "Green Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'green_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [88, 112, 22, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGQBtaW5lY3JhZnQ6Z3JlZW5fd29vbF9zbGFiCgYAc3RhdGVzCBcAbWluZWNyYWZ0OnZlcnRpY2FsX2hhbGYGAGJvdHRvbQADBwB2ZXJzaW9uITwVAQAKEwBibG9ja19wb3NpdGlvbl9kYXRhAAAAAAkWAHN0cnVjdHVyZV93b3JsZF9vcmlnaW4DAwAAAEAAAADE////QAAAAAA="
+}], ["cyanws", {
+    name: "Cyan Wool Slab",
+    description: "Cyan Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'cyan_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: true,
+    rgb: [22, 138, 138, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGABtaW5lY3JhZnQ6Y3lhbl93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["lightbluews", {
+    name: "Light Blue Wool Slab",
+    description: "Light Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'light_blue_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [56, 158, 190, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lHgBtaW5lY3JhZnQ6bGlnaHRfYmx1ZV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["bluews", {
+    name: "Blue Wool Slab",
+    description: "Blue Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'blue_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [44, 54, 128, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGABtaW5lY3JhZnQ6Ymx1ZV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["purplews", {
+    name: "Purple Wool Slab",
+    description: "Purple Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'purple_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [124, 48, 160, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGgBtaW5lY3JhZnQ6cHVycGxlX3dvb2xfc2xhYgoGAHN0YXRlcwgXAG1pbmVjcmFmdDp2ZXJ0aWNhbF9oYWxmBgBib3R0b20AAwcAdmVyc2lvbiE8FQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAABAAAAAxP///0AAAAAA"
+}], ["magentaws", {
+    name: "Magenta Wool Slab",
+    description: "Magenta Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'magenta_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [174, 72, 166, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGwBtaW5lY3JhZnQ6bWFnZW50YV93b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
+}], ["pinkws", {
+    name: "Pink Wool Slab",
+    description: "Pink Wool Slabs, Double Slabs, Wool Stairs",
+    id: 'pink_wool_slab []',
+    is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
+    rgb: [210, 125, 150, 255],
+    structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24CAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwsBAAAAAQAAAAAAAAAJCABlbnRpdGllcwAAAAAACgcAcGFsZXR0ZQoHAGRlZmF1bHQJDQBibG9ja19wYWxldHRlCgEAAAAIBABuYW1lGABtaW5lY3JhZnQ6cGlua193b29sX3NsYWIKBgBzdGF0ZXMIFwBtaW5lY3JhZnQ6dmVydGljYWxfaGFsZgYAYm90dG9tAAMHAHZlcnNpb24hPBUBAAoTAGJsb2NrX3Bvc2l0aW9uX2RhdGEAAAAACRYAc3RydWN0dXJlX3dvcmxkX29yaWdpbgMDAAAAQAAAAMT///9AAAAAAA=="
 }], ["whiteterc", {
     name: "White Terracotta",
     description: "White Terracotta <br/> <i>Also</i>: Calcite; Cherry Planks, Vertical Logs, Vertical Stripped Logs, Fences, Fence Gates, Doors, Trapdoors, Pressure Plates, Signs &amp; Hanging Signs, Slabs &amp Stairs",
@@ -248,7 +360,7 @@ const Colours = new Map([["white", {
     structure: "CgAAAw4AZm9ybWF0X3ZlcnNpb24BAAAACQQAc2l6ZQMDAAAAAQAAAAEAAAABAAAACgkAc3RydWN0dXJlCQ0AYmxvY2tfaW5kaWNlcwkCAAAAAwEAAAAAAAAAAwEAAAD/////CQgAZW50aXRpZXMAAAAAAAoHAHBhbGV0dGUKBwBkZWZhdWx0CQ0AYmxvY2tfcGFsZXR0ZQoBAAAACAQAbmFtZRQAbWluZWNyYWZ0Om9ha19wbGFua3MKBgBzdGF0ZXMAAwcAdmVyc2lvbgMAFQEAChMAYmxvY2tfcG9zaXRpb25fZGF0YQAAAAAJFgBzdHJ1Y3R1cmVfd29ybGRfb3JpZ2luAwMAAACu////xf///2QAAAAA"
 }], ["spruce", {
     name: "Spruce",
-    description: "Spruce Planks, Vertical Logs, Stripped Logs, Wood, Stripped Wood, Fences, Fence Gates, Doors, Trapdoors, Pressure Plates, Signs &amp; Hanging Signs, Slabs &amp; Stairs;<br/> Campfire, Soul Campfire, Podzol; Mangrove Roots, Muddy Mangrove Roots; Horizontal Oak &amp; Jungle Logs",
+    description: "Spruce Planks, Vertical Logs, Stripped Logs, Wood, Stripped Wood, Fences, Fence Gates, Doors, Trapdoors, Pressure Plates, Signs &amp; Hanging Signs, Slabs &amp; Stairs;<br/> Campfire, Soul Campfire, Podzol; Mangrove Roots, Muddy Mangrove Roots; Horizontal Oak &amp; Jungle Logs; Poplar Wood",
     id: 'spruce_planks []',
     is_dye: false, is_terc: false, is_biomevar: false, is_greyscale: false,
     rgb: [111, 74, 42, 255],
